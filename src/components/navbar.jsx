@@ -52,7 +52,7 @@ function Navbar() {
         </div>
       </form>
 
-      <div className="m-2">
+      <div className="m-2 text-center">
       <i className="" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
       <button className='btn'>ثبت نام / ورود</button>
       </div>
