@@ -23,7 +23,7 @@ function Banner() {
         
           
           <div className="col-lg-4">
-            <img src={products} alt="" className="img-fluid d-none d-md-block" />
+            <img src={products} alt="" className="img-fluid d-none d-lg-block" />
           </div>
         </div>
       </div>
