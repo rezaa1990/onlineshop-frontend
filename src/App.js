@@ -1,4 +1,5 @@
 import Banner from "./components/banner";
+import Blog from "./components/blog";
 import Features from "./components/features";
 import Navbar from "./components/navbar";
 import Products from "./components/products";
@@ -10,6 +11,7 @@ function App() {
       <Banner></Banner>
       <Features></Features>
       <Products></Products>
+      <Blog></Blog>
     </div>
   );
 }
