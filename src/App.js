@@ -1,8 +1,9 @@
-
+import Navbar from "./components/navbar";
+import css from "./css/main.css"
 function App() {
   return (
     <div className="">
-      reza
+      <Navbar></Navbar>
     </div>
   );
 }
