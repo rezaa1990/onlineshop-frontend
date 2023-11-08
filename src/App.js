@@ -1,5 +1,6 @@
 import Banner from "./components/banner";
 import Blog from "./components/blog";
+import Contact from "./components/contact";
 import Features from "./components/features";
 import Navbar from "./components/navbar";
 import Products from "./components/products";
@@ -12,6 +13,7 @@ function App() {
       <Features></Features>
       <Products></Products>
       <Blog></Blog>
+      <Contact></Contact>
     </div>
   );
 }
