@@ -6,3 +6,7 @@
 *{
   font-family: yekan;
 }
+
+a:hover{
+  background-color: #eee;
+}
