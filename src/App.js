@@ -8,6 +8,9 @@ import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import Products from "./components/products";
 import css from "./css/main.css";
+import Register from "./components/login";
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import Login from "./components/login";
 
 function App() {
   const [admin, setAdmin] = useState(true);
@@ -19,11 +22,18 @@ function App() {
         <AdminPanel></AdminPanel>
       ) : (
         <>
-          <Banner></Banner>
-          <Features></Features>
+          {/* <Banner></Banner> */}
+
+          <Router>
+          <Routes>
+          <Route path="/login" element={<Login/>} />
+          </Routes>
+          </Router>
+
+          {/* <Features></Features>
           <Products></Products>
           <Blog></Blog>
-          <Contact></Contact>
+          <Contact></Contact> */}
           <Footer></Footer>
         </>
       )}

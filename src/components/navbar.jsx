@@ -54,7 +54,7 @@ function Navbar() {
 
       <div className="m-2 text-center">
       <i className="" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
-      <button className='btn'>ثبت نام / ورود</button>
+      <a href="./login" className="text-secondary py-2"> <button className='btn'>ثبت نام / ورود</button></a>
       </div>
     </nav>
   );
