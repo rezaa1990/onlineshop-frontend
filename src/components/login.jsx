@@ -26,7 +26,7 @@ function Login() {
       console.log(response.data.message);
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
-      window.location = '/dashboard';
+      window.location = '/userdashboard';
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
     }
