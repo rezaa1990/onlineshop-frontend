@@ -5,8 +5,14 @@
 
 *{
   font-family: yekan;
+  background: rgb(241, 241, 241);
 }
 
 a:hover{
-  background-color: #eee;
+  background-color: #c0c0c0;
+}
+
+.submenu1:hover{
+  background: #c0c0c0;
+  cursor: pointer
 }

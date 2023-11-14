@@ -12,6 +12,7 @@ import Register from "./components/register";
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
 import Login from "./components/login";
 import UserPanel from "./components/userpanel";
+import UserProducts from "./components/userproducts.jsx";
 
 function App() {
   const [admin, setAdmin] = useState(true);
@@ -19,24 +20,22 @@ function App() {
   return (
     <BrowserRouter>
     <div className="">
-      <Navbar></Navbar>
-      {admin === true ? (
+      {admin === false ? (
         <AdminPanel></AdminPanel>
       ) : (
         <>
+          <Navbar></Navbar>
           {/* <Banner></Banner> */}
           
-          {/* <Routes>
+          <Routes>
           <Route path="/userdashboard" element={<UserPanel/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
-          </Routes> */}
-          
+          </Routes>
+          <UserProducts></UserProducts>
           {/* <Features></Features> */}
-          {/* <Products></Products> */}
-          <Products></Products>
-          {/* <Contact></Contact> */}
-          {/* <Footer></Footer> */}
+          <Contact></Contact>
+          <Footer></Footer>
         </>
       )}
     </div>
