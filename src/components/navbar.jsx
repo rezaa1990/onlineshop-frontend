@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee, faDove, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCoffee, faDove, faLaptop, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -10,32 +10,28 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-sm shadow-sm py-0">
 
-      <a className="navbar-brand text-warning">
-        <i className="m-2" style={{ fontSize: '20px' }}><FontAwesomeIcon icon={faDove} /></i>
+      <a className="navbar-brand text-">
+        <i className="m-2" style={{ fontSize: '20px' }}><FontAwesomeIcon icon={faLaptop} /></i>
       </a>
-      {/* <button className='navbar-toggler' data-toggle="collapse" data-target="#mynav">
-        <span className="navbar-toggler-icon"></span>
-      </button> */}
-      {/* <div className='collapse navbar-collapse' id='mynav'> */}
       <ul className="navbar-nav">
         <li className="nav-item mx-2">
           <a href="/home" className="nav-link">خانه</a>
         </li>
 
         <li className="nav-item mx-2">
-          <a href="./gallery" className="nav-link">گالری</a>
+          <a href="./gallery" className="nav-link">سبد خرید</a>
         </li>
 
-        <li className="nav-item mx-2">
+        {/* <li className="nav-item mx-2">
           <a href="client" className="nav-link">مشتری</a>
-        </li>
+        </li> */}
 
         <li className="nav-item mx-2 dropdown">
           <a href="" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">محصولات</a>
           <div className="dropdown-menu text-end">
-            <a href="" className="dropdown-item my-1">مرطوب کننده</a>
-            <a href="" className="dropdown-item my-1">صابون</a>
-            <a href="#" className="dropdown-item my-1">پک داو</a>
+            <a href="" className="dropdown-item my-1">لپ تاپ</a>
+            <a href="" className="dropdown-item my-1">موبایل</a>
+            <a href="#" className="dropdown-item my-1">لوازم جانبی</a>
           </div>
         </li>
       </ul>
