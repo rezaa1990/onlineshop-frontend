@@ -1,108 +1,45 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee, faFaceAngry, faGolfBall, faLaughWink} from '@fortawesome/free-solid-svg-icons';
+import { faCoffee} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import b1 from "./../images/b1.jpg"
-import b2 from "./../images/b2.jpg"
-import b3 from "./../images/b3.jpg"
-import b4 from "./../images/b4.jpg"
+import p1 from "./../images/p1.jpg"
+import p2 from "./../images/p2.jpg"
+import p3 from "./../images/p3.jpg"
+
 
 library.add(faCoffee);
-function Blog() {
+function Products() {
   return (
-    <section className='bg-secondary p-5'>
-      <div className="container-fluid">
-        <h1 className="text-warning text-center mb-5">تازه های وبلاگ</h1>
-        <div className="row">
-          <div className="col-lg-3 col-md-6 mb-5 px-3">
-            <div className="card">
-              <img src={b1} alt="" className="card-img-top" />
-              <div className="card-body">
-                <div className="card-title">
-                  <h3 className="text-secondary">تست تست تست </h3>
-                </div>
-                <div className="card-subtitle my-4">
-                  <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست و پوست انسانها جلوگیری شود</p>
-                </div>
-                <div className="text-right">
-                  <a href=""><i className="ml-3 text-primary" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faFaceAngry} /></i></a>
-                  <a href=""><i className="ml-3 text-info" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faGolfBall} /></i></a>
-                  <a href=""><i className="ml-3 text-danger" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faLaughWink} /></i></a>
-                </div>
-              </div>
-            </div>
+    <section className='py-5'>
+      <div className="container">
+          <div className="text-center">
+            <h1 className="text-warning">کیفیت معین محصولات ماست</h1>
+            <p className="text-muted my-5">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست جلوگیری شود</p>
           </div>
+          <div className="row my-5 text-center">
 
-
-          <div className="col-lg-3 col-md-6 mb-5 px-3">
-            <div className="card">
-              <img src={b2} alt="" className="card-img-top" />
-              <div className="card-body">
-                <div className="card-title">
-                  <h3 className="text-secondary">تست تست تست </h3>
-                </div>
-                <div className="card-subtitle my-4">
-                  <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست و پوست انسانها جلوگیری شود</p>
-                </div>
-                <div className="text-right">
-                  <a href=""><i className="ml-3 text-primary" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faFaceAngry} /></i></a>
-                  <a href=""><i className="ml-3 text-info" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faGolfBall} /></i></a>
-                  <a href=""><i className="ml-3 text-danger" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faLaughWink} /></i></a>
-                </div>
-              </div>
+            <div className="col-lg-4 col-md-6 p-5">
+              <img src={p1} alt="" className="img-thumbnail" />
+              <h2 className="my-3 text-secondary">نرم کننده</h2>
+              <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست جلوگیری شود</p>
             </div>
-          </div>
 
-
-
-
-          <div className="col-lg-3 col-md-6 mb-5 px-3">
-            <div className="card">
-              <img src={b3} alt="" className="card-img-top" />
-              <div className="card-body">
-                <div className="card-title">
-                  <h3 className="text-secondary">تست تست تست </h3>
-                </div>
-                <div className="card-subtitle my-4">
-                  <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست و پوست انسانها جلوگیری شود</p>
-                </div>
-                <div className="text-right">
-                  <a href=""><i className="ml-3 text-primary" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faFaceAngry} /></i></a>
-                  <a href=""><i className="ml-3 text-info" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faGolfBall} /></i></a>
-                  <a href=""><i className="ml-3 text-danger" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faLaughWink} /></i></a>
-                </div>
-              </div>
+            <div className="col-lg-4 col-md-6 p-5">
+              <img src={p2} alt="" className="img-thumbnail" />
+              <h2 className="my-3 text-secondary">پکیج داو</h2>
+              <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست جلوگیری شود</p>
             </div>
-          </div>
 
-
-
-
-          <div className="col-lg-3 col-md-6 mb-5 px-3">
-            <div className="card">
-              <img src={b4} alt="" className="card-img-top" />
-              <div className="card-body">
-                <div className="card-title">
-                  <h3 className="text-secondary">تست تست تست </h3>
-                </div>
-                <div className="card-subtitle my-4">
-                  <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست و پوست انسانها جلوگیری شود</p>
-                </div>
-                <div className="text-right">
-                  <a href=""><i className="ml-3 text-primary" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faFaceAngry} /></i></a>
-                  <a href=""><i className="ml-3 text-info" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faGolfBall} /></i></a>
-                  <a href=""><i className="ml-3 text-danger" style={{ fontSize: '30px' }}><FontAwesomeIcon icon={faLaughWink} /></i></a>
-                </div>
-              </div>
+            <div className="col-lg-4 col-md-12 p-5">
+              <img src={p3} alt="" className="img-thumbnail" />
+              <h2 className="my-3 text-secondary">صابونها</h2>
+              <p className="text-muted">این مواد باید به دقت استفاده شوند تا آسیب به محیط زیست جلوگیری شود</p>
+            
             </div>
+
           </div>
-
-
-
-
-        </div>
       </div>
     </section>
   );
 }
 
-export default Blog;
+export default Products;
