@@ -3,10 +3,11 @@ import { faCoffee, faDove} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // library.add(faCoffee);
 function Login() {
-  // const emailInput=useRef();
+  const  navigate = useNavigate();
 
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
@@ -26,7 +27,8 @@ function Login() {
       console.log(response.data.message);
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
-      window.location = '/userdashboard';
+      // window.location = '/userdashboard';
+      navigate("./userdashboard");
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
     }
