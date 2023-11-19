@@ -10,7 +10,7 @@ function UserProducts() {
   const [products, setProducts] = useState([]);
   const [userId, setUserId] = useState();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-useEffect(() => {
+
   const fetchData = async () => {
     try {
       const productResponse = await axios.get(`http://localhost:5000/api/products/getproducts`);
@@ -23,8 +23,9 @@ useEffect(() => {
     }
   };
 
-  fetchData();
-}, []);
+  useEffect(()=>{
+    fetchData();
+  },[]);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 async function getUser () {
@@ -68,12 +69,38 @@ async function getUser () {
       const response = await axios.put(`http://localhost:5000/api/user/updateuser/${userId}`, updateData,config);
       console.log(response.data.message);
       console.log(response.data);
+      fetchData();
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
     }
   }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  return (
+
+  async function addLike(productId) {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const config = {
+        headers: {
+          'token1': `${userToken}`
+        }
+      };
+      
+      const updateData = {
+        userId,
+  
+      };
+      console.log(updateData);
+      console.log(userId);
+      const response = await axios.put(`http://localhost:5000/api/products/addlike/${productId}`, updateData,config);
+      console.log(response.data.message);
+      console.log(response.data);
+      fetchData();
+    } catch (error) {
+      console.error('خطا در ارسال درخواست:', error);
+    }
+  }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+return (
     <>
       <section className='p-5'>
         <div className="container-fluid">
@@ -100,8 +127,8 @@ async function getUser () {
                      
                       <div className="col-6 p-3 d-flex">
                         <p className="me-auto">
-                          {product.numberOfLikes}                        
-                          <i className="p-2 buylike" style={{ fontSize: '15px',cursor:'pointer'}}><FontAwesomeIcon icon={faHeart} /></i>
+                          {product.numberOfLikes?.length}                        
+                          <i className="p-2 buylike" onClick={()=>addLike(product._id)} style={{ fontSize: '15px',cursor:'pointer'}}><FontAwesomeIcon icon={faHeart} /></i>
                         </p>
                       </div>
 
@@ -111,7 +138,7 @@ async function getUser () {
                   </div>
                 </div>
               </div>
-            )}buylike
+            )}
           </div>
         </div>
       </section>
