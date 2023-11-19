@@ -3,9 +3,10 @@ import { faBasketShopping, faCoffee, faDove, faProcedures, faUser, faWarehouse }
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import pp from "./../images/pp.jpg"
+import pp from "./../images/pp.jpg";
+import p1 from "./../images/p1.jpeg"
 
-library.add(faCoffee);
+// library.add(faCoffee);
 
 function UserPanel() {
   const [showHidden, setShowHidden] = useState(false);
@@ -30,12 +31,37 @@ function UserPanel() {
       .catch(error => {
         console.log(error);
       });
-  }, [user]);
+  }, []);
+
+  async function deleteFromBasket(userId,basketId) {
+    console.log('userid:',userId,'basketid',basketId);
+
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+      'token1': `${userToken}`
+      }
+    };
+
+    const data={
+      userId,
+      basketId
+    }
+
+    try {
+      const response = await axios.put(`http://localhost:5000/api/user/deletebasket`,data,config)
+      console.log(response.data.message);
+      console.log(response.data);
+      alert(response.data.message)
+    } catch (error) {
+      console.error('خطا:', error);
+    }
+  }
 
   return (
     <>
       <div className="d-flex">
-        <ul className="row nav col-sm-3 h-50 ">
+        <ul className="row nav col-sm-2 col-md-3 h-50">
 
         <li className="nav-item m-auto p-2 shadow-sm row">
           <img src={pp} alt="" className="w-50" style={{}}/>
@@ -60,7 +86,7 @@ function UserPanel() {
           </li>
         </ul>
 
-        <div className="container-fluid col-sm-11 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
+        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className="">نام:</p>
             <p className="">{user.fName}</p>
@@ -83,19 +109,35 @@ function UserPanel() {
           </div>
         </div>
 
-        <div className="container-fluid col-sm-11 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
-          <div className="p-2 shadow-sm">
-            <p className=""> نام محصول:</p>
-            <p className="">{user.basket?.name}</p>
+        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
+        <section className='p-5'>
+        <div className="container-fluid">
+          <h1 className="text-center mb-5">سبد خرید</h1>
+          <div className="row">
+            {user.basket?.map((basket) =>
+              <div className="col-lg-3 col-md-6 mb-5 px-3">
+                <div className="card">
+                  <img src={p1} alt="" className="card-img-top" />
+                  <div className="card-body">
+                    <div className="card-title">
+                      <h3 className="text-secondary">{basket.name}</h3>
+                    </div>
+                    <div className="card-subtitle my-4">
+                      <p className="text-muted">{basket.description}</p>
+                    </div>
+                    <div className="text-right">
+                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-outline-danger my-1 w-100">حذف</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="p-2 shadow-sm">
-            <p className="">جزییات</p>
-            <p className="">{user.basket?.description}</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">قیمت:</p>
-            <p className="">{user.basket?.price} تومان</p>
-          </div>
+          <div className="text-right">
+                      <button onClick={''} className="btn btn-success my-1 w-100">ادامه و خرید</button>
+                    </div>
+        </div>
+      </section>
         </div>
 
 
