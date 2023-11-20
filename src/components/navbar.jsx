@@ -1,12 +1,46 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee, faDove, faLaptop, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faCircleXmark, faCoffee, faDove, faLaptop, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+//////////////////////////////////////////////////////////////////////////////////
 
+function Navbar(props) {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  const [rerender, setRerender] = useState(false);
+///////////////////////////////////////////////////////////////
+    function getUser(){
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+    headers: {
+      'token1': `${userToken}`
+    }
+    };
 
-
-library.add(faCoffee);
-function Navbar() {
+    axios.get(`http://localhost:5000/api/user/me`,config)
+      .then(response => {
+        console.log("user",response);
+        console.log("pro", response.data.data);
+        const p = response.data.data;
+        setUser(p);
+        setRerender(props.rerender);
+        console.log(user);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+    useEffect(() => {
+      getUser();
+      },[]);
+  ///////////////////////////////////////////////////////////////////////////////////
+    function handleExit(){
+      localStorage.removeItem('userToken');
+    };
+  ///////////////////////////////////////////////////////////////////////////////////
   return (
     <nav className="navbar navbar-expand-sm shadow-sm py-0">
 
@@ -14,12 +48,21 @@ function Navbar() {
         <i className="m-2" style={{ fontSize: '20px' }}><FontAwesomeIcon icon={faLaptop} /></i>
       </a>
       <ul className="navbar-nav">
-        <li className="nav-item mx-2">
-          <a href="/home" className="nav-link">خانه</a>
+
+
+      <li className="nav-item mx-2">
+          <Link to="./userdashboard" className="nav-link">حساب کاربری</Link>
         </li>
 
         <li className="nav-item mx-2">
-          <a href="./gallery" className="nav-link">سبد خرید</a>
+          <Link to="/" className="nav-link">خانه</Link>
+        </li>
+
+        <li className="nav-item mx-2">
+          <Link to="./userdashboard" className="nav-link">
+          <i className="text-light" style={{backgroundColor:"red",borderRadius:"50%",margin:"3px"}}>{user?.basket?.length}</i>
+            سبد خرید
+          </Link>
         </li>
 
         {/* <li className="nav-item mx-2">
@@ -49,9 +92,20 @@ function Navbar() {
       </form>
 
       <div className="m-2 text-center">
-      <i className="" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
-      <a href="./login" className="text-secondary py-2"> <button className='btn'>ثبت نام / ورود</button></a>
+      
+      <Link to="./login" className="py-2">
+      <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
+        <button className='btn'>ثبت نام / ورود</button>
+      </Link>
       </div>
+
+      <div className="m-2 text-center">
+        <Link to="./login" className="py-2" onClick={handleExit}>
+          <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faCircleXmark}/></i>
+          <button className='btn'>خروج</button>
+        </Link>
+      </div>
+
     </nav>
   );
 }
