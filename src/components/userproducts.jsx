@@ -9,6 +9,8 @@ import { Await } from 'react-router-dom';
 function UserProducts() {
   const [products, setProducts] = useState([]);
   const [userId, setUserId] = useState();
+  const [showHidden, setShowHidden] = useState(false);
+  const [comments, setComments] = useState({});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const fetchData = async () => {
@@ -100,6 +102,57 @@ async function getUser () {
     }
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const handleCommentChange = (productId, value) => {
+  setComments({ ...comments, [productId]: value });
+};
+
+
+async function addComment(productId,e) {
+  e.preventDefault();
+  try {
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+        'token1': `${userToken}`
+      }
+    };
+    
+    const data = {
+      author:userId,
+      text:comments[productId],
+
+    };
+    console.log(data);
+    const response = await axios.post(`http://localhost:5000/api/comment/addcomment`, data,config);
+    console.log(response.data);
+    addThisCommentToProduct(response.data.data._id,productId);
+  } catch (error) {
+    console.error('خطا:', error);
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+async function addThisCommentToProduct(commentId,productId) {
+  try {
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+        'token1': `${userToken}`
+      }
+    };
+    
+    const data = {
+      productId,
+      commentId,
+
+    };
+    console.log(data);
+    const response = await axios.put(`http://localhost:5000/api/products/addcomment`, data,config);
+    console.log(response.data);
+  } catch (error) {
+    console.error('خطا:', error);
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 return (
     <>
       <section className='p-5'>
@@ -136,10 +189,45 @@ return (
 
 
                   </div>
+
+
+                  <div className="comments" style={{  minHeight: "200px"}}>
+
+                    <form className="m-2">
+                      <div className="input-group">
+                        {/* <input placeholder='نظر خود را بنویسید ...' onChange={(e) => addComment(e.target.value)} id="" type="text" className="form-control" /> */}
+                        <textarea
+                          value={comments[product._id] || ''}
+                          onChange={(e)=>handleCommentChange(product._id, e.target.value)}
+                          className="form-control"
+                          id="message"
+                          cols="30"
+                          rows="1"
+                          placeholder='نظر خود را بنویسید ...'>
+                        </textarea>
+                        <div className=""><button onClick={(e)=>addComment(product._id,e)} className="btn btn-secondary">ثبت نظر</button></div>
+                      </div>
+                    </form>
+
+                    <div className="m-1" style={{  maxHeight: "150px"}}>
+                      <p className="text-secondary text-center"> نظرات دیگران</p>
+                      <div className="" style={{  maxHeight: "100px",overflow: "auto"}}>
+                        {product.comments?.map((coments)=>
+                        <p className="text-secondary m- p-2 shadow-sm">{coments}</p>
+                        )}
+                      </div>
+                   </div>
+
+                  </div>
+                  
                 </div>
+                
               </div>
-            )}
+              )}
+            
+
           </div>
+
         </div>
       </section>
     </>
