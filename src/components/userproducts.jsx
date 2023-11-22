@@ -9,14 +9,14 @@ import { Await } from 'react-router-dom';
 function UserProducts() {
   const [products, setProducts] = useState([]);
   const [userId, setUserId] = useState();
-  const [showHidden, setShowHidden] = useState(false);
+  // const [reRender, setReRender] = useState(false);
   const [comments, setComments] = useState({});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const fetchData = async () => {
     try {
       const productResponse = await axios.get(`http://localhost:5000/api/products/getproducts`);
-      console.log(productResponse.data.message);
+      console.log(productResponse.data.data.products);
       const productsData = productResponse.data.data.products;
       setProducts(productsData);
       getUser();
@@ -148,6 +148,8 @@ async function addThisCommentToProduct(commentId,productId) {
     console.log(data);
     const response = await axios.put(`http://localhost:5000/api/products/addcomment`, data,config);
     console.log(response.data);
+    setComments({});
+    fetchData();
   } catch (error) {
     console.error('خطا:', error);
   }
@@ -209,12 +211,20 @@ return (
                       </div>
                     </form>
 
-                    <div className="m-1" style={{  maxHeight: "150px"}}>
+                    <div className="m-1" style={{  maxHeight: "100px"}}>
                       <p className="text-secondary text-center"> نظرات دیگران</p>
-                      <div className="" style={{  maxHeight: "100px",overflow: "auto"}}>
+
+                      <div className="shadow-sm" style={{  maxHeight: "100px",overflow: "auto"}}>
+
                         {product.comments?.map((coments)=>
-                        <p className="text-secondary m- p-2 shadow-sm">{coments}</p>
+                        <div className="row mx-1 shadow-sm">
+                          <p className="col-6">{coments?.text}</p>
+                          {coments.author?.map((author)=>
+                          <p className="col-6 text-start">{author?.fName}</p>
+                          )}
+                        </div>
                         )}
+
                       </div>
                    </div>
 
