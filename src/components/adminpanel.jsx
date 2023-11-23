@@ -20,8 +20,9 @@ function AdminPanel() {
   const [responseMessage, setResponseMessage] = useState("");
   const [imgPath, setImgPath] = useState("");
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
+  const [img, setImg] = useState();
 
-  async function handleClick(e) {
+  async function addProduct(e) {
     e.preventDefault();
     try {
       const addProduct = {
@@ -29,14 +30,13 @@ function AdminPanel() {
         price,
         numberOfLikes,
         description,
-        imgPath,
+        img,
       };
   
       console.log(addProduct);
   
       const response = await axios.post(`http://localhost:5000/api/products/addproduct`,addProduct);
-      console.log(response.data.message);
-      // console.log(response.data);
+      console.log(response.data);
       setResponseMessage(response.data.message);
       setShowHidden(4);
       console.log(showHidden);
@@ -52,7 +52,24 @@ function AdminPanel() {
   const navigation = () => {
     navigate("./products");
   };
+////////////////////////////////////////////////////////////////////////////////////////
+const handleFileInputChange = (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
 
+  reader.onloadend = () => {
+    // عکس با موفقیت خوانده شده و آماده ذخیره در state است
+    setImg(reader.result);
+    console.log(img);
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}; 
+
+
+////////////////////////////////////////////////////////////////////////////////////////
   return (
     <>
       
@@ -145,33 +162,19 @@ function AdminPanel() {
           <label htmlFor="email">قیمت</label>
           <input onChange={(e)=>setPrice(e.target.value)} id="email" type="text" className="form-control" />
         </div>
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="email">لایک</label>
-          <input onChange={(e)=>setNumberOfLikes(e.target.value)} id="email" type="text" className="form-control" />
-        </div>
+   
         <div className="form-group mx-5 my-3">
           <label htmlFor="email">مشخصات</label>
           <textarea className="form-control" onChange={(e)=>setDescription(e.target.value)}  name="" id="message" cols="30" rows="3"></textarea>
         </div>
         <div className="form-group mx-5 my-3">
-          <label htmlFor="email">مسیر فایل عکس</label>
-          <input onChange={(e)=>setImgPath(e.target.value)} id="path" type="text" className="form-control" />
+          <label htmlFor="image">آپلود عکس</label>
+          <input onChange={(e) => handleFileInputChange(e)} id="image" type="file" className="form-control" />
         </div>
-        {/* <div className="form-group mx-5 my-3">
-            <input className="form-control" type="file" accept="image/*" onChange={handleImageChange} />
-            
-            {selectedImage && (
-            <div>
-              <h2>تصویر انتخاب شده:</h2>
-              <img className="rounded img-fluid" src={URL.createObjectURL(selectedImage)} alt="Selected" style={{ maxWidth: '300px' }} />
-            </div>
-            
-              )}
-              <button className="btn btn-success my-1" onClick={handleUpload}>آپلود تصویر</button>
-        </div> */}
-        {/* <ImageUpload></ImageUpload> */}
+
+
         <div className="mx-5">
-            <button className="btn btn-success w-100" onClick={handleClick}>افزودن محصول</button>
+            <button className="btn btn-success w-100" onClick={addProduct}>افزودن محصول</button>
           </div>
         </div>
 

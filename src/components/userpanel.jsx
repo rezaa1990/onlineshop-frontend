@@ -8,11 +8,11 @@ import p1 from "./../images/p1.jpeg"
 
 // library.add(faCoffee);
 
-function UserPanel() {
-  const [showHidden, setShowHidden] = useState(false);
+function UserPanel(props) {
+  const [showHidden, setShowHidden] = useState(2);
   const [user, setUser] = useState({});
 
-  useEffect(() => {
+  function getUser(){
     const userToken = localStorage.getItem('userToken');
     const config = {
     headers: {
@@ -30,8 +30,11 @@ function UserPanel() {
       })
       .catch(error => {
         console.log(error);
-      });
-  }, []);
+      })
+    };
+  useEffect(() => {
+    getUser();
+  },[]);
 
   async function deleteFromBasket(userId,basketId) {
     console.log('userid:',userId,'basketid',basketId);
@@ -52,6 +55,7 @@ function UserPanel() {
       const response = await axios.put(`http://localhost:5000/api/user/deletebasket`,data,config)
       console.log(response.data.message);
       console.log(response.data);
+      getUser();
       alert(response.data.message)
     } catch (error) {
       console.error('خطا:', error);
@@ -66,8 +70,8 @@ function UserPanel() {
         <li className="nav-item m-auto p-2 shadow-sm row">
           <img src={pp} alt="" className="w-50" style={{}}/>
           <div className="">
-            <a href="" className="ps-1 text-muted">{user.fName}</a>
-            <a href="" className="ps-1 text-muted">{user.lName}</a>
+            <a href="" className="ps-1 text-muted">{user?.fName}</a>
+            <a href="" className="ps-1 text-muted">{user?.lName}</a>
           </div>
         </li>
 
@@ -89,23 +93,23 @@ function UserPanel() {
         <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className="">نام:</p>
-            <p className="">{user.fName}</p>
+            <p className="">{user?.fName}</p>
           </div>
           <div className="p-2 shadow-sm">
             <p className=""> نام خانوادگی:</p>
-            <p className="">{user.lName}</p>
+            <p className="">{user?.lName}</p>
           </div>
           <div className="p-2 shadow-sm">
             <p className="">ایمیل:</p>
-            <p className="">{user.email}</p>
+            <p className="">{user?.email}</p>
           </div>
           <div className="p-2 shadow-sm">
             <p className="">شماره تماس:</p>
-            <p className="">{user.mobile}</p>
+            <p className="">{user?.mobile}</p>
           </div>
           <div className="p-2 shadow-sm">
             <p className="">آدرس:</p>
-            <p className="">{user.address}</p>
+            <p className="">{user?.address}</p>
           </div>
         </div>
 
@@ -114,7 +118,7 @@ function UserPanel() {
         <div className="container-fluid">
           <h1 className="text-center mb-5">سبد خرید</h1>
           <div className="row">
-            {user.basket?.map((basket) =>
+            {user?.basket?.map((basket) =>
               <div className="col-lg-3 col-md-6 mb-5 px-3">
                 <div className="card">
                   <img src={p1} alt="" className="card-img-top" />

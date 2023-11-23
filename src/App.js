@@ -1,44 +1,44 @@
+// App.js
 import { useState } from "react";
-import AdminPanel from "./components/adminpanel";
-import Banner from "./components/banner";
-import Blog from "./components/products";
-import Contact from "./components/contact";
-import Features from "./components/features";
-import Footer from "./components/footer";
-import Navbar from "./components/navbar";
-import Products from "./components/products";
-import css from "./css/main.css";
-import Register from "./components/register";
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import AppContext, { AppProvider } from "./context/context.js";
+import AdminPanel from "./components/adminpanel";
+import Navbar from "./components/navbar";
+import Contact from "./components/contact";
+import Footer from "./components/footer";
 import Login from "./components/login";
-import UserPanel from "./components/userpanel";
+import Register from "./components/register";
 import UserProducts from "./components/userproducts.jsx";
+import UserPanel from "./components/userpanel";
 
 function App() {
-  const [admin, setAdmin] = useState(true);
-
   return (
     <BrowserRouter>
-    <div className="">
-      {admin === false ? (
-        <AdminPanel></AdminPanel>
-      ) : (
-        <>
-          <Navbar></Navbar>
-          {/* <Banner></Banner> */}
-          
-          <Routes>
-          <Route path="/userdashboard" element={<UserPanel/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
-          </Routes>
-          <UserProducts></UserProducts>
-          {/* <Features></Features> */}
-          <Contact></Contact>
-          <Footer></Footer>
-        </>
-      )}
-    </div>
+      <AppProvider>
+        <div className="">
+          <AppContext.Consumer value={{}}>
+            {({ admin }) => (
+              <>
+                {!admin ? (
+                  <AdminPanel></AdminPanel>
+                ) : (
+                  <>
+                    <Navbar></Navbar>
+                    <Routes>
+                      <Route path="/userdashboard" element={<UserPanel />} />
+                      <Route path="/" element={<UserProducts />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                    </Routes>
+                    <Contact></Contact>
+                    <Footer></Footer>
+                  </>
+                )}
+              </>
+            )}
+          </AppContext.Consumer>
+        </div>
+      </AppProvider>
     </BrowserRouter>
   );
 }

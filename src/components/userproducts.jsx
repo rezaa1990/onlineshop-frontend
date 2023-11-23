@@ -9,7 +9,6 @@ import { Await } from 'react-router-dom';
 function UserProducts() {
   const [products, setProducts] = useState([]);
   const [userId, setUserId] = useState();
-  // const [reRender, setReRender] = useState(false);
   const [comments, setComments] = useState({});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,7 +17,9 @@ function UserProducts() {
       const productResponse = await axios.get(`http://localhost:5000/api/products/getproducts`);
       console.log(productResponse.data.data.products);
       const productsData = productResponse.data.data.products;
+      console.log(productsData);
       setProducts(productsData);
+      console.log(products);
       getUser();
     } catch (error) {
       console.error(error);
@@ -154,6 +155,8 @@ async function addThisCommentToProduct(commentId,productId) {
     console.error('خطا:', error);
   }
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 return (
     <>

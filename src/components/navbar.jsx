@@ -11,6 +11,7 @@ function Navbar(props) {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [rerender, setRerender] = useState(false);
+  const [login , setLogin] = useState();
 ///////////////////////////////////////////////////////////////
     function getUser(){
     const userToken = localStorage.getItem('userToken');
@@ -28,6 +29,7 @@ function Navbar(props) {
         setUser(p);
         setRerender(props.rerender);
         console.log(user);
+        setLogin(true);
       })
       .catch(error => {
         console.log(error);
@@ -39,6 +41,7 @@ function Navbar(props) {
   ///////////////////////////////////////////////////////////////////////////////////
     function handleExit(){
       localStorage.removeItem('userToken');
+      setLogin(false);
     };
   ///////////////////////////////////////////////////////////////////////////////////
   return (
@@ -65,10 +68,6 @@ function Navbar(props) {
           </Link>
         </li>
 
-        {/* <li className="nav-item mx-2">
-          <a href="client" className="nav-link">مشتری</a>
-        </li> */}
-
         <li className="nav-item mx-2 dropdown">
           <a href="" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">محصولات</a>
           <div className="dropdown-menu text-end">
@@ -78,7 +77,6 @@ function Navbar(props) {
           </div>
         </li>
       </ul>
-      {/* </div> */}
 
       <form action="" className="form-inline mx-auto">
         <div className="input-group">
@@ -93,13 +91,13 @@ function Navbar(props) {
 
       <div className="m-2 text-center">
       
-      <Link to="./login" className="py-2">
+      <Link to="./login" className="py-2" style={{ display: login ==false ? 'block' : 'none'}}>
       <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
         <button className='btn'>ثبت نام / ورود</button>
       </Link>
       </div>
 
-      <div className="m-2 text-center">
+      <div className="m-2 text-center" style={{ display: login ==true ? 'block' : 'none'}}>
         <Link to="./login" className="py-2" onClick={handleExit}>
           <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faCircleXmark}/></i>
           <button className='btn'>خروج</button>
