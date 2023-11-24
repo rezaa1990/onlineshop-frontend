@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAdd, faCoffee, faDove, faProcedures, faUpDown, faUpRightAndDownLeftFromCenter, faUser, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useState ,useContext} from 'react';
 import axios from 'axios';
 import ImageUpload from './uploadeimg';
 import { useNavigate } from 'react-router-dom';
@@ -9,41 +9,35 @@ import Products from './products';
 import { hover } from '@testing-library/user-event/dist/hover';
 import css from "./../css/main.css";
 import Navbar from "./navbar";
+import AppContext from '../context/context';
+
+
 function AdminPanel() {
+  const{
+    price,
+    setPrice,
+    name,
+    setName,
+    numberOfLikes,
+    setNumberOfLikes,
+    description,
+    setDescription,
+    responseMessage,
+    setResponseMessage,
+    imgPath,
+    setImgPath,
+    img,
+    setImg,
+    isSubMenuVisible,
+    setIsSubMenuVisible,
+    showHidden,
+    setShowHidden,
+    addProduct,
+    
+
+  }=useContext(AppContext);
+
   const navigate = useNavigate();
-
-  const [showHidden, setShowHidden] = useState();
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [numberOfLikes, setNumberOfLikes] = useState("");
-  const [description, setDescription] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
-  const [imgPath, setImgPath] = useState("");
-  const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
-  const [img, setImg] = useState();
-
-  async function addProduct(e) {
-    e.preventDefault();
-    try {
-      const addProduct = {
-        name,
-        price,
-        numberOfLikes,
-        description,
-        img,
-      };
-  
-      console.log(addProduct);
-  
-      const response = await axios.post(`http://localhost:5000/api/products/addproduct`,addProduct);
-      console.log(response.data);
-      setResponseMessage(response.data.message);
-      setShowHidden(4);
-      console.log(showHidden);
-    } catch (error) {
-      console.error('خطا:', error);
-    }
-  }
 
   const toggleSubMenu = () => {
     setIsSubMenuVisible(!isSubMenuVisible);
