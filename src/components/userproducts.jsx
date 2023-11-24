@@ -1,170 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, {useEffect,useContext } from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee, faFaceAngry, faGolfBall, faHeart, faLaughWink, faListCheck, faShoppingBasket, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import p1 from "./../images/p1.jpeg"
-import { Await } from 'react-router-dom';
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function UserProducts() {
-  const [products, setProducts] = useState([]);
-  const [userId, setUserId] = useState();
-  const [comments, setComments] = useState({});
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import AppContext from '../context/context';
 
-  const fetchData = async () => {
-    try {
-      const productResponse = await axios.get(`http://localhost:5000/api/products/getproducts`);
-      console.log(productResponse.data.data.products);
-      const productsData = productResponse.data.data.products;
-      console.log(productsData);
-      setProducts(productsData);
-      console.log(products);
-      getUser();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+function UserProducts() {
+  const{
+    userProducts,
+    setUserProducts,
+    userId,
+    setUserId,
+    comments,
+    setComments,
+    addComment,
+    addThisCommentToProduct,
+    handleCommentChange,
+    addLike,
+    addToBasket,
+    getUser,
+    fetchData,
+  }=useContext(AppContext);
 
   useEffect(()=>{
     fetchData();
   },[]);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-async function getUser () {
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-      headers: {
-        'token1': `${userToken}`
-      }
-    };
-    console.log(config);
-    axios.get(`http://localhost:5000/api/user/me`,config)
-      .then(response => {
-        // console.log("user",response);
-        console.log("pro", response.data);
-        const id = response.data.data._id;
-        console.log(id);
-        setUserId(id);
-        console.log(userId);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  async function addToBasket(productId) {
-    try {
-      const userToken = localStorage.getItem('userToken');
-      const config = {
-        headers: {
-          'token1': `${userToken}`
-        }
-      };
-      
-      const updateData = {
-        productId,
-
-      };
-      console.log(updateData);
-      console.log(userId);
-      const response = await axios.put(`http://localhost:5000/api/user/updateuser/${userId}`, updateData,config);
-      console.log(response.data.message);
-      console.log(response.data);
-      fetchData();
-    } catch (error) {
-      console.error('خطا در ارسال درخواست:', error);
-    }
-  }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  async function addLike(productId) {
-    try {
-      const userToken = localStorage.getItem('userToken');
-      const config = {
-        headers: {
-          'token1': `${userToken}`
-        }
-      };
-      
-      const updateData = {
-        userId,
-  
-      };
-      console.log(updateData);
-      console.log(userId);
-      const response = await axios.put(`http://localhost:5000/api/products/addlike/${productId}`, updateData,config);
-      console.log(response.data.message);
-      console.log(response.data);
-      fetchData();
-    } catch (error) {
-      console.error('خطا در ارسال درخواست:', error);
-    }
-  }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const handleCommentChange = (productId, value) => {
-  setComments({ ...comments, [productId]: value });
-};
-
-
-async function addComment(productId,e) {
-  e.preventDefault();
-  try {
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-      headers: {
-        'token1': `${userToken}`
-      }
-    };
-    
-    const data = {
-      author:userId,
-      text:comments[productId],
-
-    };
-    console.log(data);
-    const response = await axios.post(`http://localhost:5000/api/comment/addcomment`, data,config);
-    console.log(response.data);
-    addThisCommentToProduct(response.data.data._id,productId);
-  } catch (error) {
-    console.error('خطا:', error);
-  }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-async function addThisCommentToProduct(commentId,productId) {
-  try {
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-      headers: {
-        'token1': `${userToken}`
-      }
-    };
-    
-    const data = {
-      productId,
-      commentId,
-
-    };
-    console.log(data);
-    const response = await axios.put(`http://localhost:5000/api/products/addcomment`, data,config);
-    console.log(response.data);
-    setComments({});
-    fetchData();
-  } catch (error) {
-    console.error('خطا:', error);
-  }
-}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 return (
     <>
       <section className='p-5'>
         <div className="container-fluid">
           <h1 className="text-center mb-5">محصولات</h1>
           <div className="row">
-            {products.map((product) =>
+            {userProducts.map((product) =>
               <div className="col-lg-3 col-md-6 mb-5 px-3">
                 <div className="card">
                   <img src={p1} alt="" className="card-img-top" />
@@ -246,5 +114,5 @@ return (
     </>
   );
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export default UserProducts;

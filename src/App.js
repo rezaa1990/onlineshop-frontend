@@ -115,6 +115,149 @@ function App() {
     setIsFormVisible(false);
   };
   /////////////////////////////////////////////////////////////////////////////
+  //user product
+  const [userProducts, setUserProducts] = useState([]);
+  const [userId, setUserId] = useState();
+  const [comments, setComments] = useState({});
+
+  const fetchData = async () => {
+    try {
+      const productResponse = await axios.get(`http://localhost:5000/api/products/getproducts`);
+      console.log(productResponse.data.data.products);
+      const productsData = productResponse.data.data.products;
+      console.log(productsData);
+      setUserProducts(productsData);
+      console.log(userProducts);
+      getUser();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+async function getUser () {
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+        'token1': `${userToken}`
+      }
+    };
+    console.log(config);
+    axios.get(`http://localhost:5000/api/user/me`,config)
+      .then(response => {
+        // console.log("user",response);
+        console.log("pro", response.data);
+        const id = response.data.data._id;
+        console.log(id);
+        setUserId(id);
+        console.log(userId);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async function addToBasket(productId) {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const config = {
+        headers: {
+          'token1': `${userToken}`
+        }
+      };
+      
+      const updateData = {
+        productId,
+
+      };
+      console.log(updateData);
+      console.log(userId);
+      const response = await axios.put(`http://localhost:5000/api/user/updateuser/${userId}`, updateData,config);
+      console.log(response.data.message);
+      console.log(response.data);
+      fetchData();
+    } catch (error) {
+      console.error('خطا در ارسال درخواست:', error);
+    }
+  }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  async function addLike(productId) {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const config = {
+        headers: {
+          'token1': `${userToken}`
+        }
+      };
+      
+      const updateData = {
+        userId,
+  
+      };
+      console.log(updateData);
+      console.log(userId);
+      const response = await axios.put(`http://localhost:5000/api/products/addlike/${productId}`, updateData,config);
+      console.log(response.data.message);
+      console.log(response.data);
+      fetchData();
+    } catch (error) {
+      console.error('خطا در ارسال درخواست:', error);
+    }
+  }
+const handleCommentChange = (productId, value) => {
+  setComments({ ...comments, [productId]: value });
+};
+
+async function addComment(productId,e) {
+  e.preventDefault();
+  try {
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+        'token1': `${userToken}`
+      }
+    };
+    
+    const data = {
+      author:userId,
+      text:comments[productId],
+
+    };
+    console.log(data);
+    const response = await axios.post(`http://localhost:5000/api/comment/addcomment`, data,config);
+    console.log(response.data);
+    addThisCommentToProduct(response.data.data._id,productId);
+  } catch (error) {
+    console.error('خطا:', error);
+  }
+}
+
+async function addThisCommentToProduct(commentId,productId) {
+  try {
+    const userToken = localStorage.getItem('userToken');
+    const config = {
+      headers: {
+        'token1': `${userToken}`
+      }
+    };
+    
+    const data = {
+      productId,
+      commentId,
+
+    };
+    console.log(data);
+    const response = await axios.put(`http://localhost:5000/api/products/addcomment`, data,config);
+    console.log(response.data);
+    setComments({});
+    fetchData();
+  } catch (error) {
+    console.error('خطا:', error);
+  }
+}
+  /////////////////////////////////////////////////////////////////////////////
   const[admin , setadmin] = useState(true)
   return (
     <BrowserRouter>
@@ -163,9 +306,26 @@ function App() {
             openForm,
             deleteProduct,
             useEffect,
+            //user product
+            userProducts,
+            setUserProducts,
+            userId,
+            setUserId,
+            comments,
+            setComments,
+            addComment,
+            addThisCommentToProduct,
+            handleCommentChange,
+            addLike,
+            addToBasket,
+            getUser,
+            fetchData,
+
+
+
 
           }}>
-            {admin === true ? (
+            {admin === false ? (
                   <AdminPanel></AdminPanel>
                 ) : (
                   <>
