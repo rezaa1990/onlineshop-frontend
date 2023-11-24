@@ -3,115 +3,125 @@ import { faCoffee, faDove} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import { useContext } from 'react';
+import AppContext from '../context/context';
+import{useNavigate } from 'react-router-dom';
 
 function Register() {
   const navigate  = useNavigate();
+
+  const{
+    fName,
+    lName,
+    email,
+    mobile,
+    address,
+    password,
+    repeatPassword,
+    postalCode,
+    setRegisterName,
+    setLastName,
+    setEmail,
+    setMobile,
+    setAddress ,
+    setPassword,
+    setRepeatPassword,
+    setPostalCode,
+
+  }=useContext(AppContext);
+
+  async function register(e) {
+    e.preventDefault();
+    if (password !== repeatPassword) {
+      console.log('مقادیر پسورد یکسان نیست');
+      return;
+    }
   
-  const[fName , setName ]= useState("fname");
-  const[lName , setLastName ]= useState("lname");
-  const[email , setEmail ]= useState("");
-  const[mobile , setMobile ]= useState(0);
-  const[address , setAddress ]= useState("address");
-  const[password , setPassword ]= useState("");
-  const[repeatPassword , setRepeatPassword ]= useState("");
-  const[postalCode , setPostalCode ]= useState(0);
-
-  const [googleUserData,setGoogleUserData] = useState();
-
-async function register(e) {
-  e.preventDefault();
-  if (password !== repeatPassword) {
-    console.log('مقادیر پسورد یکسان نیست');
-    return;
-  }
-
-  try {
-    const registerData = {
-      fName,
-      lName,
-      mobile,
-      email,
-      address,
-      postalCode,
-      password,
-    };
-
-    console.log(registerData);
-
-    const response = await axios.post(`http://localhost:5000/api/auth/register`, registerData);
-    console.log(response.data.message);
-    console.log(response.data);
-    navigate("/login");
-    // localStorage.setItem('userToken', response.data.data.token);
-  } catch (error) {
-    console.error('خطا در ارسال درخواست:', error);
-  }
-}
-
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAolIs0-QmQYJhmK-WKIkoKAluX_CMp3ZE",
-  authDomain: "shoptest-fe6b7.firebaseapp.com",
-  projectId: "shoptest-fe6b7",
-  storageBucket: "shoptest-fe6b7.appspot.com",
-  messagingSenderId: "350382528617",
-  appId: "1:350382528617:web:d89c226b7cc1473fcd6af8",
-  measurementId: "G-FCWC766RRB"
-};
-
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig); // firebaseConfig باید شامل تنظیمات مربوط به Firebase شما باشد
-}
-
-const handleGoogleRegister = async (e) => {
-  e.preventDefault();
-  const provider = new firebase.auth.GoogleAuthProvider();
-  try {
-    const result = await firebase.auth().signInWithPopup(provider);
-    const userData = result.user;
-    // console.log(userData.multiFactor.user);
-    console.log(userData.multiFactor.user.email);
-    console.log(userData.multiFactor.user.uid);
-
-    setEmail(userData.multiFactor.user.email);
-    setPassword(userData.multiFactor.user.uid);
-
-    console.log(email);
-    console.log(password);
-
-    const registerData = {
-      fName,
-      lName,
-      mobile,
-      email,
-      address,
-      postalCode,
-      password,
-    };
-
-    console.log(registerData);
-
-    const response = await axios.post(`http://localhost:5000/api/auth/register`, registerData);
-    console.log(response.data.message);
-    console.log(response.data);
-    navigate("/login");
-  } catch (error) {
-    console.error('خطا در ثبت‌نام با گوگل:', error);
-  }
-};
-
-
-
-
+    try {
+      const registerData = {
+        fName,
+        lName,
+        mobile,
+        email,
+        address,
+        postalCode,
+        password,
+      };
   
+      console.log(registerData);
+  
+      const response = await axios.post(`http://localhost:5000/api/auth/register`, registerData);
+      console.log(response.data.message);
+      console.log(response.data);
+      navigate("/login")
+    } catch (error) {
+      console.log('خطا:', error.response.data);
+    }
+  }
+
+  // const [googleUserData,setGoogleUserData] = useState();
+
+
+
+
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAolIs0-QmQYJhmK-WKIkoKAluX_CMp3ZE",
+//   authDomain: "shoptest-fe6b7.firebaseapp.com",
+//   projectId: "shoptest-fe6b7",
+//   storageBucket: "shoptest-fe6b7.appspot.com",
+//   messagingSenderId: "350382528617",
+//   appId: "1:350382528617:web:d89c226b7cc1473fcd6af8",
+//   measurementId: "G-FCWC766RRB"
+// };
+
+// // const app = initializeApp(firebaseConfig);
+// // const auth = getAuth(app);
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig); // firebaseConfig باید شامل تنظیمات مربوط به Firebase شما باشد
+// }
+
+// const handleGoogleRegister = async (e) => {
+//   e.preventDefault();
+//   const provider = new firebase.auth.GoogleAuthProvider();
+//   try {
+//     const result = await firebase.auth().signInWithPopup(provider);
+//     const userData = result.user;
+//     // console.log(userData.multiFactor.user);
+//     console.log(userData.multiFactor.user.email);
+//     console.log(userData.multiFactor.user.uid);
+
+//     setEmail(userData.multiFactor.user.email);
+//     setPassword(userData.multiFactor.user.uid);
+
+//     console.log(email);
+//     console.log(password);
+
+//     const registerData = {
+//       fName,
+//       lName,
+//       mobile,
+//       email,
+//       address,
+//       postalCode,
+//       password,
+//     };
+
+//     console.log(registerData);
+
+//     const response = await axios.post(`http://localhost:5000/api/auth/register`, registerData);
+//     console.log(response.data.message);
+//     console.log(response.data);
+//     navigate("/login");
+//   } catch (error) {
+//     console.error('خطا در ثبت‌نام با گوگل:', error);
+//   }
+// };
 
   return (
     <div className="row justify-content-center">
@@ -122,7 +132,7 @@ const handleGoogleRegister = async (e) => {
       <form action="" className="text-muted mb-5">
         <div className="form-group mx-5">
           <label htmlFor="name">نام</label>
-          <input onChange={(e)=>setName(e.target.value)} id="name" type="text" className="form-control" />
+          <input onChange={(e)=> setRegisterName(e.target.value)} id="name" type="text" className="form-control" />
         </div>
 
         <div className="form-group mx-5">
@@ -164,14 +174,15 @@ const handleGoogleRegister = async (e) => {
           <button onClick={register} className="btn btn-outline-success my-1 w-100">ثبت نام</button>
         </div>
 
-        <div className="form-group mx-5">
+        {/* <div className="form-group mx-5">
           <button onClick={handleGoogleRegister} className="btn btn-outline-success my-1 w-100">google</button>
-        </div>
+        </div> */}
 
       </form>
 
 
     </div>
+
   </div>
   );
 }

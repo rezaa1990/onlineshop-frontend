@@ -1,6 +1,6 @@
 // App.js
-import { useState,useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
+import { useState,useEffect} from "react";
+import { BrowserRouter as Router, Route, Routes, BrowserRouter, useNavigate } from 'react-router-dom';
 import AppContext from "./context/context.js";
 import AdminPanel from "./components/adminpanel";
 import Navbar from "./components/navbar";
@@ -12,7 +12,9 @@ import UserProducts from "./components/userproducts.jsx";
 import UserPanel from "./components/userpanel";
 import axios from "axios";
 
+
 function App() {
+  
   ///////////////////////////////////////////////////////////////////////////
   //admin component
   const [price, setPrice] = useState("");
@@ -309,7 +311,23 @@ async function deleteFromBasket(userId,basketId) {
     console.error('خطا:', error);
   }
 }
-  /////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  //register
+  const[fName , setRegisterName ]= useState("fname");
+  const[lName , setLastName ]= useState("lname");
+  const[email , setEmail ]= useState("");
+  const[mobile , setMobile ]= useState(0);
+  const[address , setAddress ]= useState("address");
+  const[password , setPassword ]= useState("");
+  const[repeatPassword , setRepeatPassword ]= useState("");
+  const[postalCode , setPostalCode ]= useState(0);
+  const[showRegisterMessage , setShowRegisterMessage ]= useState(true);
+  const[registerResponseMessage,setRegisterResponseMessage]=useState(); 
+  
+  
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
   const[admin , setadmin] = useState(true)
   return (
     <BrowserRouter>
@@ -379,8 +397,23 @@ async function deleteFromBasket(userId,basketId) {
             setUserPanelShowHidden,
             userPanelGetUser,
             deleteFromBasket,
-
-
+            //register
+            fName,
+            lName,
+            email,
+            mobile,
+            address,
+            password,
+            repeatPassword,
+            postalCode,
+            setRegisterName,
+            setLastName,
+            setEmail,
+            setMobile,
+            setAddress ,
+            setPassword,
+            setRepeatPassword,
+            setPostalCode,
 
           }}>
             {admin === false ? (

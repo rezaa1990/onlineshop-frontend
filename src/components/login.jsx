@@ -3,31 +3,30 @@ import { faCoffee, faDove} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
 
 function Login() {
   const  navigate = useNavigate();
-
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
 
 
-  const firebaseConfig = {
+  // const firebaseConfig = {
     
-    apiKey: "AIzaSyBZMUlJZKzLF3sYE8L2OWQmf8YgbwZjk2c",
-    authDomain: "rezshop.firebaseapp.com",
-    projectId: "rezshop",
-  };
+  //   apiKey: "AIzaSyBZMUlJZKzLF3sYE8L2OWQmf8YgbwZjk2c",
+  //   authDomain: "rezshop.firebaseapp.com",
+  //   projectId: "rezshop",
+  // };
   
-  // بررسی اینکه آیا یک نمونه از Firebase App با نام '[DEFAULT]' ایجاد شده یا خیر
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig); // ایجاد یک نمونه از Firebase App
-  } else {
-    firebase.app(); // استفاده از نمونه ایجاد شده اگر وجود دارد
-  }
+  // // بررسی اینکه آیا یک نمونه از Firebase App با نام '[DEFAULT]' ایجاد شده یا خیر
+  // if (!firebase.apps.length) {
+  //   firebase.initializeApp(firebaseConfig); // ایجاد یک نمونه از Firebase App
+  // } else {
+  //   firebase.app(); // استفاده از نمونه ایجاد شده اگر وجود دارد
+  // }
 
   async function login(e) {
     e.preventDefault();
@@ -49,20 +48,20 @@ function Login() {
     }
   }
 
-  const handleGoogleLogin = async (e) => {
-    e.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    try {
-      const result = await firebase.auth().signInWithPopup(provider);
-      // ورود موفقیت‌آمیز
-      const user = result.user;
-      console.log('Logged in user:', user);
-      navigate("/userdashboard");
-    } catch (error) {
-      // خطا در ورود
-      console.error('Login error:', error);
-    }
-  };
+  // const handleGoogleLogin = async (e) => {
+  //   e.preventDefault();
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   try {
+  //     const result = await firebase.auth().signInWithPopup(provider);
+  //     // ورود موفقیت‌آمیز
+  //     const user = result.user;
+  //     console.log('Logged in user:', user);
+  //     navigate("/userdashboard");
+  //   } catch (error) {
+  //     // خطا در ورود
+  //     console.error('Login error:', error);
+  //   }
+  // };
   
 
   return (
@@ -86,12 +85,12 @@ function Login() {
           <button onClick={login} className="btn btn-outline-success my-1 w-100">ورود</button>
         </div>
 
-        <div className="form-group mx-5">
+        {/* <div className="form-group mx-5">
           <button onClick={handleGoogleLogin} className="btn btn-outline-warning my-1 w-100">google</button>
-        </div>
+        </div> */}
 
         <div className="text-center">
-          <a href="./register" className="">ثبت نام</a>
+          <Link to="/register" className="">ثبت نام</Link>
         </div>
       </form>
 
