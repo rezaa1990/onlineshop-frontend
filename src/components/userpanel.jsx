@@ -1,66 +1,24 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBasketShopping, faCoffee, faDove, faProcedures, faUser, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect,useContext } from 'react';
 import pp from "./../images/pp.jpg";
 import p1 from "./../images/p1.jpeg"
-
-// library.add(faCoffee);
+import AppContext from '../context/context';
 
 function UserPanel(props) {
-  const [showHidden, setShowHidden] = useState(2);
-  const [user, setUser] = useState({});
+  const{
+    user,
+    setUser,
+    userPanelShowHidden,
+    setUserPanelShowHidden,
+    userPanelGetUser,
+    deleteFromBasket,
+  }=useContext(AppContext);
 
-  function getUser(){
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-    headers: {
-      'token1': `${userToken}`
-    }
-    };
-
-    axios.get(`http://localhost:5000/api/user/me`,config)
-      .then(response => {
-        console.log("user",response);
-        console.log("pro", response.data.data);
-        const p = response.data.data;
-        setUser(p);
-        console.log(user);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    };
   useEffect(() => {
-    getUser();
+    userPanelGetUser();
   },[]);
-
-  async function deleteFromBasket(userId,basketId) {
-    console.log('userid:',userId,'basketid',basketId);
-
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-      headers: {
-      'token1': `${userToken}`
-      }
-    };
-
-    const data={
-      userId,
-      basketId
-    }
-
-    try {
-      const response = await axios.put(`http://localhost:5000/api/user/deletebasket`,data,config)
-      console.log(response.data.message);
-      console.log(response.data);
-      getUser();
-      alert(response.data.message)
-    } catch (error) {
-      console.error('خطا:', error);
-    }
-  }
 
   return (
     <>
@@ -76,21 +34,21 @@ function UserPanel(props) {
         </li>
 
         <li className="nav-item m-auto p-2 shadow-sm">
-            <a className="nav-link text-black" href="#" onClick={() => setShowHidden(1)}>
+            <a className="nav-link text-black" href="#" onClick={() => setUserPanelShowHidden(1)}>
             <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
                اطلاعات کاربری
             </a>
         </li>
        
         <li className="nav-item m-auto p-2 shadow-sm">
-            <a className="nav-link text-black" href="#" onClick={() => setShowHidden(2)}>
+            <a className="nav-link text-black" href="#" onClick={() => setUserPanelShowHidden(2)}>
             <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faBasketShopping} /></i>
               سبد خرید
               </a>
           </li>
         </ul>
 
-        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
+        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: userPanelShowHidden ==1 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className="">نام:</p>
             <p className="">{user?.fName}</p>
@@ -113,7 +71,7 @@ function UserPanel(props) {
           </div>
         </div>
 
-        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
+        <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
         <section className='p-5'>
         <div className="container-fluid">
           <h1 className="text-center mb-5">سبد خرید</h1>

@@ -258,6 +258,58 @@ async function addThisCommentToProduct(commentId,productId) {
   }
 }
   /////////////////////////////////////////////////////////////////////////////
+//user panel
+const [user, setUser] = useState({});
+const [userPanelShowHidden, setUserPanelShowHidden] = useState(2);
+
+function userPanelGetUser(){
+  const userToken = localStorage.getItem('userToken');
+  const config = {
+  headers: {
+    'token1': `${userToken}`
+  }
+  };
+
+  axios.get(`http://localhost:5000/api/user/me`,config)
+    .then(response => {
+      console.log("user",response);
+      console.log("pro", response.data.data);
+      const p = response.data.data;
+      setUser(p);
+      console.log(user);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  };
+
+
+async function deleteFromBasket(userId,basketId) {
+  console.log('userid:',userId,'basketid',basketId);
+
+  const userToken = localStorage.getItem('userToken');
+  const config = {
+    headers: {
+    'token1': `${userToken}`
+    }
+  };
+
+  const data={
+    userId,
+    basketId
+  }
+
+  try {
+    const response = await axios.put(`http://localhost:5000/api/user/deletebasket`,data,config)
+    console.log(response.data.message);
+    console.log(response.data);
+    getUser();
+    alert(response.data.message)
+  } catch (error) {
+    console.error('خطا:', error);
+  }
+}
+  /////////////////////////////////////////////////////////////////////////////
   const[admin , setadmin] = useState(true)
   return (
     <BrowserRouter>
@@ -320,7 +372,13 @@ async function addThisCommentToProduct(commentId,productId) {
             addToBasket,
             getUser,
             fetchData,
-
+            //user panel
+            user,
+            setUser,
+            userPanelShowHidden,
+            setUserPanelShowHidden,
+            userPanelGetUser,
+            deleteFromBasket,
 
 
 
