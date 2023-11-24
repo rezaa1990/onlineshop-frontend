@@ -1,47 +1,18 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBasketShopping, faCircleXmark, faCoffee, faDove, faLaptop, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {useContext } from 'react';
+import { Link} from 'react-router-dom';
+import AppContext from '../context/context';
 
-//////////////////////////////////////////////////////////////////////////////////
-
-function Navbar(props) {
-  const navigate = useNavigate();
-  const [user, setUser] = useState({});
-  const [rerender, setRerender] = useState(false);
-  const [login , setLogin] = useState();
-///////////////////////////////////////////////////////////////
-    function getUser(){
-    const userToken = localStorage.getItem('userToken');
-    const config = {
-    headers: {
-      'token1': `${userToken}`
-    }
-    };
-
-    axios.get(`http://localhost:5000/api/user/me`,config)
-      .then(response => {
-        console.log("user",response);
-        console.log("pro", response.data.data);
-        const p = response.data.data;
-        setUser(p);
-        setRerender(props.rerender);
-        console.log(user);
-        setLogin(true);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    }
-    useEffect(() => {
-      getUser();
-      },[]);
+function Navbar() {
+  const{
+    user,
+    setUser,
+  }=useContext(AppContext);
   ///////////////////////////////////////////////////////////////////////////////////
     function handleExit(){
       localStorage.removeItem('userToken');
-      setLogin(false);
     };
   ///////////////////////////////////////////////////////////////////////////////////
   return (
@@ -91,13 +62,26 @@ function Navbar(props) {
 
       <div className="m-2 text-center">
       
-      <Link to="./login" className="py-2" style={{ display: login ==false ? 'block' : 'none'}}>
+      <Link to="./login" className="py-2" 
+      // style={{ 
+      //   display: 
+      //   login ==false ? 
+      //   'block' : 
+      //   'none'
+      //   }}
+        >
       <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
         <button className='btn'>ثبت نام / ورود</button>
       </Link>
       </div>
 
-      <div className="m-2 text-center" style={{ display: login ==true ? 'block' : 'none'}}>
+      <div className="m-2 text-center" 
+      // style={{ 
+      //   display: 
+      //   login ==true ?
+      //    'block' : 
+      //    'none'}}
+         >
         <Link to="./login" className="py-2" onClick={handleExit}>
           <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faCircleXmark}/></i>
           <button className='btn'>خروج</button>
