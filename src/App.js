@@ -433,12 +433,13 @@ async function deleteFromBasket(userId,basketId) {
 
 
           }}>
-            {admin === true ? (
+            {/* {admin === false ? (
                   <AdminPanel></AdminPanel>
-                ) : (
+                ) : ( */}
                   <>
                     <Navbar></Navbar>
                     <Routes>
+                    <Route path="/adminpanel" element={<AdminPanel />} />
                       <Route path="/userdashboard" element={<UserPanel />} />
                       <Route path="/" element={<UserProducts />} />
                       <Route path="/login" element={<Login />} />
@@ -447,7 +448,7 @@ async function deleteFromBasket(userId,basketId) {
                     <Contact></Contact>
                     <Footer></Footer>
                   </>
-                )}
+                {/* )} */}
           </AppContext.Provider>
         </div>
       

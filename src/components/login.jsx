@@ -19,8 +19,7 @@ function Login() {
   const[password , setPassword ]= useState("");
   const[loginResponseMessage,setLoginResponseMessage]=useState();
   
-
-
+  
   // const firebaseConfig = {
     
   //   apiKey: "AIzaSyBZMUlJZKzLF3sYE8L2OWQmf8YgbwZjk2c",
@@ -50,7 +49,7 @@ function Login() {
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
       setLogInLogUot(false)
-      navigate("/userdashboard");
+      navigate(response.data.data.isAdmin === true ? "/adminpanel":"/userdashboard");
     } catch (error) {
       setLoginResponseMessage(error.response?.data?.message);
     }
