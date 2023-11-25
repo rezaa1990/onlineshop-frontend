@@ -13,6 +13,7 @@ import{useNavigate } from 'react-router-dom';
 
 function Register() {
   const navigate  = useNavigate();
+  const[registerResponseMessage,setRegisterResponseMessage]=useState();
 
   const{
     fName,
@@ -59,7 +60,7 @@ function Register() {
       console.log(response.data);
       navigate("/login")
     } catch (error) {
-      console.log('خطا:', error.response.data);
+      setRegisterResponseMessage(error.response?.data?.message);
     }
   }
 
@@ -128,6 +129,9 @@ function Register() {
     <div className="col-lg-6">
       <h3 className="m-5">ثبت نام</h3>
 
+      <div className="form-group mx-5">
+       <p className="text-center text-danger ">{registerResponseMessage}</p>
+      </div>
 
       <form action="" className="text-muted mb-5">
         <div className="form-group mx-5">

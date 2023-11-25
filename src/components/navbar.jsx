@@ -9,10 +9,13 @@ function Navbar() {
   const{
     user,
     setUser,
+    logInLogUot,
+    setLogInLogUot,
   }=useContext(AppContext);
   ///////////////////////////////////////////////////////////////////////////////////
     function handleExit(){
       localStorage.removeItem('userToken');
+      setLogInLogUot(true)
     };
   ///////////////////////////////////////////////////////////////////////////////////
   return (
@@ -33,8 +36,18 @@ function Navbar() {
         </li>
 
         <li className="nav-item mx-2">
-          <Link to="./userdashboard" className="nav-link">
-          <i className="text-light" style={{backgroundColor:"red",borderRadius:"50%",margin:"3px"}}>{user?.basket?.length}</i>
+          <Link to="./userdashboard" className="nav-link d-flex">
+
+          <i className="text-light text-center px-1"
+          style={{
+            backgroundColor:"red",
+            borderRadius:"50%",
+            margin:"1px",
+            display:logInLogUot == false ? "block" : "none"
+          }}>
+            {user?.basket?.length}
+          </i>
+
             سبد خرید
           </Link>
         </li>
@@ -63,12 +76,9 @@ function Navbar() {
       <div className="m-2 text-center">
       
       <Link to="./login" className="py-2" 
-      // style={{ 
-      //   display: 
-      //   login ==false ? 
-      //   'block' : 
-      //   'none'
-      //   }}
+      style={{ 
+        display:logInLogUot ==true ? 'block' : 'none'
+        }}
         >
       <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
         <button className='btn'>ثبت نام / ورود</button>
@@ -76,11 +86,9 @@ function Navbar() {
       </div>
 
       <div className="m-2 text-center" 
-      // style={{ 
-      //   display: 
-      //   login ==true ?
-      //    'block' : 
-      //    'none'}}
+      style={{ 
+        display:logInLogUot ==false ?'block' : 'none'
+      }}
          >
         <Link to="./login" className="py-2" onClick={handleExit}>
           <i className="text-secondary" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faCircleXmark}/></i>

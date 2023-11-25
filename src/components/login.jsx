@@ -6,12 +6,18 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import { useContext } from 'react';
+import AppContext from '../context/context';
 
 
 function Login() {
+  const {
+    setLogInLogUot
+  }=useContext(AppContext);
   const  navigate = useNavigate();
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
+  const[loginResponseMessage,setLoginResponseMessage]=useState();
 
 
   // const firebaseConfig = {
@@ -42,9 +48,10 @@ function Login() {
       console.log(response.data.message);
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
+      setLogInLogUot(false)
       navigate("/userdashboard");
     } catch (error) {
-      console.error('خطا در ارسال درخواست:', error);
+      setLoginResponseMessage(error.response?.data?.message);
     }
   }
 
@@ -69,6 +76,9 @@ function Login() {
     <div className="col-lg-6">
       <h3 className="m-5">ورود</h3>
 
+      <div className="form-group mx-5">
+       <p className="text-center text-danger ">{loginResponseMessage}</p>
+      </div>
 
       <form action="" className="text-muted mb-5">
         <div className="form-group mx-5">

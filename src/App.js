@@ -26,6 +26,7 @@ function App() {
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
   const [img, setImg] = useState();
   const [showHidden, setShowHidden] = useState();
+
   async function addProduct(e) {
     e.preventDefault();
     try {
@@ -41,6 +42,7 @@ function App() {
       console.log(response.data);
       setResponseMessage(response.data.message);
       setShowHidden(4);
+      getProduct();
       console.log(showHidden);
     } catch (error) {
       console.error('خطا:', error);
@@ -57,20 +59,25 @@ function App() {
   const [updateImg, setUpdateImg] = useState("");
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-
+  //در این تابع فقط هنگام رندر شدن اولیه ی کامپوننت مقادیر محصولات در استیت قرار میگیرد
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/products/getproducts`)
-      .then(response => {
-        console.log(response.data.message);
-        console.log("pro", response.data.data.products);
-        const p = response.data.data.products;
-        setProducts(p);
-        console.log(products);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  getProduct();
   }, []);
+
+  //این تابع پس از آپدیت یا خذف یا اضافه کردن یک محصول توسط ادمین صدا زده میشود تا مقادیر جدید محصولات در استیت قرار بگیرد
+  async function getProduct(id) {
+    axios.get(`http://localhost:5000/api/products/getproducts`)
+    .then(response => {
+      console.log(response.data.message);
+      console.log("pro", response.data.data.products);
+      const p = response.data.data.products;
+      setProducts(p);
+      console.log(products);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
 
   async function updateProduct(id) {
     try {
@@ -85,7 +92,8 @@ function App() {
       const response = await axios.put(`http://localhost:5000/api/products/updateproduct/${id}`, updateData)
       console.log(response.data.message);
       console.log(response.data);
-      alert(response.data.message)
+      alert(response.data.message);
+      getProduct();
       closeForm();
     } catch (error) {
       console.error('خطا:', error);
@@ -98,7 +106,8 @@ function App() {
       const response = await axios.delete(`http://localhost:5000/api/products/deleteproduct/${id}`)
       console.log(response.data.message);
       console.log(response.data);
-      alert(response.data.message)
+      alert(response.data.message);
+      getProduct();
     } catch (error) {
       console.error('خطا:', error);
     }
@@ -179,6 +188,7 @@ async function getUser () {
       console.log(response.data.message);
       console.log(response.data);
       fetchData();
+      userPanelGetUser();//for updating navbar component
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
     }
@@ -306,7 +316,8 @@ async function deleteFromBasket(userId,basketId) {
     console.log(response.data.message);
     console.log(response.data);
     getUser();
-    alert(response.data.message)
+    alert(response.data.message);
+    userPanelGetUser();//for updating navbar
   } catch (error) {
     console.error('خطا:', error);
   }
@@ -322,18 +333,19 @@ async function deleteFromBasket(userId,basketId) {
   const[repeatPassword , setRepeatPassword ]= useState("");
   const[postalCode , setPostalCode ]= useState(0);
   const[showRegisterMessage , setShowRegisterMessage ]= useState(true);
-  const[registerResponseMessage,setRegisterResponseMessage]=useState(); 
-  
-  
-
+  const[registerResponseMessage,setRegisterResponseMessage]=useState();
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //login
+  const[logInLogUot,setLogInLogUot]=useState(true);//for showing login and logout link in navbar
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const[admin , setadmin] = useState(true)
   return (
     <BrowserRouter>
       
         <div className="">
           <AppContext.Provider value={{
+            //admin
             price,
             setPrice,
             name,
@@ -414,9 +426,14 @@ async function deleteFromBasket(userId,basketId) {
             setPassword,
             setRepeatPassword,
             setPostalCode,
+            //login
+            setLogInLogUot,
+            //navbar
+            logInLogUot,
+
 
           }}>
-            {admin === false ? (
+            {admin === true ? (
                   <AdminPanel></AdminPanel>
                 ) : (
                   <>
