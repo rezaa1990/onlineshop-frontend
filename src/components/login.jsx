@@ -12,12 +12,13 @@ import AppContext from '../context/context';
 
 function Login() {
   const {
-    setLogInLogUot
+    setLogInLogUot,
   }=useContext(AppContext);
   const  navigate = useNavigate();
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
   const[loginResponseMessage,setLoginResponseMessage]=useState();
+  
 
 
   // const firebaseConfig = {

@@ -88,7 +88,7 @@ function UserPanel(props) {
                       <p className="text-muted">{basket.description}</p>
                     </div>
                     <div className="text-right">
-                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-outline-danger my-1 w-100">حذف</button>
+                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-outline-danger my-1 w-100">حذف از سبد</button>
                     </div>
                   </div>
                 </div>

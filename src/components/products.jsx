@@ -74,7 +74,11 @@ function Products() {
                 <input className="form-control my-1" type="text" value={updateName} onChange={(e) => setUpdateName(e.target.value)} placeholder="نام محصول" />
                 <input className="form-control my-1" type="text" value={updatePrice} onChange={(e) => setUpdatePrice(e.target.value)} placeholder="قیمت" />
                 <input className="form-control my-1" type="text" value={updateDescription} onChange={(e) => setUpdateDescription(e.target.value)} placeholder="توضیحات" />
-                <input className="form-control my-1" type="text" value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} placeholder="تصویر محصول" />
+                {/* <input className="form-control my-1" type="text" value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} placeholder="تصویر محصول" /> */}
+                <div className="form-group mx-5 my-3">
+                  <label htmlFor="image">آپلود عکس</label>
+                  <input value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} id="image" type="file" className="form-control"/>
+                </div>
                 
               </div>
               <div className="modal-footer justify-content-between">

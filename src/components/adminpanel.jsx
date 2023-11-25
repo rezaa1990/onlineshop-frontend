@@ -33,7 +33,6 @@ function AdminPanel() {
     showHidden,
     setShowHidden,
     addProduct,
-    
 
   }=useContext(AppContext);
 
