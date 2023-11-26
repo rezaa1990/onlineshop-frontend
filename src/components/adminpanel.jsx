@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAdd, faCoffee, faDove, faProcedures, faUpDown, faUpRightAndDownLeftFromCenter, faUser, faWarehouse } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faCoffee, faDove, faMessage, faProcedures, faReceipt, faUpDown, faUpRightAndDownLeftFromCenter, faUser, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState ,useContext} from 'react';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { hover } from '@testing-library/user-event/dist/hover';
 import css from "./../css/main.css";
 import Navbar from "./navbar";
 import AppContext from '../context/context';
+import MessageList from './message';
 
 
 function AdminPanel() {
@@ -67,7 +68,7 @@ const handleFileInputChange = (event) => {
     <>
       
       <div className="d-flex p-2">
-        <ul className="row nav col-sm-3 h-50 ">
+        <ul className="row nav col-sm-2 h-50 ">
           <li className="nav-item m-auto p-2 shadow-sm">
             <a className="nav-link text-black" href="#" onClick={() => setShowHidden(1)}>
             <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
@@ -99,14 +100,39 @@ const handleFileInputChange = (event) => {
                   اضافه کردن
                 </li>
                  {/* Add more submenu items as needed */}
+
               </ul>
             )}
           </li>
 
 
+          <li className="nav-item m-auto p-2 shadow-sm">
+            <a className="nav-link text-black" href="#" onClick={() => setShowHidden(6)}>
+            <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faMessage} /></i>
+              پیامها
+            </a>
+          </li>
+
+
+          <li className="nav-item m-auto p-2 shadow-sm">
+            <a className="nav-link text-black" href="#" onClick={() => setShowHidden(7)}>
+            <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faReceipt} /></i>
+              سفارشها
+            </a>
+          </li>
+
+
         </ul>
 
-        <div className="container-fluid col-sm-11 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
+        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==6 ? 'block' : 'none' }}>
+        <MessageList></MessageList>
+        </div>
+
+        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==7 ? 'block' : 'none' }}>
+        eee
+        </div>
+
+        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==1 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className="">نام:</p>
             <p className="">رضا</p>
@@ -129,7 +155,7 @@ const handleFileInputChange = (event) => {
           </div>
         </div>
 
-        <div className="container-fluid col-sm-11 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
+        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className=""> نام محصول:</p>
             <p className="">موبایل</p>
@@ -197,6 +223,8 @@ const handleFileInputChange = (event) => {
         <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==5 ? 'block' : 'none' }}>
           <Products></Products>
         </div>
+
+        
 
       </div>
     </>
