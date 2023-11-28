@@ -5,14 +5,36 @@
 
 *{
   font-family: yekan;
-  /* background: rgb(241, 241, 241); */
+  /* background: rgba(250, 242, 202, 0.922); */
 }
 
-a:hover{
+/* i:hover{
   background-color: #c0c0c0;
-}
+  
+} */
 
-.submenu1,.buylike:hover{
+/* img:hover{
+  background-color: #c0c0c0;
+} */
+
+/* Link:hover{ 
+ background-color: #c0c0c0;
+ font-size: "500px"; 
+} */
+
+/* li:hover{
+  background-color: #c0c0c0;
+} */
+
+
+/* .submenu1,.buylike:hover{
   background: #c0c0c0;
   cursor: pointer
-}
+} */
+
+/* @media (max-width: 768px) {
+  .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+  }
+} */

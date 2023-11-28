@@ -68,29 +68,33 @@ function UserPanel() {
 
   return (
     <>
-      <div className="d-flex">
+      <div className="">
         <ul className="row nav col-sm-2 col-md-3 h-50">
 
-        <li className="nav-item m-auto p-2 shadow-sm row">
-          <img src={pp} alt="" className="w-50" style={{}}/>
-          <div className="">
-            <a href="" className="ps-1 text-muted">{user?.fName}</a>
-            <a href="" className="ps-1 text-muted">{user?.lName}</a>
+        <li className="nav-item p-2 shadow-sm row">
+          <img src={pp} alt="" className="w-50 mx-auto" style={{borderRadius:"50%"}}/>
+          <div className="text-center m-3">
+            <div href="" className="ps-1">{user?.fName}</div>
+            <div href="" className="ps-1">{user?.lName}</div>
           </div>
         </li>
 
-        <li className="nav-item m-auto p-2 shadow-sm">
-            <a className="nav-link text-black" href="#" onClick={() => setUserPanelShowHidden(1)}>
+        <li className="nav-item p-2 shadow-sm row">
+          
+          <a className="nav-link text-black" href="#" onClick={() => setUserPanelShowHidden(1)}>
             <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
-               اطلاعات کاربری
-            </a>
+            اطلاعات کاربری
+          </a>
+
+           
+            
         </li>
        
-        <li className="nav-item m-auto p-2 shadow-sm">
+        <li className="nav-item p-2 shadow-sm row">
             <a className="nav-link text-black" href="#" onClick={() => setUserPanelShowHidden(2)}>
-            <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faBasketShopping} /></i>
+              <i className="px-2" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faBasketShopping} /></i>
               سبد خرید
-              </a>
+            </a>
           </li>
         </ul>
 
@@ -118,8 +122,8 @@ function UserPanel() {
         </div>
 
         <div className="container-fluid col-sm-10 col-md-9 p-4" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
-          <section className='p-5'>
-            <div className="container-fluid">
+          <section className=''>
+            <div className="">
             <h1 className="text-center mb-5">سبد خرید</h1>
             <div className="row">
             {user?.basket?.map((basket) =>
