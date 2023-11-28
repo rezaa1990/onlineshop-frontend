@@ -3,6 +3,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee, faFaceAngry, faGolfBall, faHeart, faLaughWink, faListCheck, faShoppingBasket, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import p1 from "./../images/p1.jpeg"
+import redHeart from "./../images/redheart.png"
+import defaultHeart from "./../images/defaultheart.png"
+import basket from "./../images/basket.png"
 import AppContext from '../context/context';
 
 function UserProducts() {
@@ -20,6 +23,7 @@ function UserProducts() {
     addToBasket,
     getUser,
     fetchData,
+    likeIconColors,
   }=useContext(AppContext);
 
   useEffect(()=>{
@@ -48,13 +52,17 @@ return (
                     <div className="row" style={{borderTop: '1px solid' }}>
 
                       <p className="col-6 text-end p-3" onClick={()=>addToBasket(product._id)}>
-                        <i className="buylike p-2" style={{ fontSize: '15px',cursor:'pointer'}}><FontAwesomeIcon icon={faShoppingBasket} /></i>
+                        <i className="" style={{ fontSize: '15px',cursor:'pointer'}}>
+                          <img src={basket} className="basket" style={{cursor:'pointer', width: '20px', height: '20px'}}/>
+                        </i>
                       </p>
                      
                       <div className="col-6 p-3 d-flex">
                         <p className="me-auto">
                           {product.numberOfLikes?.length}                        
-                          <i className="p-2 buylike" onClick={()=>addLike(product._id)} style={{ fontSize: '15px',cursor:'pointer'}}><FontAwesomeIcon icon={faHeart} /></i>
+                          <i className="" onClick={()=>addLike(product._id,product)} style={{ fontSize: '10px',cursor:'pointer'}}>
+                            <img src={product.likeIconColor == "red" ? redHeart : defaultHeart} className="heart" style={{cursor:'pointer', width: '20px', height: '20px'}}/>
+                          </i>
                         </p>
                       </div>
 
