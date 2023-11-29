@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../context/context';
-import onLineshop from '../images/onlineshop.png';
+// import onLineshop from '../images/onlineshop.png';
 import userIcon from '../images/user.png';
 import search from '../images/search.png';
 import home from '../images/home.png';
@@ -18,13 +18,10 @@ function Navbar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-md navbar-light bg-light h-md-100">
-      <div className="container">
-        <Link className="navbar-brand" to="/">
-          <img src={onLineshop} alt="Online Shop" className="basket me-2" style={{ cursor: 'pointer', width: '25px', height: '25px' }} />
-        </Link>
+    <nav className="navbar navbar-expand-lg bg-light shadow">
+      <div className="container-fluid">
         <button
-          className="navbar-toggler"
+          className="navbar-toggler ms-auto"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -36,11 +33,12 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`} id="navbarSupportedContent">
-          <ul className="navbar-nav">
+         
+            <ul className="navbar-nav">
             <li className="nav-item mx-2">
               <Link to="./userdashboard" className="nav-link">
                 <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
-                  <img src={userIcon} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
+                  <img src={userIcon} className="basket " style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
                 </i>
                 حساب کاربری
               </Link>
@@ -72,36 +70,50 @@ function Navbar() {
                 <a href="#" className="dropdown-item my-1">لوازم جانبی</a>
               </div>
             </li>
-          </ul>
-          <form action="" className="form-inline mx-auto">
-            <div className="input-group">
-              <button className="btn">
-                <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
-                  <img src={search} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
-                </i>
-              </button>
-              <input type="text" placeholder='جست و جو' className="form-control rounded" />
-              <div className="input-group-append">
-              </div>
-            </div>
-          </form>
-          <div className="m-2 text-center">
-            <Link to="./login" className="py-2" style={{ display: logInLogUot === true ? 'block' : 'none', textDecoration: 'none' }}>
-              <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
-                <img src={userIcon} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
-              </i>
-              <p className="text-muted">ثبت نام / ورود</p>
-            </Link>
-          </div>
-          <div className="m-2 text-center" style={{ display: logInLogUot === false ? 'block' : 'none' }}>
-            <Link to="./login" className="py-2" onClick={handleExit}>
-              <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
-                <img src={exit} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
-              </i>
-              <button className='btn'>خروج</button>
-            </Link>
-          </div>
+            </ul>
+
+  
+
         </div>
+        <div className="d-flex align-items-center">
+
+<form action="" className="form-inline mx-auto">
+<div className="input-group">
+  {/* <button className="btn"> */}
+
+  {/* </button> */}
+  <div className="input-group-append pt-1">
+  <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
+      <img src={search} className="" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
+    </i>
+  </div>
+  <input type="text" placeholder='جست و جو' className="form-control rounded" />
+</div>
+</form>
+
+<div className="col-3 text-center">تاریخ-شمسی</div>
+
+<div className="col-3 my-3">
+  <div className="m-2 text-center">
+<Link to="./login" className="py-2 row" style={{ display: logInLogUot === true ? 'block' : 'none', textDecoration: 'none' }}>
+  <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
+    <img src={userIcon} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
+  </i>
+  <p className="text-muted">ثبت نام / ورود</p>
+</Link>
+  </div>
+
+  <div className="m-2 text-center" style={{ display: logInLogUot === false ? 'block' : 'none' }}>
+<Link to="./login" className="py-2" onClick={handleExit}>
+  <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
+    <img src={exit} className="basket" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
+  </i>
+  <button className='btn'>خروج</button>
+</Link>
+  </div>
+</div>
+
+</div>
       </div>
     </nav>
   );
