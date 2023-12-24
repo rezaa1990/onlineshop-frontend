@@ -5,46 +5,63 @@
 
 *{
   font-family: yekan;
-  background-color: rgba(236, 236, 236, 0.996);   
 }
 
-/* i:hover{
-  background-color: #c0c0c0;
-  
-} */
+.contact, .login , .register, .userproduct, .userinfo{
+  background-color: rgba(4, 1, 50, 0.996);   
+}
 
-/* img:hover{
-  background-color: #c0c0c0;
-} */
+footer,nav, .DatePicker,.usersidebar{
+  background-color: rgba(4, 1, 50, 0.996);
+}
 
-/* Link:hover{ 
- background-color: #c0c0c0;
- font-size: "500px"; 
-} */
-
-/* li:hover{
-  background-color: #c0c0c0;
-} */
-
-
-/* .submenu1,.buylike:hover{
-  background: #c0c0c0;
-  cursor: pointer
-} */
-
-/* @media (max-width: 768px) {
-  .nav-item .nav-link {
-    display: flex;
-    align-items: center;
-  }
-} */
-
-/* @media (min-width: 992px) and (max-width: 1199.98px) {
-  nav {
-    height: 60px;
-  }
-} */
+.search-input::placeholder{
+    color: white;
+}
 
 li:hover , .lilo:hover{
-  font-style: oblique;
+  background-color: rgb(37, 0, 122);
 }
+
+#card{
+  background-color:rgba(47, 45, 92, 0.996);
+  transition: background-color 0.4s ease;
+}
+
+#card:hover{
+  background-color: rgb(95, 80, 189);
+}
+
+#oneproduct,#comment-text-area{
+  background-color:rgba(4, 1, 50, 0.996);
+}
+
+#text-area::placeholder{
+  color: #ffffff;
+  font-size: 2vh;
+}
+#text-area{
+  background-color: rgb(10, 0, 74);
+}
+
+#one-product-comment{
+  background-color:rgba(4, 1, 50, 0.996);
+}
+
+#comment{
+  background-color: rgba(3, 0, 39, 0.996);
+}
+
+#reply-comment{
+  background-color: rgba(1, 8, 73, 0.996);
+}
+/* #baske{
+  background-color:rgb(95, 80, 189)
+} */
+/* #comment-text-area, #reply-comment-text-area{
+  background-color: rgb(95, 80, 189);
+} */
+
+/* #basket-button:hover , #add-comment-button:hover {
+  background-color: rgba(16, 1, 224, 0.87);
+} */
