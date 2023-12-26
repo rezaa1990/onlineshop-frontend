@@ -66,6 +66,8 @@ function App() {
   const [indexOfSelectedProduct , setIndexOfSelectedProducts] = useState();
   const [id1 , setId1] = useState([]);
   const [oneProduct, setOneProduct] = useState();
+  const [searchValue, setSearchValue] = useState();
+  const [navSearchInputValue,setNavSearchInputValue ] = useState();
   //user panel
   const [user, setUser] = useState({});
   const [userPanelShowHidden, setUserPanelShowHidden] = useState(2);
@@ -91,14 +93,27 @@ function App() {
   const[showRegisterMessage , setShowRegisterMessage ]= useState(true);
   const[registerResponseMessage,setRegisterResponseMessage]=useState();
   //login
-  const[logInLogUot,setLogInLogUot]=useState(true);//for showing login and logout link in navbar
+  const [token, setToken] = useState();//for showing login and logout link in navbar
   // contact
   const [senderName,setSenderName]=useState('');
   const [senderEmail,setSenderEmail]=useState('');
   const [content,setContent]=useState('');
   const [sendMessageResponse,setSendMessageResponse]=useState('')
   
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  function responseApi(response) {
+    setResponseMessage(response);
+    setTimeout(() => {
+      setResponseMessage('');
+    }, 5000);
+  }
+
+  const [component, setReRenderComponent] = useState(false);
+  
+  function reRenderComponentFunc() {
+    setReRenderComponent(true);
+  }
 //admin component
   async function addProduct(e) {
     e.preventDefault();
@@ -112,7 +127,7 @@ function App() {
         serialNumber,
       };
       const response = await axios.post(`http://${server}:5000/api/products/addproduct`,addProduct,config);
-      setResponseMessage(response.data.message);
+      responseApi(response.data.message);
       setShowHidden(4);
       getProduct();
     } catch (error) {
@@ -187,7 +202,8 @@ function App() {
 
   //در این تابع فقط هنگام رندر شدن اولیه ی کامپوننت مقادیر محصولات در استیت قرار میگیرد
   useEffect(() => {
-  getProduct();
+    getProduct();
+    setToken(localStorage.getItem("userToken"))//در اینجا مقدار استیت برای token ست میشود تا دکمه ی ورود و خروج بر اساس آن نمایش داده شود
   }, []);
 
   //این تابع پس از آپدیت یا خذف یا اضافه کردن یک محصول توسط ادمین صدا زده میشود تا مقادیر جدید محصولات در استیت قرار بگیرد
@@ -295,6 +311,7 @@ function App() {
       setOneProduct(response.data.data.commentedProduct);
     } catch (error) {
       console.error('خطا:', error);
+      setCommentResponse("برای لایک کردن ابتدا باید وارد شوید یا ثبت نام کنید")
     }
   }
 
@@ -311,6 +328,7 @@ function App() {
       addReplyToComment(replyCommentId,commentId,oneProductId);
     } catch (error) {
       console.error('خطا:', error);
+      setCommentResponse("برای ثبت نظر خود باید وارد شوید یا ثبت نام کنید")
     }
   }
 
@@ -333,6 +351,7 @@ function App() {
       setReplyComments('');
     } catch (error) {
       console.error('خطا:', error);
+      setCommentResponse("برای ثبت نظر خود باید وارد شوید یا ثبت نام کنید")
     }
   }
 
@@ -406,6 +425,7 @@ async function getUser () {
       setOneProduct(response.data.data.updatedProduct);//برای ری رندر شدن oneproduct و آپدیت نمایش تعداد لایکها
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
+      setCommentResponse("برای لایک کردن ابتدا باید وارد شوید یا ثبت نام کنید")
     }
   }
 const handleCommentChange = (productId, value) => {
@@ -425,7 +445,7 @@ async function addComment(productId,e) {
     addThisCommentToProduct(response.data.data._id,productId);
   } catch (error) {
     console.error('خطا:', error);
-    setCommentResponse("برای ثبت نظر خود باید وارد شوید یا ثبت نام کنید")
+    setCommentResponse(error.response.data.data)
   }
 }
 
@@ -461,10 +481,14 @@ function moreDataAboutProduct(productId){
       email:clientEmail,
       address:clientAddress,
       postalCode:clientPostalCode,
-      }
-      const response = await axios.put(`http://localhost:5000/api/order/addpostalinformation/${orderId}`,data);
+     }
+      console.log(data);
+      const response = await axios.put(`http://localhost:5000/api/order/addpostalinformation/${orderId}`, data);
+      console.log(response.data);
+      responseApi(response.data.message);
     } catch (error) {
       console.error('خطا:', error);
+      responseApi(error.response.data.data);
     }
   }
   //ساخت و صدور فاکتور
@@ -474,8 +498,10 @@ function moreDataAboutProduct(productId){
        const data = {
         productsId:userBasket,
         numberOfEachProductInBasket
-        }
+       }
+        console.log(data);
         const response = await axios.post(`http://localhost:5000/api/order/addorder`,data);
+        console.log(response);
         setTotalPrice(response.data.data.totalPrice)
         setFactor(response.data.data.factors)
         const newOrderId = response.data.data.order._id
@@ -483,6 +509,7 @@ function moreDataAboutProduct(productId){
         getUser();
       } catch (error) {
         console.error('خطا:', error);
+        responseApi(error.response.data.data);
       }
     }
 
@@ -523,7 +550,12 @@ async function deleteFromBasket(userId,basketId) {
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   //login
-
+  function handleLogin() {
+    const userToken = localStorage.getItem('userToken');
+    setToken(userToken);
+    console.log(token)
+    console.log(userToken)
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // contact
   async function sendMessage(e) {
@@ -542,7 +574,7 @@ async function deleteFromBasket(userId,basketId) {
       setTimeout(() => setSendMessageResponse(''), 3000);    
     } catch (error) {
       console.error('خطا:', error);
-      setSendMessageResponse(error.data);
+      setSendMessageResponse(error.response.data.data);
     }
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -551,7 +583,7 @@ async function deleteFromBasket(userId,basketId) {
     <BrowserRouter>
         <RouteGuard></RouteGuard>
         <div className="">
-          <AppContext.Provider value={{
+        <AppContext.Provider value={{
             server,
             //admin
             price,
@@ -619,6 +651,8 @@ async function deleteFromBasket(userId,basketId) {
             handleDiscountSelection,
             updateSerialNumber , 
             setUpdateSerialNumber,
+            searchValue,
+            setSearchValue,
             //user product
             userProducts,
             setUserProducts,
@@ -660,6 +694,8 @@ async function deleteFromBasket(userId,basketId) {
             setId1,
             oneProduct , 
             setOneProduct,
+            navSearchInputValue,
+            setNavSearchInputValue,
             //user panel
             user,
             setUser,
@@ -676,7 +712,6 @@ async function deleteFromBasket(userId,basketId) {
             setTotalPrice,
             sendingPostalInformation,
             IssuingInvoice,
-            middleFunction1,
             clientFName , 
             setClientFName,
             clientLName , 
@@ -718,9 +753,10 @@ async function deleteFromBasket(userId,basketId) {
             setRepeatPassword,
             setPostalCode,
             //login
-            setLogInLogUot,
+            handleLogin,
+             token,
+            setToken,
             //navbar
-            logInLogUot,
             //contact
             senderName,
             setSenderName,
@@ -731,6 +767,10 @@ async function deleteFromBasket(userId,basketId) {
             sendMessageResponse,
             setSendMessageResponse,
             sendMessage,
+            ////////
+            component,
+            reRenderComponentFunc,
+
 
           }}>
             {/* {admin === false ? ( */}

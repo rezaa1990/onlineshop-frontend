@@ -16,6 +16,7 @@ function Register() {
   const[registerResponseMessage,setRegisterResponseMessage]=useState();
 
   const{
+    server,
     fName,
     lName,
     email,
@@ -37,30 +38,25 @@ function Register() {
 
   async function register(e) {
     e.preventDefault();
-    if (password !== repeatPassword) {
-      console.log('مقادیر پسورد یکسان نیست');
-      return;
-    }
-  
     try {
       const registerData = {
         fName,
         lName,
         mobile,
         email,
-        address,
-        postalCode,
         password,
+        repeatPassword,
       };
   
       console.log(registerData);
   
-      const response = await axios.post(`http://localhost:5000/api/auth/register`, registerData);
+      const response = await axios.post(`http://${server}:5000/api/auth/register`, registerData);
       console.log(response.data.message);
       console.log(response.data);
       navigate("/login")
     } catch (error) {
-      setRegisterResponseMessage(error.response?.data?.message);
+      console.log(error.response)
+      setRegisterResponseMessage(error.response.data.data);
     }
   }
 
@@ -125,57 +121,57 @@ function Register() {
 // };
 
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center register">
     <div className="col-lg-6">
-      <h3 className="m-5">ثبت نام</h3>
+      <h3 className="m-5 text-center text-white">ثبت نام</h3>
 
       <div className="form-group mx-5">
        <p className="text-center text-danger ">{registerResponseMessage}</p>
       </div>
 
-      <form action="" className="text-muted mb-5">
+      <form action="" className=" text-white mb-5">
         <div className="form-group mx-5">
           <label htmlFor="name">نام</label>
-          <input onChange={(e)=> setRegisterName(e.target.value)} id="name" type="text" className="form-control" />
+          <input onChange={(e)=> setRegisterName(e.target.value)} id="register-input" type="text" className="form-control border-0 text-light" />
         </div>
 
-        <div className="form-group mx-5">
+        {/* <div className="form-group mx-5">
           <label htmlFor="name">نام خانوادگی</label>
-          <input onChange={(e)=>setLastName(e.target.value)} id="fname" type="text" className="form-control" />
-        </div>
+          <input onChange={(e)=>setLastName(e.target.value)} id="lname" type="text" className="form-control" />
+        </div> */}
 
         <div className="form-group mx-5">
           <label htmlFor="name">* ایمیل</label>
-          <input onChange={(e)=>setEmail(e.target.value)} id="lname" type="text" className="form-control" />
+          <input onChange={(e)=>setEmail(e.target.value)} id="register-input" type="text" className="form-control border-0 text-light" />
         </div>
 
         <div className="form-group mx-5">
           <label htmlFor="name">موبایل</label>
-          <input onChange={(e)=>setMobile(e.target.value)} id="mobile" type="number" className="form-control" />
+          <input onChange={(e)=>setMobile(e.target.value)} id="register-input" type="text" className="form-control border-0 text-light" />
         </div>
-
+{/* 
         <div className="form-group mx-5">
           <label htmlFor="name">آدرس</label>
           <input onChange={(e)=>setAddress(e.target.value)} id="address" type="text" className="form-control" />
-        </div>
+        </div> */}
 
-        <div className="form-group mx-5">
+        {/* <div className="form-group mx-5">
           <label htmlFor="name">کد پستی</label>
           <input onChange={(e)=>setPostalCode(e.target.value)} id="postalcode" type="number" className="form-control" />
-        </div>
+        </div> */}
 
         <div className="form-group mx-5">
           <label htmlFor="email">* رمز عبور</label>
-          <input onChange={(e)=>setPassword(e.target.value)} id="number" type="password" className="form-control" />
+          <input onChange={(e)=>setPassword(e.target.value)} id="register-input" type="password" className="form-control border-0 text-light" />
         </div>
 
         <div className="form-group mx-5">
           <label htmlFor="email">* تکرار رمز عبور</label>
-          <input onChange={(e)=>setRepeatPassword(e.target.value)} id="repeatpassword" type="password" className="form-control" />
+          <input onChange={(e)=>setRepeatPassword(e.target.value)} id="register-input" type="password" className="form-control border-0 text-light" />
         </div>
 
         <div className="form-group mx-5">
-          <button onClick={register} className="btn btn-outline-success my-1 w-100">ثبت نام</button>
+          <button onClick={register} className="btn btn-success my-3 w-100">ثبت نام</button>
         </div>
 
         {/* <div className="form-group mx-5">

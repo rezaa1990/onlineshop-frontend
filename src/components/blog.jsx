@@ -5,8 +5,6 @@ import p1 from "./../images/p1.jpg"
 import p2 from "./../images/p2.jpg"
 import p3 from "./../images/p3.jpg"
 
-
-library.add(faCoffee);
 function Products() {
   return (
     <section className='py-5'>

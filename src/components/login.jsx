@@ -13,7 +13,11 @@ import AppContext from '../context/context';
 function Login() {
   const {
     setLogInLogUot,
+    server,
+    handleLogin,
+
   }=useContext(AppContext);
+  
   const  navigate = useNavigate();
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
@@ -44,13 +48,14 @@ function Login() {
   
       console.log(loginData);
   
-      const response = await axios.post(`http://localhost:5000/api/auth/login`, loginData);
+      const response = await axios.post(`http://${server}:5000/api/auth/login`, loginData);
       console.log(response.data.message);
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
-      setLogInLogUot(false)
-      navigate(response.data.data.isAdmin === true ? "/adminpanel":"/userdashboard");
+      handleLogin();
+      navigate(response.data.data.isAdmin === true ? "/adminpanel":"/");
     } catch (error) {
+      console.log(error)
       setLoginResponseMessage(error.response?.data?.message);
     }
   }
@@ -72,27 +77,27 @@ function Login() {
   
 
   return (
-    <div className="row justify-content-center">
+    <div className="row containe justify-content-center login mx-0">
     <div className="col-lg-6">
-      <h3 className="m-5">ورود</h3>
+      <h3 className="m-4 text-center text-light">ورود</h3>
 
       <div className="form-group mx-5">
        <p className="text-center text-danger ">{loginResponseMessage}</p>
       </div>
 
       <form action="" className="text-muted mb-5">
-        <div className="form-group mx-5">
-          <label htmlFor="name">ایمیل</label>
-          <input onChange={(e)=>setEmail(e.target.value)} id="name" type="text" className="form-control" />
+        <div className="form-group mx-5 text-light">
+          <label htmlFor="">ایمیل</label>
+          <input onChange={(e)=>setEmail(e.target.value)} id="login-input" type="text" className="form-control border-0 text-light" />
+        </div>
+
+        <div className="form-group mx-5 text-light">
+          <label htmlFor="">رمز عبور</label>
+          <input onChange={(e)=>setPassword(e.target.value)} id="login-input" type="password" className="form-control border-0 text-light" />
         </div>
 
         <div className="form-group mx-5">
-          <label htmlFor="email">رمز عبور</label>
-          <input onChange={(e)=>setPassword(e.target.value)} id="email" type="password" className="form-control" />
-        </div>
-
-        <div className="form-group mx-5">
-          <button onClick={login} className="btn btn-outline-success my-1 w-100">ورود</button>
+          <button onClick={login} className="btn btn-success my-3 w-100">ورود</button>
         </div>
 
         {/* <div className="form-group mx-5">
@@ -100,7 +105,7 @@ function Login() {
         </div> */}
 
         <div className="text-center">
-          <Link to="/register" className="">ثبت نام</Link>
+          <Link to="/register" className="text-light">ثبت نام</Link>
         </div>
       </form>
 

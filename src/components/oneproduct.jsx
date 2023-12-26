@@ -4,7 +4,7 @@ import redHeart from "./../images/redheart.png";
 import defaultHeart from "./../images/defaultheart.png";
 import basket from "./../images/basket.png";
 import AppContext from "../context/context";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import like from "./../images/like.png";
 import unfold from "./../images/unfold.png"
 
@@ -180,7 +180,7 @@ function OneProduct() {
     setSendMessageResponse,
     sendMessage,
   } = useContext(AppContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData();
   }, []);
@@ -202,6 +202,12 @@ function OneProduct() {
       console.log(visibleComments)
     }
   }
+
+  function oneProductMiddleFunc(navigateDestination) {
+    setCommentResponse(null);
+    navigate(navigateDestination);
+  }
+
   return (
     <div className="" id="oneproduct">
       {/* card img */}
@@ -214,7 +220,7 @@ function OneProduct() {
           <div className="card-discount d-flex col-8 m-auto">
             <h6
               className="text-warning col-6 text-center p-2 m-2"
-              style={{ display: oneProduct.discount.length > 0 ? "block" : "none" }}
+              style={{ display: oneProduct.discount?.length > 0 ? "block" : "none" }}
             >
               
               تخفیف {oneProduct.discount[0]?.value * 100}%
@@ -293,14 +299,7 @@ function OneProduct() {
                   -
                 </button>
                 <span className="text-light p-1">
-                  {
-                    // indexOfSelectedProduct ==
-                    // oneProduct._id
-                    // ?
-                      numberOfSelectedProduct
-                  // :
-                  ||
-                     1}
+                  {numberOfSelectedProduct || 1 } 
                 </span>
                 <button
                   className="btn btn-sm text-light rounded"
@@ -370,9 +369,9 @@ function OneProduct() {
           </div>
         </form>
 
-        {/* response comment meesage */}
-        <div
-          className="bg-light m-2 p-3 border rounded "
+          {/* response comment meesage */}
+          <div
+          className="bg-light m-2 p-3 rounded "
           style={{
             display: commentResponse == null ? "none" : "block",
             position: "fixed",
@@ -384,19 +383,23 @@ function OneProduct() {
         >
           <p className="m-1">{commentResponse}</p>
           <div>
-            <div className="">
-              <button
+            <div className="d-flex">
+              <div className="me-auto">
+                <button
                 className="btn btn-primary btn-sm  m-1"
-                onClick={() => Navigate("/login")}
+                onClick={() => oneProductMiddleFunc("/login")}
               >
                 ورود
-              </button>
-              <button
+                </button>
+              </div>
+              <div className="ms-auto">
+                <button
                 className="btn btn-primary btn-sm  m-1"
-                onClick={() => Navigate("/register")}
+                onClick={() => oneProductMiddleFunc("/register")}
               >
                 ثبت نام
-              </button>
+                </button>
+              </div>
             </div>
           </div>
           <div style={{ position: "absolute", top: "0", right: "0" }}>
@@ -407,7 +410,8 @@ function OneProduct() {
               ×
             </button>
           </div>
-        </div>
+          </div>
+
         <p className="text-center text-light mt-4 "> نظرات دیگران</p>
         <div id="" className="col-8 mx-auto p-1 rounded">
           <div
@@ -491,6 +495,9 @@ function OneProduct() {
               </div>
             ))}
           </div>
+        </div>
+        <div className="text-center my-1">
+            <button className="text-light btn btn-warning w-50" onClick={()=>navigate("/")}>بازگشت</button>
         </div>
       </div>
     </div>

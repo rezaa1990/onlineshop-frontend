@@ -3,14 +3,9 @@ import { faCoffee, faDove, faSearch, faUser } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import products from "./../images/products.png"
 
-
-
-
-library.add(faCoffee);
 function Banner() {
   return (
     <section>
-
 
       <div className="container-fluid">
         <div className="row bg-warning align-items-center text-center" style={{ height: '95vh' }}>
@@ -21,7 +16,6 @@ function Banner() {
             <a className='btn btn-outline-light btn-lg mx-1' href="">وبلاگ</a>
           </div>
         
-          
           <div className="col-lg-4">
             <img src={products} alt="" className="img-fluid d-none d-lg-block" />
           </div>

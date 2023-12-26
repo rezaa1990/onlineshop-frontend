@@ -13,7 +13,7 @@ const MyDatePicker = () => {
 
   return (
     <div>
-      <DatePicker className='w-100 border-0 text-danger'
+      <DatePicker className='w-100 border-0 DatePicker rounded text-light'
         selected={currentDate ? new Date(currentDate) : null}
         onChange={date => setCurrentDate(date)}
         dateFormat="yyyy/M/d"

@@ -3,7 +3,6 @@ import { faAdd, faCoffee, faDove, faMessage, faProcedures, faReceipt, faUpDown, 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState ,useContext} from 'react';
 import axios from 'axios';
-import ImageUpload from './uploadeimg';
 import { useNavigate } from 'react-router-dom';
 import Products from './products';
 import { hover } from '@testing-library/user-event/dist/hover';
@@ -19,8 +18,9 @@ function AdminPanel() {
     setPrice,
     name,
     setName,
-    numberOfLikes,
-    setNumberOfLikes,
+    setCategory,
+    setNumberOfProduct,
+    setSerialNumber,
     description,
     setDescription,
     responseMessage,
@@ -34,6 +34,7 @@ function AdminPanel() {
     showHidden,
     setShowHidden,
     addProduct,
+    server
 
   }=useContext(AppContext);
 
@@ -47,26 +48,10 @@ function AdminPanel() {
     navigate("./products");
   };
 ////////////////////////////////////////////////////////////////////////////////////////
-const handleFileInputChange = (event) => {
-  const file = event.target.files[0];
-  const reader = new FileReader();
-
-  reader.onloadend = () => {
-    // عکس با موفقیت خوانده شده و آماده ذخیره در state است
-    setImg(reader.result);
-    console.log(img);
-  };
-
-  if (file) {
-    reader.readAsDataURL(file);
-  }
-}; 
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
   return (
     <>
-      
       <div className="d-flex p-2">
         <ul className="row nav col-sm-2 h-50 ">
           <li className="nav-item m-auto p-2 shadow-sm">
@@ -171,31 +156,46 @@ const handleFileInputChange = (event) => {
         </div>
 
 
-        <div className="container-fluid col-sm-10 px-5 mt-3" style={{ display: showHidden ==3 ? 'block' : 'none' }}>افزودن محصول جدید
+      <div className="container-fluid col-sm-10 px-5 mt-3" style={{ display: showHidden ==3 ? 'block' : 'none' }}>افزودن محصول جدید
+        
+        <div className="form-group mx-5 my-3">
+          <label htmlFor="">دسته بندی</label>
+          <input onChange={(e)=>setCategory(e.target.value)} id="category" type="text" className="form-control" />
+        </div>
 
-          <div className="form-group mx-5 my-3">
-          <label htmlFor="email">نام</label>
-          <input onChange={(e)=>setName(e.target.value)} id="email" type="text" className="form-control" />
-        </div>
         <div className="form-group mx-5 my-3">
-          <label htmlFor="email">قیمت</label>
-          <input onChange={(e)=>setPrice(e.target.value)} id="email" type="text" className="form-control" />
+          <label htmlFor="">نام</label>
+          <input onChange={(e)=>setName(e.target.value)} id="" type="text" className="form-control" />
         </div>
-   
+
         <div className="form-group mx-5 my-3">
-          <label htmlFor="email">مشخصات</label>
+          <label htmlFor="">قیمت</label>
+          <input onChange={(e)=>setPrice(e.target.value)} id="" type="text" className="form-control" />
+        </div>
+
+        <div className="form-group mx-5 my-3">
+          <label htmlFor="">تعداد</label>
+          <input onChange={(e)=>setNumberOfProduct(e.target.value)} id="numberOfProduct" type="text" className="form-control" />
+        </div>
+
+        <div className="form-group mx-5 my-3">
+          <label htmlFor="">مشخصات</label>
           <textarea className="form-control" onChange={(e)=>setDescription(e.target.value)}  name="" id="message" cols="30" rows="3"></textarea>
         </div>
+
         <div className="form-group mx-5 my-3">
-          <label htmlFor="image">آپلود عکس</label>
-          <input onChange={(e) => handleFileInputChange(e)} id="image" type="file" className="form-control" />
+          <label htmlFor="">شماره سریال</label>
+          <input onChange={(e)=>setSerialNumber(e.target.value)} id="" type="text" className="form-control" />
         </div>
+
 
 
         <div className="mx-5">
             <button className="btn btn-success w-100" onClick={addProduct}>افزودن محصول</button>
-          </div>
         </div>
+      </div>
+
+
 
         <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==4 ? 'block' : 'none' }}>
             <div className="p-2">
@@ -223,8 +223,6 @@ const handleFileInputChange = (event) => {
         <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==5 ? 'block' : 'none' }}>
           <Products></Products>
         </div>
-
-        
 
       </div>
     </>

@@ -11,7 +11,7 @@
   background-color: rgba(4, 1, 50, 0.996);   
 }
 
-footer,nav, .DatePicker,.usersidebar{
+footer,nav, .DatePicker,.usersidebar,#basket,#nav-drop-down-menu{
   background-color: rgba(4, 1, 50, 0.996);
 }
 
@@ -19,11 +19,11 @@ footer,nav, .DatePicker,.usersidebar{
     color: white;
 }
 
-li:hover , .lilo:hover{
+li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop-down-item:hover,#nav-dropdown:hover{
   background-color: rgb(37, 0, 122);
 }
 
-#card{
+#card,#basket-card,#user-info,#factor,#table-head,#factor-sum , #postal-info{
   background-color:rgba(47, 45, 92, 0.996);
   transition: background-color 0.4s ease;
 }
@@ -36,11 +36,12 @@ li:hover , .lilo:hover{
   background-color:rgba(4, 1, 50, 0.996);
 }
 
-#text-area::placeholder{
-  color: #ffffff;
+#text-area::placeholder,#nav-search-input::placeholder{
+  color: #ffffffb7;
   font-size: 2vh;
 }
-#text-area{
+/* inputs */
+#text-area,#postal-info-input,#nav-search-input,#contact-input,#login-input,#register-input{
   background-color: rgb(10, 0, 74);
 }
 
