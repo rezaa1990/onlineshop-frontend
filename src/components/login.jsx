@@ -37,7 +37,7 @@ function Login() {
   // } else {
   //   firebase.app(); // استفاده از نمونه ایجاد شده اگر وجود دارد
   // }
-
+  
   async function login(e) {
     e.preventDefault();
     try {
@@ -49,11 +49,11 @@ function Login() {
       console.log(loginData);
   
       const response = await axios.post(`http://${server}:5000/api/auth/login`, loginData);
-      console.log(response.data.message);
       console.log(response.data);
       localStorage.setItem('userToken', response.data.data.token);
       handleLogin();
-      navigate(response.data.data.isAdmin === true ? "/adminpanel":"/");
+      const role = response.data.data.role;
+      navigate(role === "adminUser" ? "/adminpanel" : "/");
     } catch (error) {
       console.log(error)
       setLoginResponseMessage(error.response?.data?.message);
