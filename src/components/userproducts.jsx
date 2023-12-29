@@ -79,7 +79,7 @@ function UserProducts() {
     setCommentResponse(null);
     navigate(navigateDestination);
   }
-
+console.log(userProducts)
 return (
     <>
       <section className='p-2 userproduct'>
@@ -107,11 +107,11 @@ return (
                   <div className="card-body">
 
                   <div className="card-discount d-flex">
-                      <h6 className="text-warning col-6 text-center" style={{display:(product.discount[0]?.value ? "block" : "none")}}> تخفیف {(product.discount[0]?.value)*100}%</h6>
+                      <h6 className="text-warning col-6 text-center" style={{display:(product?.discount?.value ? "block" : "none")}}> تخفیف {(product?.discount?.value)*100}%</h6>
                       
                       {
-                        product.discount[0]?  
-                        <h6 className="text-warning col-6 text-center">{product.price * product.discount[0]?.value} تومان </h6> 
+                        product?.discount ?  
+                        <h6 className="text-warning col-6 text-center">{product.price * product?.discount?.value} تومان </h6> 
                         :
                         <h6 className="text-warning col-6 text-center">{product.price} تومان </h6>
                       }

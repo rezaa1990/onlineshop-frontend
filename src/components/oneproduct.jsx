@@ -220,15 +220,15 @@ function OneProduct() {
           <div className="card-discount d-flex col-8 m-auto">
             <h6
               className="text-warning col-6 text-center p-2 m-2"
-              style={{ display: oneProduct.discount?.length > 0 ? "block" : "none" }}
+              style={{ display: oneProduct.discount ? "block" : "none" }}
             >
               
-              تخفیف {oneProduct.discount[0]?.value * 100}%
+              تخفیف {oneProduct.discount?.value * 100}%
             </h6>
 
-            {oneProduct?.discount.length > 0 ? (
+            {oneProduct?.discount ? (
               <h6 className="text-warning col-6 text-center p-2 m-2">
-                {oneProduct?.price * oneProduct?.discount[0]?.value} تومان{" "}
+                {oneProduct?.price * oneProduct?.discount?.value} تومان{" "}
               </h6>
             ) : (
               <h6 className="text-warning col-6 text-center p-2 m-2">
