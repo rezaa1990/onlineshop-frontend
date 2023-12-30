@@ -9,7 +9,7 @@ import { Navigate } from 'react-router-dom';
 
 
 function Products() {
-  const{
+  const {
     server,
     //admin
     price,
@@ -52,7 +52,7 @@ function Products() {
     setUpdateImg,
     updateCategory,
     setUpdateCategory,
-    updateNumberOfProduct ,
+    updateNumberOfProduct,
     setUpdateNumberOfProduct,
     isFormVisible,
     setIsFormVisible,
@@ -66,16 +66,16 @@ function Products() {
     setSelectedProducts,
     discountType,
     setDiscountType,
-    discountValue, 
+    discountValue,
     setDiscountValue,
-    discountExpireTime, 
+    discountExpireTime,
     setDiscountExpireTime,
     createDiscount,
     addDiscountToProduct,
     removeDiscount,
     handleToggleProduct,
     handleDiscountSelection,
-    updateSerialNumber , 
+    updateSerialNumber,
     setUpdateSerialNumber,
     //user product
     userProducts,
@@ -96,13 +96,13 @@ function Products() {
     setAllDataAboutProduct,
     commentResponse,
     setCommentResponse,
-    fullDescription, 
+    fullDescription,
     setFullDescription,
-    replyComment, 
+    replyComment,
     setReplyComments,
-    numberOfSelectedProduct, 
+    numberOfSelectedProduct,
     setNumberOfSelectedProduct,
-    indexOfSelectedProduct , 
+    indexOfSelectedProduct,
     setIndexOfSelectedProducts,
     handleClick,
     toggleDescription,
@@ -114,7 +114,7 @@ function Products() {
     addReplyToComment,
     setProductId,
     changeNumber,
-    id1 , 
+    id1,
     setId1,
     //user panel
     user,
@@ -123,27 +123,28 @@ function Products() {
     setUserPanelShowHidden,
     userPanelGetUser,
     deleteFromBasket,
-    orderMeesage,setOrderResponseMessage,
+    orderMeesage,
+    setOrderResponseMessage,
     orderId,
     setOrderId,
-    factor , 
+    factor,
     setFactor,
-    totalPrice , 
+    totalPrice,
     setTotalPrice,
     sendingPostalInformation,
     IssuingInvoice,
     middleFunction1,
-    clientFName , 
+    clientFName,
     setClientFName,
-    clientLName , 
+    clientLName,
     setClientLName,
-    clientEmail , 
+    clientEmail,
     setClientEmail,
-    clientMobile , 
+    clientMobile,
     setClientMobile,
-    clientAddress , 
+    clientAddress,
     setClientAddress,
-    clientPostalCode , 
+    clientPostalCode,
     setClientPostalCode,
     //register
     fName,
@@ -158,7 +159,7 @@ function Products() {
     setLastName,
     setEmail,
     setMobile,
-    setAddress ,
+    setAddress,
     setPassword,
     setRepeatPassword,
     setPostalCode,
@@ -176,201 +177,335 @@ function Products() {
     sendMessageResponse,
     setSendMessageResponse,
     sendMessage,
-  }=useContext(AppContext);
+  } = useContext(AppContext);
 
+  const [commentId, setCommentId] = useState();
+  function middleFunc(commentid, order) {
+    setCommentId(commentid);
+    if (order === 1) {
+      approveComment(commentid);
+    } else {
+      deleteComment(commentid);
+    }
+  }
+
+  console.log(products);
   return (
     <>
-      <section className='p-5'>
+      <section className="">
         <div className="container-fluid">
           <h1 className="text-center mb-5">محصولات</h1>
+
+          {/* product */}
           <div className="row">
-            {products.map((product) =>
-              <div className="col-lg-3 col-md-6 mb-5 px-3">
-                <div className="card">
+            {products.map((product) => (
+              <div className="col-lg-4 col-md-6 col-xs-12 mb-5 px-3">
+                <div className="card " id="admin-card">
                   <img src={p1} alt="" className="card-img-top" />
                   <div className="card-body">
                     <div className="card-title">
-                      <h3 className="text-secondary">{product.name}</h3>
+                      <h3 className="text-secondary text-center">
+                        {product.name}
+                      </h3>
                     </div>
-                    <div className="card-subtitle my-4">
-                      <p className="text-muted">{product.description}</p>
-                    </div>
-                    <div className="text-right">
-                    <input
-                      type="checkbox"
-                      onChange={() => handleToggleProduct(product._id)}
-                      checked={selectedProducts.includes(product._id)}
-                    />
-                      <button onClick={() => middleFunction(product._id)} className="btn btn-outline-success my-1 w-100">بروزرسانی</button>
-                      <button onClick={()=>deleteProduct(product._id)} className="btn btn-outline-danger my-1 w-100">۴حذف</button>
 
-
-                      <button className='btn text-muted' onClick={() => handleClick(product._id)} style={{display: id1.includes(product._id ) ? "none" : "block"}}>دیدن نظرات  ⇓</button>
-                  <div className="comments text-center" style={{ minHeight: "200px",display: id1.includes(product._id ) ? "block" : "none"}}>
-                    <form className="m-2">
-                      <div className="">
-                        <textarea
-                          value={comments[product._id] || ''}
-                          onChange={(e)=>handleCommentChange(product._id, e.target.value)}
-                          className="form-control"
-                          id="comment-text-area"
-                          cols="30"
-                          rows="2"
-                          placeholder='نظر خود را بنویسید ...'
-                          style={{outline:"none",boxShadow: "none"}}>
-                        </textarea>
-                        <div className="">
-                          <button onClick={(e)=>addComment(product._id,e)} className="btn btn-sm text-light m-1 w-50" id='add-comment-button' style={{border:"1px solid white"}}>ثبت نظر</button>
-                        </div>
-                        
-                      </div>
-                    </form>
-
-                    {/* response comment meesage */}
-                    <div className="bg-light m-2 p-3 border rounded" style={{ display:commentResponse == null ? "none" : "block",    position: 'fixed',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      zIndex: 9999}}>
-                      <p className="m-1">{commentResponse}</p>
-                      <div>
-                        <div className="">
-                          <button className='btn btn-primary btn-sm  m-1' onClick={()=>Navigate("/login")}>ورود</button>
-                          <button className='btn btn-primary btn-sm  m-1' onClick={()=>Navigate("/register")}>ثبت نام</button>
-                        </div>
-                      </div>
-                      <div style={{ position: 'absolute', top: '0', right: '0' }}>
-                        <button className='btn btn-sm' onClick={()=>setCommentResponse(null)}>×</button>
-                      </div>
-                    </div>
-                    
-
-                    <div className="comments text-center mx-2 border mt-5 rounded" style={{ minHeight: "300px"}}>
+                    <div className="card-discount d-flex">
+                      <h6 className="col-6 text-center" style={{display:(product.discount?.value ? "block" : "none")}}> تخفیف {(product.discount?.value)*100}%</h6>
+                      
+                      {
+                        product.discount?  
+                        <h6 className="col-6 text-center">{(product.price * product.discount?.value).toFixed(2)} تومان </h6> 
+                        :
+                        <h6 className="col-6 text-center">{product.price} تومان </h6>
+                      }
                      
-                      <p className="text-center text-lightbtn mt-3"> نظرات دیگران</p>
+                    </div>
 
-                      <div className="border mx-2" style={{  maxHeight: "220px",overflow: "auto"}}>
+                    <div className="text-right">
+                      <input
+                        className=""
+                        type="checkbox"
+                        onChange={() => handleToggleProduct(product._id)}
+                        checked={selectedProducts.includes(product._id)}
+                      />
 
-                          {product.comments?.map((comment)=>
-                          <div className="row mx-1 border m-3 bg-light rounded">
-                            <button className="btn" onClick={()=>deleteComment(comment._id)}>❌</button>
-                            <button className="btn" onClick={()=>approveComment(comment._id)}>تایید</button>
-                            <button className="btn" onClick={()=>likeComment(comment._id,userId)}>👍</button>
-                            <p className="col-9 pt-3 text-end"style={{fontSize:"14px"}} >{comment?.text}</p>
-                          <div className="">
-                            <textarea
-                              value={replyComment}
-                              onChange={(e)=>handleRyplyComment(e.target.value)}
-                              className="form-control"
-                              id="message"
-                              cols="30"
-                              rows="1"
-                              placeholder='ریپلای'
-                            style={{outline:"none",boxShadow: "none"}}>
-                            </textarea>
-                            <div className="">
-                              <button onClick={(e)=>replyToComment(replyComment,comment._id,userId,e)} className="btn btn-sm m-1 w-100">تایید </button>
-                            </div>
-                        
-                          </div>
-                            {/* <p className="col-2 bg-info p-1 m-1">{console.log("111",currentDate.toLocaleDateString() ,"222", new Date(coments?.updatedAt))}</p> */}
-                            {comment.author?.map((author)=>
-                            <p className="justify-content-end pt-3 col-3 text-start" style={{fontSize:"11px"}}>{author?.fName}</p>
-                            
-                            )}
-
-                        </div>
-                        
-                        )}
+                      <div className="d-flex">
+                        <button
+                          onClick={() => middleFunction(product._id)}
+                          className="btn btn-success m-1 w-50"
+                        >
+                          بروزرسانی
+                        </button>
+                        <button
+                          onClick={() => deleteProduct(product._id)}
+                          className="btn btn-danger m-1 w-50"
+                        >
+                          حذف
+                        </button>
                       </div>
-                   </div>
 
-                  </div>
-                  <button className='btn text-muted' onClick={() => handleClick(product._id)} style={{display: id1.includes(product._id ) ? "block" : "none"}}>بستن نظرات  ⇑</button>
+                      <button
+                        className="btn text-muted mx-auto bg-info"
+                        onClick={() => handleClick(product._id)}
+                        style={{
+                          display: id1.includes(product._id) ? "none" : "block",
+                        }}
+                      >
+                        دیدن نظرات ⇓
+                      </button>
+                      <div
+                        className="comments text-center"
+                        style={{
+                          minHeight: "200px",
+                          display: id1.includes(product._id) ? "block" : "none",
+                        }}
+                      >
+                        <form className="m-2">
+                          <div className="">
+                            <div className=""></div>
+                          </div>
+                        </form>
+                        <div className="comments text-center p-1 border rounded">
+                          <p className="text-center m-1"> نظرات</p>
 
+                          <div
+                            className=""
+                            style={{ maxHeight: "220px", overflow: "auto" }}
+                          >
+                            {product.comments?.map((comment) => (
+                              <div className="rounded bg-light m-1">
+                                <div className="d-flex">
+                                  <button
+                                    className="btn"
+                                    style={{ fontSize: "7px" }}
+                                    onClick={() => middleFunc(comment._id, 0)}
+                                  >
+                                    ❌
+                                  </button>
+                                  <p
+                                    className="text-center text-warning"
+                                    style={{
+                                      display:
+                                        commentId == comment._id
+                                          ? "block"
+                                          : "none",
+                                    }}
+                                  >
+                                    {responseMessage}
+                                  </p>
+                                  <button
+                                    className="btn me-auto"
+                                    onClick={() => middleFunc(comment._id, 1)}
+                                    style={{
+                                      display:
+                                        comment.isApproved == true
+                                          ? "none"
+                                          : "block",
+                                      fontSize: "10px",
+                                    }}
+                                  >
+                                    ✅
+                                  </button>
+                                  
+                                </div>
+                                <p className="" style={{ fontSize: "14px" }}>
+                                  {comment?.text}
+                                </p>
+                                <div className="">
+                                  <div className=""></div>
+                                </div>
 
-
+                                <p className="" style={{ fontSize: "11px" }}>
+                                  {comment.author?.fName}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        className="btn text-muted mt-1 mx-auto bg-info"
+                        onClick={() => handleClick(product._id)}
+                        style={{
+                          display: id1.includes(product._id) ? "block" : "none",
+                        }}
+                      >
+                        بستن نظرات ⇑
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
-      </section>
 
+        {/* ایجاد تخفیف */}
+        <div className="p-1">
+          <div className="p-2 rounded" id='discount'>
+            <p className="text-center">ایجاد تخفیف</p>
 
-
-      {/* ایجاد تخفیف */}
-      <div className="">
-      <div className="">
-      <p className="">ایجاد تخفیف</p>
-
-      {/* چک باکس برای انتخاب نوع تخفیف */}
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={discountType === 'percentage'}
-            onChange={() => handleDiscountSelection('percentage')}
-          />
-          تخفیف درصدی
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={discountType === 'amount'}
-            onChange={() => handleDiscountSelection('amount')}
-          />
-          تخفیف مقداری
-        </label>
-      </div>
-      <input value={discountValue} onChange={(e)=>setDiscountValue (e.target.value)} type="text" placeholder='میزان تخفیف' className="" />
-      <input value={discountExpireTime} onChange={(e)=>setDiscountExpireTime(e.target.value)} type="text" placeholder='زمان انقضا' className="" />
-      <button onClick={() => createDiscount(discountType, discountValue, discountExpireTime,selectedProducts)} className="btn btn-outline-warning my-1 w-100">اعمال تخفیف</button>
-      <button onClick={() => removeDiscount(selectedProducts)} className="btn btn-outline-warning my-1 w-100">حذف تخفیف</button>
-      </div>
-    </div>
-
-
-
-
-
-      {/* Modal Form */}
-      {isFormVisible && (
-        <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">بروزرسانی محصول</h5>
-            
+            {/* چک باکس برای انتخاب نوع تخفیف */}
+            <div className='d-flex rounded border p-2'>
+              <div className="">
+              <label>
+                  <input
+                  className='mx-1'
+                  type="checkbox"
+                  checked={discountType === "percentage"}
+                  onChange={() => handleDiscountSelection("percentage")}
+                />
+                تخفیف درصدی
+              </label>
               </div>
-              <div className="modal-body">
-              <input className="form-control my-1" type="text" value={updateNumberOfProduct} onChange={(e) => setUpdateNumberOfProduct(e.target.value)} placeholder="تعداد محصول" />
-                <input className="form-control my-1" type="text" value={updateCategory} onChange={(e) => setUpdateCategory(e.target.value)} placeholder="دسته بندی محصول" />
-                <input className="form-control my-1" type="text" value={updateName} onChange={(e) => setUpdateName(e.target.value)} placeholder="نام محصول" />
-                <input className="form-control my-1" type="text" value={updatePrice} onChange={(e) => setUpdatePrice(e.target.value)} placeholder="قیمت" />
-                <input className="form-control my-1" type="text" value={updateDescription} onChange={(e) => setUpdateDescription(e.target.value)} placeholder="توضیحات" />
-                <input className="form-control my-1" type="text" value={updateSerialNumber} onChange={(e) => setUpdateSerialNumber(e.target.value)} placeholder="شماره سریال" />
-                {/* <input className="form-control my-1" type="text" value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} placeholder="تصویر محصول" /> */}
-                <div className="form-group mx-5 my-3">
-                  <label htmlFor="image">آپلود عکس</label>
-                  <input value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} id="image" type="file" className="form-control"/>
+              <div className="m-auto">
+              <label>
+                  <input
+                  className='mx-1'
+                  type="checkbox"
+                  checked={discountType === "amount"}
+                  onChange={() => handleDiscountSelection("amount")}
+                />
+                تخفیف مقداری
+              </label>
+              </div>
+            </div>
+            <div className="d-flex">
+            <input
+              value={discountValue}
+              onChange={(e) => setDiscountValue(e.target.value)}
+              type="text"
+              placeholder="میزان تخفیف"
+              className="container rounded border-0 p-2 m-1"
+            />
+            <input
+              value={discountExpireTime}
+              onChange={(e) => setDiscountExpireTime(e.target.value)}
+              type="text"
+              placeholder="زمان انقضا"
+              className="container rounded border-0 p-2 m-1"
+              />
+            </div>
+            <button
+              onClick={() =>
+                createDiscount(
+                  discountType,
+                  discountValue,
+                  discountExpireTime,
+                  selectedProducts
+                )
+              }
+              className="btn btn-success my-1 w-50"
+            >
+              اعمال تخفیف
+            </button>
+            <button
+              onClick={() => removeDiscount(selectedProducts)}
+              className="btn btn-warning my-1 w-50"
+            >
+              حذف تخفیف
+            </button>
+            <p className="text-danger text-center" style={{display:responseMessage ? "block" : "none"}}>{responseMessage}</p>
+          </div>
+          
+        </div>
+
+        {/* update product Form */}
+        {isFormVisible && (
+          <div
+            className="modal"
+            tabIndex="-1"
+            role="dialog"
+            style={{ display: "block" }}
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content" id='admin-updateproduct-form'>
+                <div className="modal-header">
+                  <h5 className="modal-title text-light mx-auto">بروزرسانی محصول</h5>
                 </div>
-                
-              </div>
-              <div className="modal-footer justify-content-between">
-                <button type="button" className="btn btn-success" onClick={() => updateProduct(id)}>
-                  تایید
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={closeForm}>
-                  بستن
-                </button>
+                <div className="modal-body">
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updateNumberOfProduct}
+                    onChange={(e) => setUpdateNumberOfProduct(e.target.value)}
+                    placeholder="تعداد محصول"
+                  />
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updateCategory}
+                    onChange={(e) => setUpdateCategory(e.target.value)}
+                    placeholder="دسته بندی محصول"
+                  />
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updateName}
+                    onChange={(e) => setUpdateName(e.target.value)}
+                    placeholder="نام محصول"
+                  />
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updatePrice}
+                    onChange={(e) => setUpdatePrice(e.target.value)}
+                    placeholder="قیمت"
+                  />
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updateDescription}
+                    onChange={(e) => setUpdateDescription(e.target.value)}
+                    placeholder="توضیحات"
+                  />
+                  <input
+                    className="form-control my-1 border-0"
+                    id='admin-updateproduct-input'
+                    type="text"
+                    value={updateSerialNumber}
+                    onChange={(e) => setUpdateSerialNumber(e.target.value)}
+                    placeholder="شماره سریال"
+                  />
+                  {/* <input className="form-control my-1" type="text" value={updateImg} onChange={(e) => setUpdateImg(e.target.value)} placeholder="تصویر محصول" /> */}
+                  <div className="form-group mx-5 my-3 ">
+                    <label htmlFor="image" className='text-light'>آپلود عکس</label>
+                    <input
+                      value={updateImg}
+                      onChange={(e) => setUpdateImg(e.target.value)}
+                      id="image"
+                      type="file"
+                      className="form-control"
+                      
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer justify-content-between">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={() => updateProduct(id)}
+                  >
+                    تایید
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeForm}
+                  >
+                    بستن
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </section>
     </>
   );
 }

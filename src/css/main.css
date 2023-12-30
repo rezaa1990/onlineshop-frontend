@@ -56,13 +56,37 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
 #reply-comment{
   background-color: rgba(1, 8, 73, 0.996);
 }
-/* #baske{
-  background-color:rgb(95, 80, 189)
-} */
-/* #comment-text-area, #reply-comment-text-area{
-  background-color: rgb(95, 80, 189);
-} */
 
-/* #basket-button:hover , #add-comment-button:hover {
-  background-color: rgba(16, 1, 224, 0.87);
-} */
+/* //////////////////////////////////////////////////// */
+/* adminpanel */
+
+#admin-sidebar{
+  background-color: rgba(119, 119, 119, 0.996);
+}
+
+#admin-sidebar-ul-li:hover{
+  background-color: rgb(77, 2, 146);
+}
+
+#admin-userinfo,#admin-updatproduct,#admin-updateproduct-form{
+  background-color: rgba(151, 151, 151, 0.896);
+}
+
+#admin-sidebar-product-submenu:hover{
+  background-color: rgb(118, 63, 174);
+}
+
+#admin-card,#discount,#admin-updateproduct-input , #admin-addproduct , #admin-message{
+  background-color : rgb(210, 209, 211)
+}
+
+
+#admin-updateproduct-input::placeholder{
+  color: #692929b7;
+  font-size: 2.5vh;
+}
+
+#message-list:hover{
+  background-color: rgb(218, 214, 250);
+}
+

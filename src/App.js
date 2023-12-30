@@ -39,6 +39,7 @@ function App() {
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
   const [img, setImg] = useState();
   const [showHidden, setShowHidden] = useState();
+  const [adminUserInfo, setAdminUserInfo] = useState();
   //producti ke dakhele admine
   const [products, setProducts] = useState([]);
   const [id, setId] = useState();
@@ -99,21 +100,22 @@ function App() {
   const [senderEmail,setSenderEmail]=useState('');
   const [content,setContent]=useState('');
   const [sendMessageResponse,setSendMessageResponse]=useState('')
-  
+ 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   function responseApi(response) {
     setResponseMessage(response);
     setTimeout(() => {
       setResponseMessage('');
-    }, 5000);
-  }
+    }, [5000]);
+  };
 
   const [component, setReRenderComponent] = useState(false);
   
   function reRenderComponentFunc() {
     setReRenderComponent(true);
   }
+////////////////////////////////////////////////////
 //admin component
   async function addProduct(e) {
     e.preventDefault();
@@ -131,6 +133,7 @@ function App() {
       setShowHidden(4);
       getProduct();
     } catch (error) {
+      console.log(error)
     }
   }
   /////////////////////////////////////////////////////////////////////////////
@@ -147,6 +150,7 @@ function App() {
       addDiscountToProduct(selectedProducts,discountId)
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
+      responseApi("خطا در اعمال تخفیف");
     }
   }
 
@@ -159,8 +163,10 @@ function App() {
       };
       const response = await axios.put(`http://${server}:5000/api/products/adddiscount`,data,config);
       getProduct();
+      responseApi("تخفیف اعمال شد");
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
+      responseApi("خطا در اعمال تخفیف");
     }
   }
 
@@ -172,8 +178,35 @@ function App() {
 
       const response = await axios.put(`http://${server}:5000/api/products/removediscount`,data,config);
       getProduct();
+      responseApi("تخفیف حذف شد");
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
+      responseApi("خطا در حذف تخفیف");
+    }
+  }
+
+  async function deleteComment(commentId) {
+    try {
+      const response = await axios.delete(`http://${server}:5000/api/comment/deletecomment/${commentId}`,config);
+      getProduct();
+    } catch (error) {
+      console.error('خطا:', error);
+      responseApi("خطا در حذف کامنت")
+
+    }
+  }
+
+  async function approveComment(commentId) {
+    try {
+      const data =  {
+      }
+      const response = await axios.put(`http://${server}:5000/api/comment/approvecomment/${commentId}`,data,config);
+      getProduct();
+      console.log(response);
+      responseApi(response.data.message)
+    } catch (error) {
+      console.error('خطا:', error);
+      responseApi("خطا در تایید کردن کامنت")
     }
   }
 
@@ -280,24 +313,7 @@ function App() {
       setFullDescription(fullDescriptionId);
     }
   };
-  async function deleteComment(commentId) {
-    try {
-      const response = await axios.delete(`http://${server}:5000/api/comment/deletecomment/${commentId}`,config);
-      getProduct();
-    } catch (error) {
-      console.error('خطا:', error);
-    }
-  }
-  async function approveComment(commentId) {
-    try {
-      const data =  {
-      }
-      const response = await axios.put(`http://${server}:5000/api/comment/approvecomment/${commentId}`,data,config);
-      getProduct();
-    } catch (error) {
-      console.error('خطا:', error);
-    }
-  }
+
 
   async function likeComment(commentId,userId,oneProductId) {
     try {
@@ -521,8 +537,15 @@ function moreDataAboutProduct(productId){
 async function userPanelGetUser(){
  await axios.get(`http://${server}:5000/api/user/me`,config)
     .then(response => {
-      const p = response.data.data;
-      setUser(p);
+      const user = response.data.data;
+      console.log(user);
+      //بر حسب نقش کاربر اطلاعات کاربری در یک استیت جدا قرار میگیرد
+      if (user.role === "adminUser") {
+        setAdminUserInfo(user);
+      } else {
+        setUser(user);
+      };
+      
     })
     .catch(error => {
       console.log(error);
@@ -580,10 +603,12 @@ async function deleteFromBasket(userId,basketId) {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const[admin , setadmin] = useState(true);
   return (
-    <BrowserRouter>
+    <div className="">
+      <BrowserRouter>
         <RouteGuard></RouteGuard>
         <div className="">
-        <AppContext.Provider value={{
+        <AppContext.Provider
+          value={{
             server,
             //admin
             price,
@@ -609,6 +634,8 @@ async function deleteFromBasket(userId,basketId) {
             setNumberOfProduct,
             serialNumber,
             setSerialNumber,
+            adminUserInfo,
+            setAdminUserInfo,
             //producti ke dakhele admine
             products,
             setProducts,
@@ -794,7 +821,8 @@ async function deleteFromBasket(userId,basketId) {
           </AppContext.Provider>
         </div>
       
-    </BrowserRouter>
+      </BrowserRouter>
+    </div>
   );
 }
 
