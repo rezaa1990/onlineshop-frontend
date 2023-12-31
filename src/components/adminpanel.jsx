@@ -236,8 +236,8 @@ function AdminPanel() {
 ////////////////////////////////////////////////////////////////////////////////////////
   return (
       <div className="d-flex">
-        {/* sidebad */}
-        <div className="col-xs-4 col-md-2" id='admin-sidebar'>
+            {/* sidebad */}
+        <div className="col-2 col-md-4" id='admin-sidebar'>
 
           <div className="p-1 py-2 m-1 rounded" id='admin-sidebar-ul-li'>
             <a className="nav-link text-light" href="#" onClick={() => setShowHidden(1)}>
@@ -293,16 +293,15 @@ function AdminPanel() {
 
         </div>
 
-
-        {/* message */}
+            {/* message */}
         <div className="container-fluid col-sm-10 p-4" id='admin-message' style={{ display: showHidden ==6 ? 'block' : 'none' }}>
         <MessageList></MessageList>
-      </div>
+        </div>
       
-          {/* order */}
-      <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==7 ? 'block' : 'none' }}>
-        <OrderList></OrderList>
-      </div>
+            {/* order */}
+        <div className="container col-10 col-md-8" style={{ display: showHidden ==7 ? 'block' : 'none' }}>
+          <OrderList></OrderList>
+        </div>
       
             {/* user info */}
         <div className="container-fluid col-xs-8 col-md-10" id='admin-userinfo' style={{ display: showHidden ==1 ? 'block' : 'none' }}>
@@ -326,9 +325,9 @@ function AdminPanel() {
             <p className="">آدرس:</p>
             <p className="">{adminUserInfo?.address}</p>
           </div>
-      </div>
+        </div>
       
-              {/* anbar  */}
+            {/* anbar  */}
         <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
           <div className="p-2 shadow-sm">
             <p className=""> نام محصول:</p>
@@ -344,7 +343,7 @@ function AdminPanel() {
           </div>
         </div>
 
-              {/* add product */}
+            {/* add product */}
         <div className="col-xs-8 col-md-10 py-4" id='admin-addproduct' style={{ display: showHidden ==3 ? 'block' : 'none'}}>
         <h4 htmlFor="" className="text-center">افزودن محصول جدید</h4>
         <div className="form-group mx-5 my-3">
@@ -390,8 +389,6 @@ function AdminPanel() {
             <button className="btn btn-success w-100" onClick={addProduct}>افزودن محصول</button>
         </div>
         </div>
-
-
 
         <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==4 ? 'block' : 'none' }}>
             <div className="p-2">
