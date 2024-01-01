@@ -181,8 +181,7 @@ function UserPanel() {
   
   useEffect(() => {
     userPanelGetUser();
-  },[]);
-  
+  }, []);
   return (
     <>
       <div className="d-md-flex">

@@ -9,13 +9,12 @@ import { hover } from '@testing-library/user-event/dist/hover';
 import css from "./../css/main.css";
 import Navbar from "./navbar";
 import AppContext from '../context/context';
-import MessageList from './message';
-import UserProducts from './userproducts';
+import MessageList from "./message";
 import OrderList from './order';
-
+import pp from "./../images/pp.jpg";
 
 function AdminPanel() {
-  const{
+  const {
     server,
     //admin
     price,
@@ -60,7 +59,7 @@ function AdminPanel() {
     setUpdateImg,
     updateCategory,
     setUpdateCategory,
-    updateNumberOfProduct ,
+    updateNumberOfProduct,
     setUpdateNumberOfProduct,
     isFormVisible,
     setIsFormVisible,
@@ -74,16 +73,16 @@ function AdminPanel() {
     setSelectedProducts,
     discountType,
     setDiscountType,
-    discountValue, 
+    discountValue,
     setDiscountValue,
-    discountExpireTime, 
+    discountExpireTime,
     setDiscountExpireTime,
     createDiscount,
     addDiscountToProduct,
     removeDiscount,
     handleToggleProduct,
     handleDiscountSelection,
-    updateSerialNumber , 
+    updateSerialNumber,
     setUpdateSerialNumber,
     searchValue,
     setSearchValue,
@@ -106,13 +105,13 @@ function AdminPanel() {
     setAllDataAboutProduct,
     commentResponse,
     setCommentResponse,
-    fullDescription, 
+    fullDescription,
     setFullDescription,
-    replyComment, 
+    replyComment,
     setReplyComments,
-    numberOfSelectedProduct, 
+    numberOfSelectedProduct,
     setNumberOfSelectedProduct,
-    indexOfSelectedProduct , 
+    indexOfSelectedProduct,
     setIndexOfSelectedProducts,
     handleClick,
     toggleDescription,
@@ -124,9 +123,9 @@ function AdminPanel() {
     addReplyToComment,
     setProductId,
     changeNumber,
-    id1 , 
+    id1,
     setId1,
-    oneProduct , 
+    oneProduct,
     setOneProduct,
     navSearchInputValue,
     setNavSearchInputValue,
@@ -137,26 +136,27 @@ function AdminPanel() {
     setUserPanelShowHidden,
     userPanelGetUser,
     deleteFromBasket,
-    orderMeesage,setOrderResponseMessage,
+    orderMeesage,
+    setOrderResponseMessage,
     orderId,
     setOrderId,
-    factor , 
+    factor,
     setFactor,
-    totalPrice , 
+    totalPrice,
     setTotalPrice,
     sendingPostalInformation,
     IssuingInvoice,
-    clientFName , 
+    clientFName,
     setClientFName,
-    clientLName , 
+    clientLName,
     setClientLName,
-    clientEmail , 
+    clientEmail,
     setClientEmail,
-    clientMobile , 
+    clientMobile,
     setClientMobile,
-    clientAddress , 
+    clientAddress,
     setClientAddress,
-    clientPostalCode , 
+    clientPostalCode,
     setClientPostalCode,
     middleFunction1,
     //register
@@ -172,13 +172,13 @@ function AdminPanel() {
     setLastName,
     setEmail,
     setMobile,
-    setAddress ,
+    setAddress,
     setPassword,
     setRepeatPassword,
     setPostalCode,
     //login
     handleLogin,
-     token,
+    token,
     setToken,
     //navbar
     //contact
@@ -195,10 +195,7 @@ function AdminPanel() {
     component,
     reRenderComponentFunc,
     userInfo,
-
-
-
-  }=useContext(AppContext);
+  } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -212,213 +209,360 @@ function AdminPanel() {
 
   useEffect(() => {
     userPanelGetUser();
-  },[])
+  }, []);
   console.log("userInfo", userInfo);
-  
+
   const [productImg, setProductImg] = useState();
   const handleUploadeImg = () => {
     const formData = new FormData();
-    formData.append('image', productImg);
+    formData.append("image", productImg);
     console.log(productImg);
-    console.log(formData.get('image'));
+    console.log(formData.get("image"));
 
-    axios.post(`http://${server}:5000/api/image/addimage`, formData)
+    axios
+      .post(`http://${server}:5000/api/image/addimage`, formData)
       .then((response) => {
-        console.log('تصویر با موفقیت ارسال شد!', response.data);
-      
+        console.log("تصویر با موفقیت ارسال شد!", response.data);
       })
       .catch((error) => {
-        console.error('خطا در ارسال تصویر:', error);
+        console.error("خطا در ارسال تصویر:", error);
       });
-  }
-////////////////////////////////////////////////////////////////////////////////////////
+  };
 
-////////////////////////////////////////////////////////////////////////////////////////
   return (
-      <div className="d-flex">
-            {/* sidebad */}
-        <div className="col-2 col-md-4" id='admin-sidebar'>
+    <div className="d-flex">
+      {/* sidebar */}
+      <div className="col-4 col-md-2 rounded-4" id="admin-sidebar">
+        <div
+          className="pt-1 text-center border-bottom rounded-4"
+          id="admin-sidebar-userinfo"
+          style={{ cursor: "pointer" }}
+          onClick={() => setShowHidden(1)}
+        >
+          <img
+            src={pp}
+            alt=""
+            className="bg-light p-1"
+            style={{ borderRadius: "50%", width: "12vh" }}
+          />
+          <div className="p-1 text-light">{adminUserInfo?.fName}</div>
+        </div>
 
-          <div className="p-1 py-2 m-1 rounded" id='admin-sidebar-ul-li'>
-            <a className="nav-link text-light" href="#" onClick={() => setShowHidden(1)}>
-            <i className="p-1" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUser} /></i>
-             حساب کاربری
-            </a>
-          </div>
-          
-          <div className="p-1 py-2 m-1 rounded" id='admin-sidebar-ul-li'>
-            <a className="nav-link text-light" href="#" onClick={() => setShowHidden(2)}>
-            <i className="px-1" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faWarehouse} /></i>
+        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
+          <a
+            className="nav-link text-light"
+            href="#"
+            onClick={() => setShowHidden(2)}
+          >
+            <i className="px-1" style={{ fontSize: "15px" }}>
+              <FontAwesomeIcon icon={faWarehouse} />
+            </i>
             انبار
-            </a>
-          </div>
+          </a>
+        </div>
 
-          <div className={`p-1 py-2 m-1 rounded ${isSubMenuVisible ? 'show-submenu' : ''}`} id='admin-sidebar-ul-li'>
-            <a className="nav-link text-light" href="#" onClick={toggleSubMenu}>
-              <i className="p-1" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faProcedures} /></i>
-              محصولات
-            </a>
-            {/* Submenu */}
-            {isSubMenuVisible && (
-              <div className="submenu py-3">
-
-                <div className="text-light mx-3 p-1 rounded" id='admin-sidebar-product-submenu' style={{cursor:"pointer"}} onClick={() => setShowHidden(5)} >
-                  <i className="ms-2 " style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></i>
-                 بروز رسانی
-                </div>
-
-                <div className="text-light mx-3 p-1 rounded" id='admin-sidebar-product-submenu' style={{cursor:"pointer"}} onClick={() => setShowHidden(3)} >
-                  <i className="ms-2 " style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faAdd} /></i>
-                  اضافه کردن
-                </div>
-                 {/* Add more submenu items as needed */}
-
+        <div
+          className={`p-1 py-2 m-1 rounded ${
+            isSubMenuVisible ? "show-submenu" : ""
+          }`}
+          id="admin-sidebar-ul-li"
+        >
+          <a className="nav-link text-light" href="#" onClick={toggleSubMenu}>
+            <i className="p-1" style={{ fontSize: "15px" }}>
+              <FontAwesomeIcon icon={faProcedures} />
+            </i>
+            محصولات
+          </a>
+          {/* Submenu */}
+          {isSubMenuVisible && (
+            <div className="submenu py-3">
+              <div
+                className="text-light mx-3 p-1 rounded"
+                id="admin-sidebar-product-submenu"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowHidden(5)}
+              >
+                <i className="ms-2 " style={{ fontSize: "15px" }}>
+                  <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
+                </i>
+                بروز رسانی
               </div>
-            )}
-          </div>
 
+              <div
+                className="text-light mx-3 p-1 rounded"
+                id="admin-sidebar-product-submenu"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowHidden(3)}
+              >
+                <i className="ms-2 " style={{ fontSize: "15px" }}>
+                  <FontAwesomeIcon icon={faAdd} />
+                </i>
+                اضافه کردن
+              </div>
+              {/* Add more submenu items as needed */}
+            </div>
+          )}
+        </div>
 
-          <div className="p-1 py-2 m-1 rounded" id='admin-sidebar-ul-li'>
-            <a className="nav-link text-light" href="#" onClick={() => setShowHidden(6)}>
-            <i className="p-1" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faMessage} /></i>
+        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
+          <a
+            className="nav-link text-light"
+            href="#"
+            onClick={() => setShowHidden(6)}
+          >
+            <i className="p-1" style={{ fontSize: "15px" }}>
+              <FontAwesomeIcon icon={faMessage} />
+            </i>
             پیامها
-            </a>
-          </div>
-          <div className="p-1 py-2 m-1 rounded" id='admin-sidebar-ul-li'>
-            <a className="nav-link text-light" href="#" onClick={() => setShowHidden(7)}>
-            <i className="p-1" style={{ fontSize: '15px' }}><FontAwesomeIcon icon={faReceipt} /></i>
+          </a>
+        </div>
+
+        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
+          <a
+            className="nav-link text-light"
+            href="#"
+            onClick={() => setShowHidden(7)}
+          >
+            <i className="p-1" style={{ fontSize: "15px" }}>
+              <FontAwesomeIcon icon={faReceipt} />
+            </i>
             سفارشها
-            </a>
-          </div>
-
+          </a>
         </div>
-
-            {/* message */}
-        <div className="container-fluid col-sm-10 p-4" id='admin-message' style={{ display: showHidden ==6 ? 'block' : 'none' }}>
-        <MessageList></MessageList>
-        </div>
-      
-            {/* order */}
-        <div className="container col-10 col-md-8" style={{ display: showHidden ==7 ? 'block' : 'none' }}>
-          <OrderList></OrderList>
-        </div>
-      
-            {/* user info */}
-        <div className="container-fluid col-xs-8 col-md-10" id='admin-userinfo' style={{ display: showHidden ==1 ? 'block' : 'none' }}>
-          <div className="d-flex p-1 col-6 shadow-sm">
-            <p className="">نام:</p>
-            <p className="">{adminUserInfo?.fName}</p>
-          </div>
-          <div className="d-flex p-1 col-6 shadow-sm">
-            <p className=""> نام خانوادگی:</p>
-            <p className="">{adminUserInfo?.LName}</p>
-          </div>
-          <div className="d-flex p-1 col-6 shadow-sm">
-            <p className="">ایمیل:</p>
-            <p className="">{adminUserInfo?.email}</p>
-          </div>
-          <div className="d-flex p-1 col-6 shadow-sm">
-            <p className="">شماره تماس:</p>
-            <p className="">{adminUserInfo?.mobile}</p>
-          </div>
-          <div className="d-flex p-1 col-6 shadow-sm">
-            <p className="">آدرس:</p>
-            <p className="">{adminUserInfo?.address}</p>
-          </div>
-        </div>
-      
-            {/* anbar  */}
-        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==2 ? 'block' : 'none' }}>
-          <div className="p-2 shadow-sm">
-            <p className=""> نام محصول:</p>
-            <p className="">موبایل</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">تعداد:</p>
-            <p className="">۳۳۴</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">قیمت:</p>
-            <p className="">۱۲۳۴۵۰۰۰ تومان</p>
-          </div>
-        </div>
-
-            {/* add product */}
-        <div className="col-xs-8 col-md-10 py-4" id='admin-addproduct' style={{ display: showHidden ==3 ? 'block' : 'none'}}>
-        <h4 htmlFor="" className="text-center">افزودن محصول جدید</h4>
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted'>دسته بندی</label>
-          <input onChange={(e)=>setCategory(e.target.value)} id="category" type="text" className="form-control" />
-        </div>
-
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted' >نام</label>
-          <input onChange={(e)=>setName(e.target.value)} id="" type="text" className="form-control" />
-        </div>
-
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted' >قیمت</label>
-          <input onChange={(e)=>setPrice(e.target.value)} id="" type="text" className="form-control" />
-        </div>
-
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted' >تعداد</label>
-          <input onChange={(e)=>setNumberOfProduct(e.target.value)} id="numberOfProduct" type="text" className="form-control" />
-        </div>
-
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted' >مشخصات</label>
-          <textarea className="form-control" onChange={(e)=>setDescription(e.target.value)}  name="" id="message" cols="30" rows="3"></textarea>
-        </div>
-
-        <div className="form-group mx-5 my-3">
-          <label htmlFor="" className='text-muted' >شماره سریال</label>
-          <input onChange={(e)=>setSerialNumber(e.target.value)} id="" type="text" className="form-control" />
-        </div>
-          
-        <div className='row mx-5 my-3 p-1 border rounded'>
-          <label htmlFor="uploadInput" className='text-muted'>بارگزاری تصویر</label>
-          <input id="uploadInput" className='m-1 btn btn-light w-100 me-auto' type="file" onChange={(e) => setProductImg(e.target.value)} />
-          <button className='btn btn-sm btn-primary w-50 mx-auto' onClick={handleUploadeImg}>آپلود تصویر</button>
-        </div>
-
-
-
-
-        <div className="mx-5">
-            <button className="btn btn-success w-100" onClick={addProduct}>افزودن محصول</button>
-        </div>
-        </div>
-
-        <div className="container-fluid col-sm-10 p-4" style={{ display: showHidden ==4 ? 'block' : 'none' }}>
-            <div className="p-2">
-            <p className="text-success">{responseMessage}</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">نام:</p>
-            <p className="">{name}</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">قیمت</p>
-            <p className="">{price}</p>
-          </div>
-          <div className="p-2 shadow-sm">
-            <p className="">مسیر عکس</p>
-            <p className="">{imgPath}</p>
-          </div>
-
-          <div className="p-2 shadow-sm">
-            <p className="">توضیحات</p>
-            <p className="">{description}</p>
-          </div>
-        </div>
-
-        <div className="container-fluid col-sm-10 p-4" id='admin-updatproduct' style={{ display: showHidden ==5 ? 'block' : 'none' }}>
-          <Products></Products>
-        </div>
-
       </div>
-    );
+
+      {/* message */}
+      <div
+        className="col-8 col-md-10"
+        id="admin-message"
+        style={{ display: showHidden == 6 ? "block" : "none" }}
+      >
+        <MessageList></MessageList>
+      </div>
+
+      {/* order */}
+      <div
+        className="col-8 col-md-10"
+        style={{ display: showHidden == 7 ? "block" : "none" }}
+      >
+        <OrderList></OrderList>
+      </div>
+
+      {/* user info */}
+      <div
+        className="col-8 col-md-10"
+        id="admin-userinfo"
+        style={{ display: showHidden == 1 ? "block" : "none" }}
+      >
+        <div className="bg-primary rounded-4">
+          <div className="">
+            <h5 className="text-light text-center">اطلاعات کاربری</h5>
+            <div className="p-2 my-2 rounded bg-light">
+              <div className="col-md-8 mx-auto shadow p-2">
+                <div className="d-flex">
+                  <p className="px-1">نام:</p>
+                  <p className="px-1">{adminUserInfo?.fName}</p>
+                </div>
+                <div className="d-flex">
+                  <p className="px-1"> نام خانوادگی:</p>
+                  <p className="px-1">{adminUserInfo?.LName}</p>
+                </div>
+                <div className="d-flex">
+                  <p className="px-1"> سطح دسترسی :</p>
+                  <p className="px-1">
+                    {adminUserInfo?.role === "adminUser"
+                      ? "ادمین"
+                      : "کاربر معمولی"}
+                  </p>
+                </div>
+                <div className="d-flex">
+                  <p className="px-1">ایمیل:</p>
+                  <p className="px-1">{adminUserInfo?.email}</p>
+                </div>
+                <div className="d-flex">
+                  <p className="px-1">شماره تماس:</p>
+                  <p className="px-1">{adminUserInfo?.mobile}</p>
+                </div>
+                <div className="d-flex p-1">
+                  <p className="px-1">آدرس:</p>
+                  <p className="px-1">{adminUserInfo?.address}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* anbar  */}
+      <div
+        className="col-8 col-md-10"
+        style={{ display: showHidden == 2 ? "block" : "none" }}
+      >
+        <div className="p-2 shadow-sm">
+          <p className=""> نام محصول:</p>
+          <p className="">موبایل</p>
+        </div>
+        <div className="p-2 shadow-sm">
+          <p className="">تعداد:</p>
+          <p className="">۳۳۴</p>
+        </div>
+        <div className="p-2 shadow-sm">
+          <p className="">قیمت:</p>
+          <p className="">۱۲۳۴۵۰۰۰ تومان</p>
+        </div>
+      </div>
+
+      {/* add product */}
+      <div
+        className="col-8 col-md-10"
+        id="admin-addproduct"
+        style={{ display: showHidden == 3 ? "block" : "none" }}
+      >
+        <div className="bg-primary rounded-4 pt-2">
+          <h5 htmlFor="" className="text-center text-light">
+            افزودن محصول جدید
+          </h5>
+          <div className="bg-light rounded pb-2">
+            <div className="form-grou col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                دسته بندی
+              </label>
+              <input
+                onChange={(e) => setCategory(e.target.value)}
+                id="category"
+                type="text"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                نام
+              </label>
+              <input
+                onChange={(e) => setName(e.target.value)}
+                id=""
+                type="text"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                قیمت
+              </label>
+              <input
+                onChange={(e) => setPrice(e.target.value)}
+                id=""
+                type="text"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                تعداد
+              </label>
+              <input
+                onChange={(e) => setNumberOfProduct(e.target.value)}
+                id="numberOfProduct"
+                type="text"
+                className="form-control"
+              />
+            </div>
+
+            <div className="form-group col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                مشخصات
+              </label>
+              <textarea
+                className="form-control"
+                onChange={(e) => setDescription(e.target.value)}
+                name=""
+                id="message"
+                cols="30"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div className="form-group col-md-6 mx-auto">
+              <label htmlFor="" className="text-muted">
+                شماره سریال
+              </label>
+              <input
+                onChange={(e) => setSerialNumber(e.target.value)}
+                id=""
+                type="text"
+                className="form-control"
+              />
+            </div>
+
+            <div className="col-md-6 mx-auto m-1 p-1 border rounded">
+              <label htmlFor="uploadInput" className="text-muted">
+                بارگزاری تصویر
+              </label>
+              <div className="text-center">
+                <input
+                  id="uploadInput"
+                  className=""
+                  type="file"
+                  onChange={(e) => setProductImg(e.target.value)}
+                />
+              </div>
+              <div className="text-center">
+                <button
+                  className="btn btn-sm btn-primary "
+                  onClick={handleUploadeImg}
+                >
+                  آپلود تصویر
+                </button>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button className="btn btn-success " onClick={addProduct}>
+                افزودن محصول
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="container-fluid col-sm-10 p-4"
+            style={{ display: showHidden == 4 ? "block" : "none" }}
+          >
+            <div className="p-2">
+              <p className="text-success">{responseMessage}</p>
+            </div>
+            <div className="p-2 shadow-sm">
+              <p className="">نام:</p>
+              <p className="">{name}</p>
+            </div>
+            <div className="p-2 shadow-sm">
+              <p className="">قیمت</p>
+              <p className="">{price}</p>
+            </div>
+            <div className="p-2 shadow-sm">
+              <p className="">مسیر عکس</p>
+              <p className="">{imgPath}</p>
+            </div>
+
+            <div className="p-2 shadow-sm">
+              <p className="">توضیحات</p>
+              <p className="">{description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="col-8 col-md-10"
+        id="admin-updatproduct"
+        style={{ display: showHidden == 5 ? "block" : "none" }}
+      >
+        <Products></Products>
+      </div>
+    </div>
+  );
 }
 
 export default AdminPanel;
