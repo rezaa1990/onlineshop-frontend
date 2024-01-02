@@ -103,4 +103,6 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   background-color: rgb(34, 33, 103);
 }
 
-
+#admin-order-row:hover{
+  background-color: rgb(129, 129, 148);
+}

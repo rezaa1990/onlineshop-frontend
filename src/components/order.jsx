@@ -12,7 +12,7 @@ const OrderList = () => {
   const [filterPostalCode, setFilterPostalCode] = useState("");
   const [filterSendToPost, setFilterSendToPost] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
-
+  const [forceUpdate, setForceUpdate] = useState(false);
   useEffect(() => {
     async function fetchOrders() {
       try {
@@ -36,7 +36,7 @@ const OrderList = () => {
     }
 
     fetchOrders();
-  }, []);
+  }, [forceUpdate]);
 
   const handleNameFilter = (name) => {
     setFilterName(name);
@@ -167,13 +167,49 @@ const OrderList = () => {
     );
   };
 
+  const [selectedOrders, setSelectedOrders] = useState([]);
+
+  const handleOrderSelection = (orderIdd) => {
+    console.log(orderIdd);
+    if (selectedOrders.includes(orderIdd)) {
+      const filteredorder = selectedOrders.filter((id) => id !== orderIdd);
+      setSelectedOrders(filteredorder);
+      console.log("1",filteredorder)
+    } else {
+      const orders = [...selectedOrders, orderIdd];
+      setSelectedOrders(orders);
+      console.log("2",orders)
+    }
+  };
+
+  async function handleSendToPostOrder() {
+    try {
+      const userToken = localStorage.getItem("userToken");
+        const config = {
+          headers: {
+            token1: `${userToken}`,
+          },
+        };
+      
+      const data = {
+        selectedOrders
+      };
+      const response = await axios.put(`http://localhost:5000/api/order/sendtopostorder`, data, config);
+      console.log(response);
+      setSelectedOrders([]);
+      setForceUpdate(prevState => !prevState);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="" id="order">
       <div className="bg-primary rounded-4">
         <h3 className="pt-1 text-center text-light">سفارشها</h3>
         <div className="bg-light pt-3 rounded-4 ">
           {/* filters */}
-          <div className="d-flex col-md-8 mx-auto filters align-items-center justify-content-center mt-3">
+          <div className="bg-secondary mx-auto d-flex col-md-8 justify-content-center filters align-items-center mt-3">
             <input
               className="col-4 rounded border-0 m-1 p-1"
               type="text"
@@ -186,13 +222,13 @@ const OrderList = () => {
               placeholder="فیلتر/کد پستی"
               onChange={(e) => handlePostalCodeFilter(e.target.value)}
             />
-            <div className="col-4 bg-light rounded m-1">
-              <div className="d-flex p-1">
-                <label className="col-6 text-muted" htmlFor="">
+            <div className="col-3 bg-light rounded m-1 p-1">
+              <div className="d-flex">
+                <label className="col-5 col-md-6 text-muted" htmlFor="">
                   وضعیت
                 </label>
                 <select
-                  className="col-6 btn btn-sm border-0"
+                  className="col-7 col-md-6 btn btn-sm border-0"
                   onChange={(e) => handleSendToPostFilter(e.target.value)}
                 >
                   <option className="" value="">
@@ -211,57 +247,54 @@ const OrderList = () => {
           </div>
 
           {/* table */}
-          <div className="table-responsive  col-md-8 mx-auto">
-            <table className="border table table-stripe table-hover">
-              <thead className="">
-                <tr className="">
-                  <th className="p-2 m-1 text-center">نام</th>
-                  <th className="p-2 m-1 text-center">نام خانوادگی</th>
-                  <th className="p-2 m-1 text-center">موبایل</th>
-                  <th className="p-2 m-1 text-center">کد پستی</th>
-                  <th className="p-2 m-1 text-center">پرداخت شده</th>
-                  <th className="p-2 m-1 text-center">ارسال</th>
-                  <th className="p-2 m-1 text-center">تاریخ ثبت</th>
-                  {/* ... ادامه هدر */}
-                </tr>
-              </thead>
-              <tbody id="">
-                {filteredOrders?.map((order, index) => (
-                  <tr
-                    key={index}
-                    className=""
-                    onClick={() => setSelectedOrder(order)}
-                  >
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.FName.slice(0, 20)}
-                    </td>
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.LName.slice(0, 20)}
-                    </td>
+          <div className="container">
+  <div className="row">
+    <div className="col">
+      <ul className="list-group">
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+          <span>نام</span>
+          <span>نام خانوادگی</span>
+          <span>موبایل</span>
+          <span>کد پستی</span>
+          <span>پرداخت شده</span>
+          <span>ارسال</span>
+          <span>تاریخ ثبت</span>
+          <span>انتخاب</span>
+        </li>
+        {filteredOrders?.map((order, index) => (
+          <li
+            key={index}
+            className="list-group-item d-flex justify-content-between align-items-center"
+            id="admin-order-row"
+            style={{cursor:"pointer"}}
+            
+          >
+            <span onClick={() => setSelectedOrder(order)}>{order.FName.slice(0, 20)}</span>
+            <span onClick={() => setSelectedOrder(order)}>{order.LName.slice(0, 20)}</span>
+            <span onClick={() => setSelectedOrder(order)}>{order.mobile.slice(0, 20)}</span>
+            <span onClick={() => setSelectedOrder(order)}>{order.postalCode.slice(0, 20)}</span>
+            <span onClick={() => setSelectedOrder(order)}>{order.payment ? "بله" : "خیر"}</span>
+            <span onClick={() => setSelectedOrder(order)}>{order.sendToPost ? "بله" : "خیر"}</span>
+            <span onClick={() => setSelectedOrder(order)}>
+              {jMoment(moment(order.createdAt).format()).format(
+                "jYYYY/jMM/jDD HH:mm"
+              )}
+            </span>
+            <span>
+              <input
+                type="checkbox"
+                onChange={() => handleOrderSelection(order._id)}
+                checked={selectedOrders.includes(order._id)}
+              />
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+            </div>
+           <div className="text-center"> <button onClick={handleSendToPostOrder} className="btn btn-sm btn-primary m-1">ارسال به پست</button></div>
+</div>
 
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.mobile.slice(0, 20)}
-                    </td>
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.postalCode.slice(0, 20)}
-                    </td>
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.payment ? "بله" : "خیر"}
-                    </td>
-                    <td className="p-2 m-1 text-center" id="">
-                      {order.sendToPost ? "بله" : "خیر"}
-                    </td>
-                    <td className="p-2 m-1 text-center" id="">
-                      {jMoment(moment(order.createdAt).format()).format(
-                        "jYYYY/jMM/jDD HH:mm"
-                      )}
-                    </td>
-                    {/* ... نمایش سایر ستون‌ها */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
 
           <div className="col-md-8 mx-auto rounded-4" id="order-detail">
             {selectedOrder && (
@@ -282,6 +315,7 @@ const OrderList = () => {
               </div>
             )}
           </div>
+
         </div>
       </div>
     </div>
