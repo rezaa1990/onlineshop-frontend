@@ -12,6 +12,7 @@ import AppContext from '../context/context';
 import MessageList from "./message";
 import OrderList from './order';
 import pp from "./../images/pp.jpg";
+import AdminSidebar from "./sidebar";
 
 function AdminPanel() {
   const {
@@ -233,102 +234,7 @@ function AdminPanel() {
     <div className="d-flex">
       {/* sidebar */}
       <div className="col-4 col-md-2 rounded-4" id="admin-sidebar">
-        <div
-          className="pt-1 text-center border-bottom rounded-4"
-          id="admin-sidebar-userinfo"
-          style={{ cursor: "pointer" }}
-          onClick={() => setShowHidden(1)}
-        >
-          <img
-            src={pp}
-            alt=""
-            className="bg-light p-1"
-            style={{ borderRadius: "50%", width: "12vh" }}
-          />
-          <div className="p-1 text-light">{adminUserInfo?.fName}</div>
-        </div>
-
-        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
-          <a
-            className="nav-link text-light"
-            href="#"
-            onClick={() => setShowHidden(2)}
-          >
-            <i className="px-1" style={{ fontSize: "15px" }}>
-              <FontAwesomeIcon icon={faWarehouse} />
-            </i>
-            انبار
-          </a>
-        </div>
-
-        <div
-          className={`p-1 py-2 m-1 rounded ${
-            isSubMenuVisible ? "show-submenu" : ""
-          }`}
-          id="admin-sidebar-ul-li"
-        >
-          <a className="nav-link text-light" href="#" onClick={toggleSubMenu}>
-            <i className="p-1" style={{ fontSize: "15px" }}>
-              <FontAwesomeIcon icon={faProcedures} />
-            </i>
-            محصولات
-          </a>
-          {/* Submenu */}
-          {isSubMenuVisible && (
-            <div className="submenu py-3">
-              <div
-                className="text-light mx-3 p-1 rounded"
-                id="admin-sidebar-product-submenu"
-                style={{ cursor: "pointer" }}
-                onClick={() => setShowHidden(5)}
-              >
-                <i className="ms-2 " style={{ fontSize: "15px" }}>
-                  <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-                </i>
-                بروز رسانی
-              </div>
-
-              <div
-                className="text-light mx-3 p-1 rounded"
-                id="admin-sidebar-product-submenu"
-                style={{ cursor: "pointer" }}
-                onClick={() => setShowHidden(3)}
-              >
-                <i className="ms-2 " style={{ fontSize: "15px" }}>
-                  <FontAwesomeIcon icon={faAdd} />
-                </i>
-                اضافه کردن
-              </div>
-              {/* Add more submenu items as needed */}
-            </div>
-          )}
-        </div>
-
-        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
-          <a
-            className="nav-link text-light"
-            href="#"
-            onClick={() => setShowHidden(6)}
-          >
-            <i className="p-1" style={{ fontSize: "15px" }}>
-              <FontAwesomeIcon icon={faMessage} />
-            </i>
-            پیامها
-          </a>
-        </div>
-
-        <div className="p-1 py-2 m-1 rounded" id="admin-sidebar-ul-li">
-          <a
-            className="nav-link text-light"
-            href="#"
-            onClick={() => setShowHidden(7)}
-          >
-            <i className="p-1" style={{ fontSize: "15px" }}>
-              <FontAwesomeIcon icon={faReceipt} />
-            </i>
-            سفارشها
-          </a>
-        </div>
+        <AdminSidebar></AdminSidebar>
       </div>
 
       {/* message */}
@@ -422,7 +328,7 @@ function AdminPanel() {
           <h5 htmlFor="" className="text-center text-light">
             افزودن محصول جدید
           </h5>
-          <div className="bg-light rounded pb-2">
+          <div className="bg-light rounded pb-2 px-2">
             <div className="form-grou col-md-6 mx-auto">
               <label htmlFor="" className="text-muted">
                 دسته بندی
