@@ -423,8 +423,11 @@ async function getUser () {
       fetchData();
       userPanelGetUser();//for updating navbar component
       getUser();
+      console.log(response.data.message);
+      responseApi(response.data.message);
     } catch (error) {
       console.error('خطا در ارسال درخواست:', error);
+      responseApi(error.response.data);
     }
   }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

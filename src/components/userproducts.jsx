@@ -63,6 +63,7 @@ function UserProducts() {
     component,
     reRenderComponentFunc,
     navSearchInputValue,
+    responseMessage
   }=useContext(AppContext);
 
   useEffect(()=>{
@@ -79,7 +80,17 @@ function UserProducts() {
     setCommentResponse(null);
     navigate(navigateDestination);
   }
-console.log(userProducts)
+
+  const [addToBasketSelectedProduct, setAddToBasketSelectedProduct] = useState();
+  async function addToBasketMiddleFunction(productId, numberOfproduct) {
+    await addToBasket(productId, numberOfproduct)
+    if (addToBasketSelectedProduct && addToBasketSelectedProduct == productId) {
+      console.log(addToBasketSelectedProduct)
+    } else {
+      setAddToBasketSelectedProduct(productId);
+    }
+  }
+
 return (
     <>
       <section className='p-2 userproduct'>
@@ -152,7 +163,7 @@ return (
                     <div className="row">
 
                       <div className="col-4 p-3 text-center">
-                        <p className="ms-auto" onClick={()=>addToBasket(product._id , indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1)}>
+                        <p className="ms-auto" onClick={()=>addToBasketMiddleFunction(product._id , indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1)}>
                           <i className="" style={{ fontSize: '15px',cursor:'pointer'}}>
                             <img src={basket} className="basket" style={{cursor:'pointer', width: '30px', height: '30px'}}/>
                           </i>
@@ -174,6 +185,7 @@ return (
                           </i>
                         </p>
                       </div>
+                      <div className="text-warning text-center" style={{ display: addToBasketSelectedProduct === product._id ? "block" : "none" }}>{responseMessage}</div>
 
                     </div>
                   </div>
