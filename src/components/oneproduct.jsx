@@ -416,23 +416,23 @@ function OneProduct() {
         <p className="text-center text-light mt-4 "> نظرات دیگران</p>
         <div id="" className="col-8 mx-auto p-1 rounded">
           <div
-            className="mx-1"
+            className=""
             style={{ maxHeight: "400px", overflow: "auto" }}
           >
             {oneProduct?.comments?.map((comment) => (
-              <div id="comment" className="mx-1 m-2 rounded">
+              <div id="comment" className="mx-1 m-2 rounded" style={{display:comment.isApproved === true ? "block" : "none"}}>
                 <div className="">
-                <p className="text-light p-1">{comment?.author.fName}</p>
-                  <p
-                    className="text-light text-center m-0 rounded"
-                    style={{ fontSize: "20px" , wordWrap:"break-word"}}
+                <p className="text-light p-1 m-0">{comment?.author.fName}</p>
+                <p
+                    className="text-light text-center m-0"
+                    style={{ fontSize: "15px" , wordWrap:"break-word"}}
                   >
                     {comment?.text}
-                  </p>
+                </p>
                   
                   <div className="d-flex justify-content-end">
                     <p
-                      className="text-light "
+                      className="text-light"
                       style={{ fontSize: "14px" }}
                     >
                       {comment?.likes?.length}
@@ -498,7 +498,7 @@ function OneProduct() {
           </div>
         </div>
         <div className="text-center my-1">
-            <button className="text-light btn btn-warning w-50" onClick={()=>navigate("/")}>بازگشت</button>
+            <button className="text-light btn border" onClick={()=>navigate("/")}>بازگشت</button>
         </div>
       </div>
     </div>
