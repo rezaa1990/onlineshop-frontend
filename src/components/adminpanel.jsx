@@ -461,9 +461,9 @@ function AdminPanel() {
       </div>
 
       <div
-        className="col-8 col-md-10"
+        className="col-8 col-md-10 "
         id="admin-updatproduct"
-        style={{ display: showHidden == 5 ? "block" : "none" }}
+        style={{ display: showHidden == 5 ? "block" : "none"}}
       >
         <Products></Products>
       </div>

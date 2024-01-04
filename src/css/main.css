@@ -106,3 +106,27 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
 #admin-order-row:hover{
   background-color: rgb(129, 129, 148);
 }
+
+@media (min-width: 410px) {
+  #custom-height {
+    height: 350px; /* یک ارتفاع مخصوص برای نمایشگرهای با عرض بیشتر از ۵۷۶ پیکسل */
+  }
+}
+
+@media (min-width: 768px) {
+  #custom-height {
+    height: 600px; /* ارتفاع دیگر برای نمایشگرهای با عرض بیشتر از ۷۶۸ پیکسل */
+  }
+}
+
+@media (min-width: 410px) {
+  #user-product-custom-height {
+    height: 600px; /* یک ارتفاع مخصوص برای نمایشگرهای با عرض بیشتر از ۵۷۶ پیکسل */
+  }
+}
+
+@media (min-width: 768px) {
+  #user-product-custom-height {
+    height: 900px; /* ارتفاع دیگر برای نمایشگرهای با عرض بیشتر از ۷۶۸ پیکسل */
+  }
+}
