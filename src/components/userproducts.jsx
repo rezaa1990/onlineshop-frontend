@@ -85,7 +85,7 @@ return (
       <section className='p-2 userproduct'>
         <div className="container-fluid">
           <h1 className="text-center text-light mb-5">محصولات</h1>
-          <div className="row">
+          <div className="row" id='user-product-custom-height' style={{overflow:"auto"}}>
 
           {userProducts
             
@@ -160,10 +160,10 @@ return (
                         
                       </div>
 
-                      <div className="col-4 p-3 d-flex align-items-center">
-                          <button className='btn text-light col-4 p-1 py-0 rounded-4' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,0)}>-</button>
+                      <div className="col-4 p-3 d-flex align-items-center justify-content-center">
+                          <button className='btn btn-sm rounded-5 text-light' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,0)}>-</button>
                           <span className='text-light text-center col-4 p-1'>{indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1}</span>
-                          <button className='btn text-light col-4 p-1 py-0 rounded-4' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,1)}>+</button>
+                          <button className='btn btn-sm rounded-5 text-light' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,1)}>+</button>
                       </div>
 
                       <div className="col-4 p-3 text-center">

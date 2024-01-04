@@ -291,7 +291,7 @@ function OneProduct() {
                 </p>
                 </div>
                 <button
-                  className="btn btn-sm text-light rounded-3"
+                  className="btn btn-sm rounded-5 text-light"
                   id="basket-button"
                   style={{ border: "1px white solid" }}
                   onClick={() => setProductId(oneProduct._id, 0)}
@@ -302,7 +302,7 @@ function OneProduct() {
                   {numberOfSelectedProduct || 1 } 
                 </span>
                 <button
-                  className="btn btn-sm text-light rounded"
+                  className="btn btn-sm rounded-4 text-light"
                   id="basket-button"
                   style={{ border: "1px white solid" }}
                   onClick={() => setProductId(oneProduct._id, 1)}
