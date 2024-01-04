@@ -270,7 +270,8 @@ function UserPanel() {
             </div>
             
             <div className="d-flex justify-content-center">
-            <img src={emptybox} alt="" className="" style={{display:user.basket?.length > 0 ? "none" : "block" , width:"30vh", height:"30vh"}}/>
+                {/* <img src={emptybox} alt="" className="" style={{display:user.basket?.length > 0 ? "none" : "block" , width:"30vh", height:"30vh"}}/> */}
+                <p className="text-warning" style={{ display: user.basket?.length > 0 ? "none" : "block" }}>سبد شما خالی است</p>
             </div>
               
             <div className="text-center mt-4">
