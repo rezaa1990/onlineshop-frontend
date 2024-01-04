@@ -200,7 +200,12 @@ function Navbar() {
     localStorage.removeItem('userToken');
     setToken();
   }
-  console.log("navv")
+
+  const [active, setActive] = useState();
+  function handleActive(tagnumber) {
+    setActive(tagnumber)
+  };
+
   return (
     <nav className="navbar navbar-expand-lg"style={{borderBottom:"1px white solid"}}>
       <div className="container-fluid">
@@ -223,7 +228,7 @@ function Navbar() {
           <ul className="navbar-nav p-0">
 
             <li className="nav-item rounded">
-              <Link to="./userdashboard" className="nav-link text-white">
+              <Link to="./userdashboard" className="nav-link text-white rounded" style={{backgroundColor: active == 1 ? "rgb(37, 0, 122)" : ''}} onClick={()=>handleActive(1)}>
                 <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
                   <img src={userIcon} className="text-dark" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
                 </i>حساب کاربری
@@ -231,7 +236,7 @@ function Navbar() {
             </li>
 
             <li className="nav-item rounded">
-              <Link to="/" className="nav-link text-white">
+              <Link to="/" className="nav-link text-white rounded" style={{backgroundColor: active == 2 ? "rgb(37, 0, 122)" : ''}} onClick={()=>handleActive(2)}>
                 <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
                   <img src={home} className="mx-1" style={{ cursor: 'pointer', width: '20px', height: '20px' }} />
                 </i>
@@ -239,7 +244,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="nav-item mx-2 d-flex align-items-start rounded">
+            <li className="nav-item mx-2 d-flex align-items-start rounded" style={{backgroundColor: active == 3 ? "rgb(37, 0, 122)" : ''}} onClick={()=>handleActive(3)}>
               <div className="text-white text-center px-2" 
                   style={{ 
                   backgroundColor: "red",
@@ -251,7 +256,7 @@ function Navbar() {
                   {user?.basket?.length || 0}
               </div>
 
-              <Link to="./userdashboard" className="nav-link text-white">                
+              <Link to="./userdashboard" className="nav-link text-white rounded">                
                 <i className="" style={{ fontSize: '15px', cursor: 'pointer' }}>
                 <img src={basket} className="" style={{ cursor: 'pointer', width: '25px', height: '25px' }} />
                 سبد خرید
@@ -259,7 +264,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <Dropdown className=''>
+            <Dropdown className='rounded' style={{backgroundColor: active == 4 ? "rgb(37, 0, 122)" : ''}} onClick={()=>handleActive(4)}>
               <Dropdown.Toggle className='nav-item text-light border-0' variant="" id="nav-dropdown">
               محصولات
               </Dropdown.Toggle>
