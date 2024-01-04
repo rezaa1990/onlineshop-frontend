@@ -53,7 +53,7 @@ const MessageList = () => {
         <h3 className="text-center text-light p-1">پیامها</h3>
         <div className="border rounded bg-light p-2 ">
           <ul
-            className="col-md-8 mx-auto"
+            className="col-md-8 mx-auto border p-2"
             style={{
               maxHeight: "300px",
               overflow: "auto",
@@ -65,7 +65,7 @@ const MessageList = () => {
               <li
                 key={index}
                 id="message-list"
-                className="rounded m-1"
+                className="rounded m-1 p-2"
                 style={{ borderBottom: "1px solid #ccc" }}
               >
                 <div className="text-muted">
