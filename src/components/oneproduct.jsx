@@ -212,7 +212,7 @@ function OneProduct() {
     <div className="" id="oneproduct">
       {/* card img */}
       <div className="d-flex justify-content-center">
-        <img src={p1} alt="" className="w-50" />
+        <img src={p1} alt="" style={{width: "350px",height: "350px"}} className="mt-3 rounded"/>
       </div>
       {/* card body */}
       <div className="pb-5 mx-2 mt-2 rounded-5">
