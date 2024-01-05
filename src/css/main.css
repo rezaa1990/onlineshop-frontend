@@ -68,7 +68,7 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   background-color: rgb(77, 2, 146);
 }
 
-#admin-userinfo,#admin-updatproduct,#admin-updateproduct-form{
+#admin-updatproduct,#admin-updateproduct-form{
   background-color: rgba(151, 151, 151, 0.896);
 }
 
@@ -76,7 +76,7 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   background-color: rgb(118, 63, 174);
 }
 
-#admin-card,#discount,#admin-updateproduct-input , #admin-addproduct , #admin-message , #order{
+#admin-card,#discount,#admin-updateproduct-input, #order{
   background-color : rgba(151, 151, 151, 0.896)
 }
 

@@ -54,14 +54,14 @@ const OrderList = () => {
 
   const filterOrdersByName = (name) => {
     const filteredByName = orders.filter(
-      (item) => item.FName.includes(name) || item.LName.includes(name)
+      (item) => item.FName?.includes(name) || item.LName?.includes(name)
     );
     setFilteredOrders(filteredByName);
   };
 
   const filterOrdersByPostalCode = (postalCode) => {
     const filteredByPostalCode = orders.filter((item) =>
-      item.postalCode.includes(postalCode)
+      item.postalCode?.includes(postalCode)
     );
     setFilteredOrders(filteredByPostalCode);
   };
@@ -208,7 +208,7 @@ const OrderList = () => {
   }
 
   return (
-    <div className="" id="order">
+    <div className="rounded-4" id="order">
       <div className="bg-primary rounded-4">
         <h3 className="pt-1 text-center text-light">سفارشها</h3>
         <div className="bg-light pt-3 rounded-4 ">
