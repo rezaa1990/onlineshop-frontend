@@ -340,26 +340,26 @@ function UserPanel() {
 
               {/* factor info */}
         <div className="col-sm-12 col-md-9" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
-          <div className="container">
+          <div className="container table-responsive">
           <h4 className='text-light text-center pt-2'>فاکتور</h4>
           
-            <table className="mx-auto container border">
-            <thead className=''>
-              <tr className='border'>
-                <th id='table-head' className='text-light p-2'>#</th>
-                <th id='table-head' className='text-light p-2'>نام کالا</th>
-                <th id='table-head' className='text-light p-2'>تعداد</th>
-                <th id='table-head' className='text-light p-2'>قیمت + تخفیف</th>
-                <th id='table-head' className='text-light p-2'>تخفیف </th>
-                <th id='table-head' className='text-light p-2'>قیمت * تعداد</th>
+            <table className="mx-auto container border table-responsive">
+              <thead className=''>
+              <tr className=''>
+                <th id='table-head' className='text-light p-1 col-1'>#</th>
+                <th id='table-head' className='text-light p-1 col-1'>نام کالا</th>
+                <th id='table-head' className='text-light p-1 col-1'>تعداد</th>
+                <th id='table-head' className='text-light p-1 col-1'>قیمت + تخفیف</th>
+                <th id='table-head' className='text-light p-1 col-1'>تخفیف </th>
+                <th id='table-head' className='text-light p-1 col-1'>قیمت * تعداد</th>
                 {/* سایر ستون‌ها */}
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               {factor?.map((factor, index) => (
                 
               <tr key={index} className='border'>
-                <td className='text-light py-3' id='table-head' >{index + 1}</td>
+                <td className='text-light' id='table-head' >{index + 1}</td>
                 <td className='text-light' id='table-head' >{factor.productName}</td>
                 <td className='text-light' id='table-head' >{factor.numberOfEachProduct}</td>
                 <td className='text-light' id='table-head' >{parseFloat(factor.pricePerUnit).toFixed(2)}</td>
@@ -378,7 +378,7 @@ function UserPanel() {
               </tr>
               
 
-            </tbody>
+              </tbody>
             </table>
           
 
