@@ -17,6 +17,7 @@ import AdminSidebar from "./sidebar";
 function AdminPanel() {
   const {
     server,
+    responseApi,
     //admin
     price,
     setPrice,
@@ -43,7 +44,10 @@ function AdminPanel() {
     setSerialNumber,
     adminUserInfo,
     setAdminUserInfo,
+    imageId,
+    setImageId,
     //producti ke dakhele admine
+
     products,
     setProducts,
     id,
@@ -213,23 +217,36 @@ function AdminPanel() {
   }, []);
   console.log("userInfo", userInfo);
 
-  const [productImg, setProductImg] = useState();
-  const handleUploadeImg = () => {
-    const formData = new FormData();
-    formData.append("image", productImg);
-    console.log(productImg);
-    console.log(formData.get("image"));
-
-    axios
-      .post(`http://${server}:5000/api/image/addimage`, formData)
-      .then((response) => {
-        console.log("تصویر با موفقیت ارسال شد!", response.data);
-      })
-      .catch((error) => {
-        console.error("خطا در ارسال تصویر:", error);
-      });
+  
+  const [selectedFile, setSelectedFile] = useState(null);
+  const handleFileInputChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
+
+  const handleUpload = () => {
+    if (!selectedFile) {
+      console.error('هیچ تصویری انتخاب نشده است.');
+      responseApi("هیچ تصویری انتخاب نشده است.")
+      return;
+    }
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+    console.log(formData);
+    console.log(formData.get("image"));
+    axios.post(`http://${server}:5000/api/image/addimage`, formData)
+      .then((response) => {
+        console.log("تصویر با موفقیت ارسال شد!", response.data);
+        console.log(response.data.data.image._id);
+        setImageId(response.data.data.image._id);
+        console.log(response.data.message);
+        responseApi(response.data.message);
+      })
+      .catch((error) => {
+        console.error("خطا در ارسال تصویر:", error)
+        responseApi(error.message);
+      });
+  }
   return (
     <div className="d-flex">
       {/* sidebar */}
@@ -329,6 +346,7 @@ function AdminPanel() {
             افزودن محصول جدید
           </h5>
           <div className="bg-light rounded pb-2 px-2">
+            <div className="text-center text-danger p-2">{responseMessage}</div>
             <div className="form-grou col-md-6 mx-auto">
               <label htmlFor="" className="text-muted">
                 دسته بندی
@@ -412,13 +430,13 @@ function AdminPanel() {
                   id="uploadInput"
                   className=""
                   type="file"
-                  onChange={(e) => setProductImg(e.target.value)}
+                  onChange={handleFileInputChange}
                 />
               </div>
               <div className="text-center">
                 <button
                   className="btn btn-sm btn-primary "
-                  onClick={handleUploadeImg}
+                  onClick={handleUpload}
                 >
                   آپلود تصویر
                 </button>

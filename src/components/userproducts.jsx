@@ -9,6 +9,8 @@ import basket from "./../images/basket.png"
 import AppContext from '../context/context';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const apiUrl = process.env.REACT_APP_CUSTOM_URL;// "http://localhost:5000"
+// import eee from "http://localhost:5000/home/reza/Desktop/node-shop/src/routes/image/uploads/m1.jpeg"
 
 function UserProducts() {
   let currentDate = new Date();
@@ -113,7 +115,9 @@ return (
                 {/* card */}
                 <div className="card p-1" id='card'>
                   {/* card img */}
-                  <img src={p1} alt="" className="card-img-top" />
+                  {product.images.map((image, index) => (
+                    <img src={""}/>
+                  ))}
                   {/* card body */}
                   <div className="card-body">
 

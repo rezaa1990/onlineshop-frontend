@@ -35,7 +35,7 @@ function App() {
   const [numberOfProduct,setNumberOfProduct] = useState();
   const [serialNumber,setSerialNumber] = useState();
   const [responseMessage, setResponseMessage] = useState("");
-  const [imgPath, setImgPath] = useState("");
+  const [imageId, setImageId] = useState();
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
   const [img, setImg] = useState();
   const [showHidden, setShowHidden] = useState();
@@ -127,13 +127,16 @@ function App() {
         description,
         numberOfProduct,
         serialNumber,
+        imageId,
       };
+      console.log(addProduct)
       const response = await axios.post(`http://${server}:5000/api/products/addproduct`,addProduct,config);
       responseApi(response.data.message);
       setShowHidden(4);
       getProduct();
     } catch (error) {
-      console.log(error)
+      console.log(error.response.data.data)
+      responseApi(error.response.data.data);
     }
   }
   /////////////////////////////////////////////////////////////////////////////
@@ -613,6 +616,7 @@ async function deleteFromBasket(userId,basketId) {
         <AppContext.Provider
           value={{
             server,
+            responseApi,
             //admin
             price,
             setPrice,
@@ -624,8 +628,8 @@ async function deleteFromBasket(userId,basketId) {
             setDescription,
             responseMessage,
             setResponseMessage,
-            imgPath,
-            setImgPath,
+            imageId,
+            setImageId,
             img,
             setImg,
             isSubMenuVisible,
@@ -800,8 +804,6 @@ async function deleteFromBasket(userId,basketId) {
             ////////
             component,
             reRenderComponentFunc,
-
-
           }}>
             {/* {admin === false ? ( */}
                   {/* <AdminPanel></AdminPanel> */}
