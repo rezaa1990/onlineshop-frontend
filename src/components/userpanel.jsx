@@ -186,13 +186,13 @@ function UserPanel() {
     <>
       <div className="d-md-flex">
         {/* sidebar */}
-        <div className="col-sm-12 col-md-3 p-2 usersidebar"
-        // style={{minHeight:"80vh"}}
+        <div className="col-12 col-md-3 p-2 usersidebar"
+        
         >
           
           <div className="p-1">
             <div className="">
-              <img src={pp} alt="" className="" style={{borderRadius:"50%",width:"12vh"}}/>
+              <div className=""><img src={pp} alt="" className="" style={{borderRadius:"50%",width:"12vh"}}/></div>
               <div className="m-1 text-light">
                 {user?.fName}
               </div>
@@ -216,7 +216,7 @@ function UserPanel() {
         </div>
 
               {/* user info */}
-        <div className="col-sm-12 col-md-9 userinfo" style={{ display: userPanelShowHidden == 1 ? 'block' : 'none' }}>
+        <div className="col-12 col-md-9 py-1 userinfo" style={{ display: userPanelShowHidden == 1 ? 'block' : 'none' }}>
           <h1 className="text-center text-light mb-3 pt-3">اطلاعات کاربری</h1>
           <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
             <p className="mx-2 text-light">نام:</p>
@@ -241,7 +241,7 @@ function UserPanel() {
         </div>
 
               {/* basket */}
-        <div className="col-sm-12 col-md-9 basket" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
+        <div className="col-12 col-md-9 basket" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
           <section className='' id='basket'>
             <div className="">
               
@@ -255,13 +255,13 @@ function UserPanel() {
                   <img src={p1} alt="" className="card-img-top" />
                   <div className="card-body">
                     <div className="card-title">
-                      <h3 className="text-light">{basket.name}</h3>
+                      <h3 className="text-light text-center">{basket.name}</h3>
                     </div>
-                    <div className="card-subtitle my-4">
-                      <p className="text-light">تعداد:{user.numberOfEachProductInBasket.filter((n,i)=>i == index )}</p>
+                    <div className="card-subtitle mt-4">
+                      <p className="text-light text-center">تعداد:{user.numberOfEachProductInBasket.filter((n,i)=>i == index )}</p>
                     </div>
-                    <div className="text-right">
-                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-warning my-1 w-100">حذف از سبد</button>
+                    <div className="text-center">
+                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-warning btn-sm">حذف از سبد</button>
                     </div>
                   </div>
                 </div> 
@@ -271,7 +271,7 @@ function UserPanel() {
             
             <div className="d-flex justify-content-center">
                 {/* <img src={emptybox} alt="" className="" style={{display:user.basket?.length > 0 ? "none" : "block" , width:"30vh", height:"30vh"}}/> */}
-                <p className="text-warning" style={{ display: user.basket?.length > 0 ? "none" : "block" }}>سبد شما خالی است</p>
+                <p className="text-warning py-5" style={{ display: user.basket?.length > 0 ? "none" : "block" }}>سبد شما خالی است</p>
             </div>
               
             <div className="text-center mt-4">
@@ -283,7 +283,7 @@ function UserPanel() {
         </div>
 
               {/* postal info */}
-        <div className="col-sm-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==3 ? 'block' : 'none' }}>
+        <div className="col-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==3 ? 'block' : 'none' }}>
           <div className="container">
 
           <div className="row justify-content-center">
@@ -327,9 +327,9 @@ function UserPanel() {
               <label htmlFor="name" className='text-light'>کد پستی</label>
               <input value={clientPostalCode} onChange={(e)=>setClientPostalCode(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
             </div>
-           <div className="form-group mx-5 d-flex">
-              <button onClick={(e)=>sendingPostalInformation(orderId,e)} disabled={''} className="btn btn-success m-1 w-100">ثبت و پرداخت فاکتور</button>
-          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning m-1 w-100"> بازگشت </button>
+           <div className="text-center m-1">
+              <button onClick={(e)=>sendingPostalInformation(orderId,e)} disabled={''} className="btn btn-success btn-sm">ثبت و پرداخت فاکتور</button>
+          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning btn-sm"> بازگشت </button>
             </div>
           </form>
           </div>
@@ -338,12 +338,11 @@ function UserPanel() {
            </div>
         </div>
 
-              {/* factor info */}
-        <div className="col-sm-12 col-md-9" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
+        {/* factor info */}
+        <div className="col-12 col-md-9" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
           <div className="container table-responsive">
-          <h4 className='text-light text-center pt-2'>فاکتور</h4>
-          
-            <table className="mx-auto container border table-responsive">
+            <h4 className='text-light text-center pt-2'>فاکتور</h4>
+            <table className="mx-auto container border table-responsive mb-4">
               <thead className=''>
               <tr className=''>
                 <th id='table-head' className='text-light p-1 col-1'>#</th>
@@ -380,17 +379,14 @@ function UserPanel() {
 
               </tbody>
             </table>
-          
-
-          <div className="form-group mx-5 d-flex">
-          <button onClick={() => setUserPanelShowHidden(3)} className="btn btn-success m-1 w-50">دریافت اطلاعات پستی</button>
-          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning  m-1 w-50"> بازگشت </button>
-        </div>
-
+            <div className="text-center pt-5">
+          <button onClick={() => setUserPanelShowHidden(3)} className="btn btn-success btn-sm m-1">دریافت اطلاعات پستی</button>
+          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning btn-sm  m-1"> بازگشت </button>
+            </div>
           </div>
         </div>
               {/* payment page */}
-        <div className="col-sm-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==5 ? 'block' : 'none' }}>
+        <div className="col-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==5 ? 'block' : 'none' }}>
           <div className="container">
                 <h1 className="">صفحه ی پرداخت</h1>
            </div>
