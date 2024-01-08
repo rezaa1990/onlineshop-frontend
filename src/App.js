@@ -135,8 +135,8 @@ function App() {
       setShowHidden(4);
       getProduct();
     } catch (error) {
-      console.log(error.response.data.data)
-      responseApi(error.response.data.data);
+      console.log(error)
+      responseApi(error.response.data.data ? error.response.data.data : error.response.data);
     }
   }
   /////////////////////////////////////////////////////////////////////////////
