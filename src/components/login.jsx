@@ -21,7 +21,8 @@ function Login() {
   const  navigate = useNavigate();
   const[email , setEmail ]= useState("");
   const[password , setPassword ]= useState("");
-  const[loginResponseMessage,setLoginResponseMessage]=useState();
+  const [loginResponseMessage, setLoginResponseMessage] = useState();
+  const [display,setDisplay] = useState(1);
   
   
   // const firebaseConfig = {
@@ -60,25 +61,24 @@ function Login() {
     }
   }
 
-  // const handleGoogleLogin = async (e) => {
-  //   e.preventDefault();
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   try {
-  //     const result = await firebase.auth().signInWithPopup(provider);
-  //     // ورود موفقیت‌آمیز
-  //     const user = result.user;
-  //     console.log('Logged in user:', user);
-  //     navigate("/userdashboard");
-  //   } catch (error) {
-  //     // خطا در ورود
-  //     console.error('Login error:', error);
-  //   }
-  // };
-  
+  async function resetPassword(e) {
+    e.preventDefault();
+    try {
+      const loginData = {
+        email,
+      };
+      console.log(loginData);
+      const response = await axios.put(`http://${server}:5000/api/auth/resetpassword`, loginData);
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+      setLoginResponseMessage(error.response?.data?.message);
+    }
+  }
 
   return (
     <div className="row containe justify-content-center login mx-0">
-    <div className="col-lg-6">
+    <div className="col-lg-6" style={{display:display === 1 ? "block" : "none"}}>
       <h3 className="m-4 text-center text-light">ورود</h3>
 
       <div className="form-group mx-5">
@@ -105,11 +105,30 @@ function Login() {
         </div> */}
 
         <div className="text-center">
-          <Link to="/register" className="text-light">ثبت نام</Link>
+            <Link to="/register" className="text-light mx-2">ثبت نام</Link>
+            <p onClick={()=>setDisplay(2)} className="text-light mx-2">فراموشی رمز عبور</p>
         </div>
       </form>
 
 
+    </div>
+      
+    <div className="d-flex justify-content-center" style={{display:display === 2 ? "block" : "none"}}>
+    <div className="col-lg-6">
+      <h3 className="m-4 text-center text-light">بازیابی رمز عبور</h3>
+      <div className="form-group mx-5">
+       <p className="text-center text-danger ">{loginResponseMessage}</p>
+      </div>
+      <form action="" className="text-muted mb-5">
+        <div className="form-group mx-5 text-light">
+          <label htmlFor="">ایمیل</label>
+          <input onChange={(e)=>setEmail(e.target.value)} id="login-input" type="text" className="form-control border-0 text-light" />
+        </div>
+        <div className="form-group mx-5 text-center">
+          <button onClick={resetPassword} className="btn btn-success my-3 w-50">بازیابی</button>
+        </div>
+      </form>
+    </div>
     </div>
   </div>
   );
