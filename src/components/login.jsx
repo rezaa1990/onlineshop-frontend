@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useContext } from 'react';
 import AppContext from '../context/context';
+import { error } from 'jquery';
 
 
 function Login() {
@@ -28,6 +29,10 @@ function Login() {
   const [display, setDisplay] = useState(1);
   const [buttonState, setButtonState] = useState(false);
 
+  function handleClick(order,e) {
+    e.preventDefault();
+    setDisplay(order)
+  }
   async function login(e) {
     e.preventDefault();
     try {
@@ -67,10 +72,11 @@ function Login() {
       );
       console.log(response);
       setButtonState(false);
+      setLoginResponseMessage(response?.data?.message);
       setDisplay(3);
     } catch (error) {
       console.log(error);
-      setLoginResponseMessage(error.response?.data?.data);
+      setLoginResponseMessage(error.response?.data?.message);
       setButtonState(false);
     }
   }
@@ -99,7 +105,7 @@ function Login() {
       console.log(response);
       setLoginResponseMessage(response.data?.message);
       setButtonState(false);
-      setDisplay(1);
+      setDisplay(response.data?.message == "رمز عبور با موفقیت تغییر یافت" ? 1 : 3)
     } catch (error) {
       console.log(error);
       console.log(error.response?.data?.data)
@@ -186,9 +192,15 @@ function Login() {
               <button
                 onClick={resetPasswordEmail}
                 disabled={buttonState}
-                className="btn btn-success my-3 w-50"
+                className="btn btn-success btn-sm my-1 w-50"
               >
                 بازیابی
+              </button>
+              <button
+                onClick={(e)=>handleClick(1,e)}
+                className="btn btn-warning btn-sm my-1 w-50"
+              >
+                بازگشت
               </button>
             </div>
           </form>
@@ -257,9 +269,15 @@ function Login() {
                   )
                 }
                 disabled={buttonState}
-                className="btn btn-success my-3 w-50"
+                className="btn btn-success btn-sm my-1 w-50"
               >
                 تغییر رمز
+              </button>
+              <button
+                onClick={(e)=>handleClick(2,e)}
+                className="btn btn-warning btn-sm my-1 w-50"
+              >
+                بازگشت
               </button>
             </div>
           </form>
