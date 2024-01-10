@@ -484,11 +484,7 @@ function OneProduct() {
                   </div>
                   <div className="text-center">
                     <button className="btn" onClick={() => showReplysOfCommentFunc(comment._id)}>
-                    <img src={unfold} alt="" className="" style={{
-                        cursor: "pointer",
-                        width: "20px",
-                        height: "20px",
-                      }}/>
+                      <p className="text-light m-0">^ ^</p>
                     </button>
                   </div>
                 </div>

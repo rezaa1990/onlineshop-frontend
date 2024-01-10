@@ -455,7 +455,9 @@ const handleCommentChange = (productId, value) => {
 };
 
 
+
 const[commentResponse,setCommentResponse]= useState(null);
+
 async function addComment(productId,e) {
   e.preventDefault();
   try {
@@ -482,6 +484,7 @@ async function addThisCommentToProduct(commentId,productId) {
     fetchData();
     console.log(response);
     setOneProduct(response.data.data.product);//برای ری رندر شدن oneproduct و آپدیت نمایش  امنتها
+    responseApi("نظر شما بعد از تایید توسط ادمین نمایش داده خواهد شد")
   } catch (error) {
     console.error('خطا:', error);
   }
