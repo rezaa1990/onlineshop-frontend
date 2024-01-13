@@ -182,6 +182,7 @@ function UserPanel() {
   useEffect(() => {
     userPanelGetUser();
   }, []);
+  console.log("uuuuserrrr",user);
   return (
     <>
       <div className="d-md-flex">
@@ -253,7 +254,7 @@ function UserPanel() {
             {user?.basket?.map((basket,index) =>
                 <div className="col-lg-3 col-md-6 mb-5 px-3">
                 <div className="card p-1" id='basket-card'> 
-                  <img src={p1} alt="" className="card-img-top" />
+                  <img src={require(`./../images/panel-img/${basket.images[0].imagePath.substring(55)}`)} alt="" className="card-img-top" />
                   <div className="card-body">
                     <div className="card-title">
                       <h3 className="text-light text-center">{basket.name}</h3>
