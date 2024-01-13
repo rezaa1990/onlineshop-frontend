@@ -218,27 +218,34 @@ function AdminPanel() {
   console.log("userInfo", userInfo);
 
   
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState([]);
   const handleFileInputChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(event.target.files);
   };
 
 
   const handleUpload = () => {
-    if (!selectedFile) {
+    if (!selectedFile || selectedFile.length === 0) {
       console.error('هیچ تصویری انتخاب نشده است.');
       responseApi("هیچ تصویری انتخاب نشده است.")
       return;
     }
     const formData = new FormData();
-    formData.append('image', selectedFile);
+    for (let i = 0; i < selectedFile.length; i++) {
+      formData.append('images', selectedFile[i]);
+    }
     console.log(formData);
-    console.log(formData.get("image"));
+    console.log(formData.get("images"));
     axios.post(`http://${server}:5000/api/image/addimage`, formData)
       .then((response) => {
         console.log("تصویر با موفقیت ارسال شد!", response.data);
-        console.log(response.data.data.image._id);
-        setImageId(response.data.data.image._id);
+        console.log(response.data.data.images);
+        const responseImageId =[]
+        response.data.data.images.map((image) => {
+          responseImageId.push(image._id)
+        });
+        console.log(responseImageId);
+        setImageId(responseImageId);
         console.log(response.data.message);
         responseApi(response.data.message);
       })
@@ -430,6 +437,7 @@ function AdminPanel() {
                   id="uploadInput"
                   className=""
                   type="file"
+                  multiple
                   onChange={handleFileInputChange}
                 />
               </div>

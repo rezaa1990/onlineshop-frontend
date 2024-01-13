@@ -192,7 +192,8 @@ function UserPanel() {
           
           <div className="p-1">
             <div className="">
-              <div className=""><img src={pp} alt="" className="" style={{borderRadius:"50%",width:"12vh"}}/></div>
+              <div className="">
+                <img src={require("./../images/pp.jpg")} alt="سسس" className="" style={{ borderRadius: "50%", width: "12vh" }} /></div>
               <div className="m-1 text-light">
                 {user?.fName}
               </div>

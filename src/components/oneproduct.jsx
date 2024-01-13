@@ -208,12 +208,55 @@ function OneProduct() {
     navigate(navigateDestination);
   }
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleNext = () => {
+      if (currentIndex < oneProduct.images.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      }
+    };
+
+    const handlePrev = () => {
+      if (currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1);
+      }
+    };
+  
   return (
     <div className="" id="oneproduct">
       {/* card img */}
-      <div className="d-flex justify-content-center">
-        <img src={p1} alt="" style={{width: "350px",height: "350px"}} className="mt-3 rounded"/>
+      <div className="">
+      <div className="d-flex justify-content-center ">
+        {oneProduct.images.map((image, index) => (
+          <img
+            className="w-50 mt-1 rounded position-relative"
+            key={index}
+            src={require(`./../images/panel-img/${image.imagePath?.substring(55)}`)}
+            alt={`image_${index}`}
+            style={{
+              display: currentIndex === index ? 'block' : 'none',
+              // width: '60vh',
+              // height: '60vh',
+            }}
+          />
+        ))}
+        <button
+          className="text-light btn btn-lg border-0 position-absolute start-0"
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+        >
+          قبلی
+        </button>
+        <button
+          className="text-light btn btn-lg border-0 position-absolute end-0"
+          onClick={handleNext}
+          disabled={currentIndex === oneProduct.images.length - 1}
+        >
+          بعدی
+        </button>
       </div>
+    </div>
+
       {/* card body */}
       <div className="pb-5 mx-2 mt-2 rounded-5">
         <div className="card-body">
@@ -222,7 +265,6 @@ function OneProduct() {
               className="text-warning col-6 text-center p-2 m-2"
               style={{ display: oneProduct.discount ? "block" : "none" }}
             >
-              
               تخفیف {oneProduct.discount?.value * 100}%
             </h6>
 
@@ -237,58 +279,56 @@ function OneProduct() {
             )}
           </div>
 
-        <div className="col-8 m-auto p-1">
-              {/* name */}
-              <div className="text-center">
-              
-                <div className="card-title">
-                  <h3 className="text-light">{oneProduct?.name}</h3>
-                </div>
-                  {/* card description */}
-                <div className="card-subtitle my-4 text-center">
-                  <p className="container-fluid text-light">
-                    <h6 className="">مشخصات</h6>
-                    <p className="p-1 m-1" style={{wordWrap:"break-word"}}>{oneProduct?.description}</p>
-                  </p>
-                </div>
+          <div className="col-8 m-auto p-1">
+            {/* name */}
+            <div className="text-center">
+              <div className="card-title">
+                <h3 className="text-light">{oneProduct?.name}</h3>
               </div>
-          
-              {/*add to basket and like */}
+              {/* card description */}
+              <div className="card-subtitle my-4 text-center">
+                <p className="container-fluid text-light">
+                  <h6 className="">مشخصات</h6>
+                  <p className="p-1 m-1" style={{ wordWrap: "break-word" }}>
+                    {oneProduct?.description}
+                  </p>
+                </p>
+              </div>
+            </div>
+
+            {/*add to basket and like */}
             <div className="d-flex align-items-center">
-              
-
-
               {/* + , -  */}
               <div className="col-6 d-flex align-items-center py-3 px-0">
                 <div className="pt-3">
-                <p
-                  className=""
-                  onClick={() =>
-                    addToBasket(
-                      oneProduct._id,
-                      indexOfSelectedProduct == oneProduct._id
-                        ? numberOfSelectedProduct
-                        : 1
-                    )
-                  }
-                >
-                  <i
-                    className="p-2 rounded"
-                    id="add-to-basket"
-                    style={{ fontSize: "15px", cursor: "pointer" }}
+                  <p
+                    className=""
+                    onClick={() =>
+                      addToBasket(
+                        oneProduct._id,
+                        indexOfSelectedProduct == oneProduct._id
+                          ? numberOfSelectedProduct
+                          : 1
+                      )
+                    }
                   >
-                    <img
-                      src={basket}
-                      className="basket"
-                      id="basket-image"
-                      style={{
-                        cursor: "pointer",
-                        width: "30px",
-                        height: "30px",
-                      }}
-                    />
-                  </i>
-                </p>
+                    <i
+                      className="p-2 rounded"
+                      id="add-to-basket"
+                      style={{ fontSize: "15px", cursor: "pointer" }}
+                    >
+                      <img
+                        src={basket}
+                        className="basket"
+                        id="basket-image"
+                        style={{
+                          cursor: "pointer",
+                          width: "30px",
+                          height: "30px",
+                        }}
+                      />
+                    </i>
+                  </p>
                 </div>
                 <button
                   className="btn btn-sm rounded-5 text-light"
@@ -299,7 +339,7 @@ function OneProduct() {
                   -
                 </button>
                 <span className="text-light p-1">
-                  {numberOfSelectedProduct || 1 } 
+                  {numberOfSelectedProduct || 1}
                 </span>
                 <button
                   className="btn btn-sm rounded-4 text-light"
@@ -336,11 +376,14 @@ function OneProduct() {
                   </i>
                 </p>
               </div>
-                      
             </div>
-            <div className="text-warning text-center" style={{ display: responseMessage ? "block" : "none" }}>{responseMessage}</div>
-        </div>
-          
+            <div
+              className="text-warning text-center"
+              style={{ display: responseMessage ? "block" : "none" }}
+            >
+              {responseMessage}
+            </div>
+          </div>
         </div>
 
         <form className="col-8 m-auto p-1">
@@ -355,11 +398,11 @@ function OneProduct() {
               cols="30"
               rows="2"
               placeholder="نظر خود را بنویسید ..."
-              style={{ outline: "none", boxShadow: "none" ,border:"none"}}
+              style={{ outline: "none", boxShadow: "none", border: "none" }}
             ></textarea>
             <div className="text-center">
               <button
-                onClick={(e) => addComment(oneProduct._id,e)}
+                onClick={(e) => addComment(oneProduct._id, e)}
                 className="btn btn-sm text-light m-1"
                 id="add-comment-button"
                 style={{ border: "1px solid white" }}
@@ -370,8 +413,8 @@ function OneProduct() {
           </div>
         </form>
 
-          {/* response comment meesage */}
-          <div
+        {/* response comment meesage */}
+        <div
           className="bg-light m-2 p-3 rounded "
           style={{
             display: commentResponse == null ? "none" : "block",
@@ -387,18 +430,18 @@ function OneProduct() {
             <div className="d-flex">
               <div className="me-auto">
                 <button
-                className="btn btn-primary btn-sm  m-1"
-                onClick={() => oneProductMiddleFunc("/login")}
-              >
-                ورود
+                  className="btn btn-primary btn-sm  m-1"
+                  onClick={() => oneProductMiddleFunc("/login")}
+                >
+                  ورود
                 </button>
               </div>
               <div className="ms-auto">
                 <button
-                className="btn btn-primary btn-sm  m-1"
-                onClick={() => oneProductMiddleFunc("/register")}
-              >
-                ثبت نام
+                  className="btn btn-primary btn-sm  m-1"
+                  onClick={() => oneProductMiddleFunc("/register")}
+                >
+                  ثبت نام
                 </button>
               </div>
             </div>
@@ -411,90 +454,129 @@ function OneProduct() {
               ×
             </button>
           </div>
-          </div>
+        </div>
 
         <p className="text-center text-light mt-4 "> نظرات دیگران</p>
         <div id="" className="col-8 mx-auto p-1 rounded">
-          <div
-            className=""
-            style={{ maxHeight: "400px", overflow: "auto" }}
-          >
+          <div className="" style={{ maxHeight: "400px", overflow: "auto" }}>
             {oneProduct?.comments?.map((comment) => (
-              <div id="comment" className="mx-1 m-2 rounded" style={{display:comment.isApproved === true ? "block" : "none"}}>
+              <div
+                id="comment"
+                className="mx-1 m-2 rounded"
+                style={{
+                  display: comment.isApproved === true ? "block" : "none",
+                }}
+              >
                 <div className="">
-                <p className="text-light p-1 m-0">{comment?.author.fName}</p>
-                <p
+                  <p className="text-light p-1 m-0">{comment?.author.fName}</p>
+                  <p
                     className="text-light text-center m-0"
-                    style={{ fontSize: "15px" , wordWrap:"break-word"}}
+                    style={{ fontSize: "15px", wordWrap: "break-word" }}
                   >
                     {comment?.text}
-                </p>
-                  
+                  </p>
+
                   <div className="d-flex justify-content-end">
-                    <p
-                      className="text-light"
-                      style={{ fontSize: "14px" }}
-                    >
+                    <p className="text-light" style={{ fontSize: "14px" }}>
                       {comment?.likes?.length}
                     </p>
                     <i
                       className="text-light pe-0 ms-2"
-                      style={{ fontSize: "12px" ,cursor:"pointer"}}
-                      onClick={() => likeComment(comment._id, userId,oneProduct._id)}
+                      style={{ fontSize: "12px", cursor: "pointer" }}
+                      onClick={() =>
+                        likeComment(comment._id, userId, oneProduct._id)
+                      }
                     >
-                      <img src={like} alt="" className=""
+                      <img
+                        src={like}
+                        alt=""
+                        className=""
                         style={{
-                        cursor: "pointer",
-                        width: "20px",
-                        height: "20px",
-                      }}/>
+                          cursor: "pointer",
+                          width: "20px",
+                          height: "20px",
+                        }}
+                      />
                     </i>
                   </div>
-                  <div className="text-light" style={{ display: visibleComments.includes(comment._id) ? "block" : "none" }}>
+                  <div
+                    className="text-light"
+                    style={{
+                      display: visibleComments.includes(comment._id)
+                        ? "block"
+                        : "none",
+                    }}
+                  >
                     {comment.reply?.map((t) => (
-                      <div id="reply-comment" className="text-center mx-4 rounded" style={{ wordWrap: "break-word"}}>
-                        <p className="text-end p-1" style={{ fontSize: "11px" }} >{t?.author.fName}</p>
+                      <div
+                        id="reply-comment"
+                        className="text-center mx-4 rounded"
+                        style={{ wordWrap: "break-word" }}
+                      >
+                        <p
+                          className="text-end p-1"
+                          style={{ fontSize: "11px" }}
+                        >
+                          {t?.author.fName}
+                        </p>
                         <p className="">{t?.text}</p>
                       </div>
                     ))}
-                  <div className="">
-                  <div className="mx-2">
-                  <textarea
-                    value={replyComment}
-                    onChange={(e) => handleRyplyComment(e.target.value)}
-                    className="form-control text-light p-1"
-                    id="text-area"
-                    cols="30"
-                    rows="1"
-                    placeholder="پاسخ ..."
-                    style={{ outline: "none", boxShadow: "none" ,border:"none"}}
-                    ></textarea>
+                    <div className="">
+                      <div className="mx-2">
+                        <textarea
+                          value={replyComment}
+                          onChange={(e) => handleRyplyComment(e.target.value)}
+                          className="form-control text-light p-1"
+                          id="text-area"
+                          cols="30"
+                          rows="1"
+                          placeholder="پاسخ ..."
+                          style={{
+                            outline: "none",
+                            boxShadow: "none",
+                            border: "none",
+                          }}
+                        ></textarea>
+                      </div>
+                      <div className="text-center">
+                        <button
+                          onClick={(e) =>
+                            replyToComment(
+                              replyComment,
+                              comment._id,
+                              userId,
+                              oneProduct._id,
+                              e
+                            )
+                          }
+                          className="btn btn-sm text-light border mb-3 mt-1"
+                        >
+                          ثبت
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div className="text-center">
                     <button
-                      onClick={(e) =>
-                        replyToComment(replyComment, comment._id, userId,oneProduct._id, e)
-                      }
-                      className="btn btn-sm text-light border mb-3 mt-1"
+                      className="btn"
+                      onClick={() => showReplysOfCommentFunc(comment._id)}
                     >
-                      ثبت
-                    </button>
-                  </div>
-                </div>
-                  </div>
-                  <div className="text-center">
-                    <button className="btn" onClick={() => showReplysOfCommentFunc(comment._id)}>
                       <p className="text-light m-0">^ ^</p>
                     </button>
                   </div>
                 </div>
-
               </div>
             ))}
           </div>
         </div>
         <div className="text-center my-1">
-            <button className="text-light btn border" onClick={()=>navigate("/")}>بازگشت</button>
+          <button
+            className="text-light btn border"
+            onClick={() => navigate("/")}
+          >
+            بازگشت
+          </button>
         </div>
       </div>
     </div>

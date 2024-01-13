@@ -115,9 +115,14 @@ return (
                 {/* card */}
                 <div className="card p-1" id='card'>
                   {/* card img */}
-                  {product.images.map((image, index) => (
-                    <img src={""}/>
-                  ))}
+                    <img
+                      className='w-100'
+                      key={index}
+                      src={require(`./../images/panel-img/${product.images[0].imagePath.substring(55)}`)}
+                      alt={`image_${index}`}
+                    />
+
+
                   {/* card body */}
                   <div className="card-body">
 
