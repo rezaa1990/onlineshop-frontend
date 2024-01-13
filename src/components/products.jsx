@@ -201,7 +201,7 @@ function Products() {
               {products.map((product) => (
                 <div className="col-lg-4 col-md-6 col-xs-12 mb-1 px-3">
                   <div className="card " id="admin-card">
-                    <img src={p1} alt="" className="card-img-top" />
+                    <img src={require(`./../images/panel-img/${product.images[0].imagePath.substring(55)}`)} alt="" className="card-img-top" />
                     <div className="card-body pb-0">
                       <div className="card-title">
                         <h3 className="text-light text-center">
