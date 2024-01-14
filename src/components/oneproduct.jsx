@@ -7,6 +7,8 @@ import AppContext from "../context/context";
 import { Navigate, useNavigate } from "react-router-dom";
 import like from "./../images/like.png";
 import unfold from "./../images/unfold.png"
+import next from "./../images/next.png"
+import prev from "./../images/prev.png"
 
 function OneProduct() {
   const {
@@ -226,39 +228,47 @@ function OneProduct() {
     <div className="" id="oneproduct">
       {/* card img */}
       <div className="">
-      <div className="d-flex justify-content-center ">
+        <div className="d-flex justify-content-center position-relative">
+        <button
+          className="text-light btn btn-lg border-0 position-absolute top-50 start-0"
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+        >
+          <img src={prev} alt="" className="" style={{
+              width: '5vh',
+              height: '5vh',
+            }} />
+        </button>
         {oneProduct.images.map((image, index) => (
           <img
-            className="w-50 mt-1 rounded position-relative"
+            className={`mt-1 px-5 
+            ${currentIndex === index ? 'd-block' : 'd-none'} 
+            ${window.innerWidth >= 576 ? 'w-50' : 'w-100'}`}
             key={index}
             src={require(`./../images/panel-img/${image.imagePath?.substring(55)}`)}
             alt={`image_${index}`}
             style={{
-              display: currentIndex === index ? 'block' : 'none',
-              // width: '60vh',
-              // height: '60vh',
+              // width: '300px',
+              // height: '300px',
             }}
-          />
+          />        
         ))}
+
         <button
-          className="text-light btn btn-lg border-0 position-absolute start-0"
-          onClick={handlePrev}
-          disabled={currentIndex === 0}
-        >
-          قبلی
-        </button>
-        <button
-          className="text-light btn btn-lg border-0 position-absolute end-0"
+          className="text-light btn btn-lg border-0 position-absolute top-50 end-0"
           onClick={handleNext}
           disabled={currentIndex === oneProduct.images.length - 1}
         >
-          بعدی
+          <img src={next} alt="" className="" style={{
+              width: '5vh',
+              height: '5vh',
+            }} />
         </button>
       </div>
     </div>
 
       {/* card body */}
-      <div className="pb-5 mx-2 mt-2 rounded-5">
+      <div className="pb-5 mx-2 mt-5 rounded-5">
         <div className="card-body">
           <div className="card-discount d-flex col-8 m-auto">
             <h6
