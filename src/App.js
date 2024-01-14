@@ -17,7 +17,7 @@ import { useLocation,} from 'react-router-dom';
 import RouteGuard from "./components/routhguard.jsx";
 
 function App() {
-  const server = "localhost" || "192.168.169.166";
+  const server =  "192.168.199.166";
 
   const userToken = localStorage.getItem('userToken');
   const config = {
@@ -508,7 +508,7 @@ function moreDataAboutProduct(productId){
       postalCode:clientPostalCode,
      }
       console.log(data);
-      const response = await axios.put(`http://localhost:5000/api/order/addpostalinformation/${orderId}`, data);
+      const response = await axios.put(`http://${server}:5000/api/order/addpostalinformation/${orderId}`, data);
       console.log(response.data);
       responseApi(response.data.message);
     } catch (error) {
@@ -525,7 +525,7 @@ function moreDataAboutProduct(productId){
         numberOfEachProductInBasket
        }
         console.log(data);
-        const response = await axios.post(`http://localhost:5000/api/order/addorder`,data);
+        const response = await axios.post(`http://${server}:5000/api/order/addorder`,data);
         console.log(response);
         setTotalPrice(response.data.data.totalPrice)
         setFactor(response.data.data.factors)
