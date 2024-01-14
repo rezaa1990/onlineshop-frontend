@@ -26,11 +26,6 @@ const AdminSidebar = () => {
       icon: faWarehouse,
       onClick: () => setShowHidden(2),
     },
-    {
-      text: "محصولات",
-      icon: faProcedures,
-      onClick: toggleSubMenu,
-      submenu: [
         {
           text: "بروز رسانی",
           icon: faUpRightAndDownLeftFromCenter,
@@ -41,9 +36,6 @@ const AdminSidebar = () => {
           icon: faAdd,
           onClick: () => setShowHidden(3),
         },
-        // Add more submenu items as needed
-      ],
-    },
     {
       text: "پیامها",
       icon: faMessage,
@@ -55,11 +47,11 @@ const AdminSidebar = () => {
       onClick: () => setShowHidden(7),
     },
   ];
-
+console.log(adminUserInfo)
   return (
     <>
       <div
-        className="pt-1 text-center border-bottom rounded-4"
+        className="pt-1 text-center"
         id="admin-sidebar-userinfo"
         style={{ cursor: "pointer" }}
         onClick={() => setShowHidden(1)}
