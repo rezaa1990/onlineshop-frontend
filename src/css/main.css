@@ -61,11 +61,11 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
 /* adminpanel */
 
 #admin-sidebar,#admin-nav{
-  background-color: rgba(3, 28, 64, 0.835);
+  background-color: rgba(3, 28, 64, 0.932);
 }
 
 #admin-sidebar-ul-li:hover{
-  background-color: rgba(16, 1, 79, 0.855);
+  background-color: rgba(28, 1, 135, 0.855);
 }
 
 #admin-updatproduct,#admin-updateproduct-form{
@@ -129,4 +129,21 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   #user-product-custom-height {
     height: 900px; /* ارتفاع دیگر برای نمایشگرهای با عرض بیشتر از ۷۶۸ پیکسل */
   }
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 25px;
+}
+
+.menu-line {
+  width: 26px;
+  height: 4px;
+  background-color: white;
+}
+
+#menu-btn{
+  /* background-color: rgba(3, 28, 64, 0.932); */
 }

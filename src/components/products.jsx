@@ -199,7 +199,7 @@ function Products() {
             {/* product */}
             <div className="row">
               {products.map((product) => (
-                <div className="col-lg-4 col-md-6 col-xs-12 mb-1 px-3">
+                <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-1 px-3">
                   <div className="card " id="admin-card">
                     <img src={require(`./../images/panel-img/${product.images[0].imagePath.substring(55)}`)} alt="" className="card-img-top" />
                     <div className="card-body pb-0">
@@ -242,16 +242,16 @@ function Products() {
                           checked={selectedProducts.includes(product._id)}
                         />
 
-                        <div className="d-flex">
+                        <div className="d-flex justify-content-between">
                           <button
                             onClick={() => middleFunction(product._id)}
-                            className="btn btn-success btn-sm m-1 w-50"
+                            className="btn btn-success btn-sm m-1"
                           >
                             بروزرسانی
                           </button>
                           <button
                             onClick={() => deleteProduct(product._id)}
-                            className="btn btn-danger btn-sm m-1 w-50"
+                            className="btn btn-danger btn-sm m-1"
                           >
                             حذف
                           </button>
@@ -457,8 +457,9 @@ function Products() {
         </div>
         {/* ایجاد تخفیف */}
         <div className="bg-light p-1">
-          <div className="mx-3">
+          <div className="">
             <div className="p-2 rounded" id="discount">
+              <div className="col-md-6 mx-auto">
               <p className="text-center">ایجاد تخفیف</p>
 
               {/* چک باکس برای انتخاب نوع تخفیف */}
@@ -502,7 +503,7 @@ function Products() {
                   className="container rounded border-0 p-2 m-1"
                 />
               </div>
-              <div className="col-md-8 mx-auto">
+              <div className="d-flex col-md-8 mx-auto justify-content-around">
                 <button
                   onClick={() =>
                     createDiscount(
@@ -512,13 +513,13 @@ function Products() {
                       selectedProducts
                     )
                   }
-                  className="btn btn-sm btn-success my-1 w-50"
+                  className="btn btn-sm btn-success my-1"
                 >
                   اعمال تخفیف
                 </button>
                 <button
                   onClick={() => removeDiscount(selectedProducts)}
-                  className="btn btn-sm btn-warning my-1 w-50"
+                  className="btn btn-sm btn-warning my-1"
                 >
                   حذف تخفیف
                 </button>
@@ -530,7 +531,7 @@ function Products() {
                 {responseMessage}
               </p>
             </div>
-        
+            </div>
           
           </div>
         </div>

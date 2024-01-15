@@ -38,7 +38,7 @@ function App() {
   const [imageId, setImageId] = useState();
   const [isSubMenuVisible, setIsSubMenuVisible] = useState(false);
   const [img, setImg] = useState();
-  const [showHidden, setShowHidden] = useState();
+  const [showHidden, setShowHidden] = useState(5);
   const [adminUserInfo, setAdminUserInfo] = useState();
   //producti ke dakhele admine
   const [products, setProducts] = useState([]);
@@ -812,7 +812,7 @@ async function deleteFromBasket(userId,basketId) {
                   {/* <AdminPanel></AdminPanel> */}
                 {/* ) : ( */}
                   <>
-                    <Navbar></Navbar>
+                    {/* <Navbar></Navbar> */}
                     {/* <AdminPanel></AdminPanel> */}
                      <Routes>
                       <Route path="/oneproduct" element={<OneProduct />} />
@@ -822,8 +822,8 @@ async function deleteFromBasket(userId,basketId) {
                       <Route path="/login" element={<Login />} />
                       <Route path="/register" element={<Register />} />
                     </Routes> 
-                    <Contact></Contact>
-                    <Footer></Footer>
+                    {/* <Contact></Contact> */}
+                    {/* <Footer></Footer> */}
                   </>
                 {/* )} */}
           </AppContext.Provider>

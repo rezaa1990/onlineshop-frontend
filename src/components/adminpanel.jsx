@@ -3,16 +3,20 @@ import { faAdd, faCoffee, faDove, faMessage, faProcedures, faReceipt, faUpDown, 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState ,useContext} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Products from './products';
-import { hover } from '@testing-library/user-event/dist/hover';
+import { Link, useNavigate } from "react-router-dom";
+import Products from "./products";
+import { hover } from "@testing-library/user-event/dist/hover";
 import css from "./../css/main.css";
 import Navbar from "./navbar";
-import AppContext from '../context/context';
+import AppContext from "../context/context";
 import MessageList from "./message";
-import OrderList from './order';
+import OrderList from "./order";
 import pp from "./../images/pp.jpg";
+import userIcon from "./../images/user.png";
+import search from "./../images/search.png";
+import exit from "./../images/exit.png";
 import AdminSidebar from "./sidebar";
+import MyDatePicker from "./date";
 
 function AdminPanel() {
   const {
@@ -217,32 +221,31 @@ function AdminPanel() {
   }, []);
   console.log("userInfo", userInfo);
 
-  
   const [selectedFile, setSelectedFile] = useState([]);
   const handleFileInputChange = (event) => {
     setSelectedFile(event.target.files);
   };
 
-
   const handleUpload = () => {
     if (!selectedFile || selectedFile.length === 0) {
-      console.error('هیچ تصویری انتخاب نشده است.');
-      responseApi("هیچ تصویری انتخاب نشده است.")
+      console.error("هیچ تصویری انتخاب نشده است.");
+      responseApi("هیچ تصویری انتخاب نشده است.");
       return;
     }
     const formData = new FormData();
     for (let i = 0; i < selectedFile.length; i++) {
-      formData.append('images', selectedFile[i]);
+      formData.append("images", selectedFile[i]);
     }
     console.log(formData);
     console.log(formData.get("images"));
-    axios.post(`http://${server}:5000/api/image/addimage`, formData)
+    axios
+      .post(`http://${server}:5000/api/image/addimage`, formData)
       .then((response) => {
         console.log("تصویر با موفقیت ارسال شد!", response.data);
         console.log(response.data.data.images);
-        const responseImageId =[]
+        const responseImageId = [];
         response.data.data.images.map((image) => {
-          responseImageId.push(image._id)
+          responseImageId.push(image._id);
         });
         console.log(responseImageId);
         setImageId(responseImageId);
@@ -250,248 +253,430 @@ function AdminPanel() {
         responseApi(response.data.message);
       })
       .catch((error) => {
-        console.error("خطا در ارسال تصویر:", error)
+        console.error("خطا در ارسال تصویر:", error);
         responseApi(error.message);
       });
+  };
+  function handleExit() {
+    localStorage.removeItem("userToken");
+    setToken();
   }
+
+  const [collapsed, setCollapsed] = useState(true);
+  const handleBodyClick = (e) => {
+    // اگر روی بدنه صفحه کلیک شده و سایدبار باز است، آن را ببند
+    if (!e.target.closest(".sidebar-wrapper") && !collapsed) {
+      setCollapsed(true);
+    }
+  };
+  
+
   return (
-    <div className="d-flex">
-      {/* sidebar */}
-      <div className="col-4 col-md-2 rounded-4" id="admin-sidebar">
-        <AdminSidebar></AdminSidebar>
+    <div className="">
+      {/* admin nav */}
+      <div className="border-bottom" id="admin-nav">
+        <nav className="">
+          <div className="container">
+            <div className="d-flex align-items-center">
+              {/* user */}
+              <div className="col-3 text-white d-flex" onClick={""}>
+                <i className="" style={{ fontSize: "15px", cursor: "pointer" }}>
+                  <img
+                    src={userIcon}
+                    className="text-dark"
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                  />
+                </i>
+                حساب کاربری
+              </div>
+
+              {/* search */}
+              <form action="" className="col-3 form-inline p-1">
+                <div className="input-group">
+                  <div className="input-group-append pt-2 px-1">
+                    <i
+                      className=""
+                      style={{ fontSize: "15px", cursor: "pointer" }}
+                    >
+                      <img
+                        src={search}
+                        className="mb-2"
+                        style={{
+                          cursor: "pointer",
+                          width: "20px",
+                          height: "20px",
+                        }}
+                      />
+                    </i>
+                  </div>
+                  <input
+                    value={navSearchInputValue}
+                    onChange={(e) => setNavSearchInputValue(e.target.value)}
+                    type="text"
+                    placeholder="جست و جو"
+                    className="text-white form-control rounded border-0 search-input"
+                    id="nav-search-input"
+                    style={{
+                      boxShadow: "none",
+                    }}
+                  />
+                </div>
+              </form>
+
+              {/* date */}
+              <div className="col-3 d-flex px-1">
+                <div className="">
+                  <i className="">
+                    {/* <img src={calendar} className="" style={{width: '25px', height: '25px' }} /> */}
+                  </i>
+                </div>
+                <div className="p-1 ">
+                  <MyDatePicker></MyDatePicker>
+                </div>
+              </div>
+
+              {/* input/output */}
+              <div className="col-3 d-flex">
+                <div className="">
+                  <Link
+                    to="./login"
+                    onClick={handleLogin}
+                    className=""
+                    style={{
+                      display: token ? "none" : "block",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <i
+                      className="text-white d-flex justify-content-end m-1"
+                      style={{ fontSize: "15px", cursor: "pointer" }}
+                    >
+                      <div className="p-2 rounded lilo">
+                        <img
+                          src={userIcon}
+                          className="col-3"
+                          style={{
+                            cursor: "pointer",
+                            width: "20px",
+                            height: "20px",
+                          }}
+                        />
+                        ثبت نام/ورود
+                      </div>
+                    </i>
+                  </Link>
+                </div>
+
+                <div className="text-center">
+                  <Link
+                    to="./"
+                    onClick={handleExit}
+                    className=""
+                    style={{
+                      display: token ? "block" : "none",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <i
+                      className="text-white d-flex justify-content-end"
+                      style={{ fontSize: "15px", cursor: "pointer" }}
+                    >
+                      <div className="p-2 rounded lilo">
+                        <img
+                          src={exit}
+                          className="col-3 mx-1 mt-"
+                          style={{
+                            cursor: "pointer",
+                            width: "18px",
+                            height: "18px",
+                          }}
+                        />
+                        خروج
+                      </div>
+                    </i>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
 
-      {/* message */}
-      <div
-        className="col-8 col-md-10"
-        id="admin-message"
-        style={{ display: showHidden == 6 ? "block" : "none" }}
-      >
-        <MessageList></MessageList>
-      </div>
+      {/* menu btn */}
+      <button
+        className="btn btn-danger mt-1 me-1 position-fixed"
+        id='menu-btn'
+  style={{
+    zIndex: 1000,
+  }}
+  onClick={() => setCollapsed(!collapsed)}
+>
+  <div className="menu-icon">
+    <div className="menu-line"></div>
+    <div className="menu-line"></div>
+    <div className="menu-line"></div>
+  </div>
+</button>
 
-      {/* order */}
-      <div
-        className="col-8 col-md-10"
-        style={{ display: showHidden == 7 ? "block" : "none" }}
-      >
-        <OrderList></OrderList>
-      </div>
 
-      {/* user info */}
-      <div
-        className="col-8 col-md-10"
-        id="admin-userinfo"
-        style={{ display: showHidden == 1 ? "block" : "none" }}
-      >
-        <div className="bg-primary rounded-4">
-          <div className="">
-            <h5 className="text-light text-center">اطلاعات کاربری</h5>
-            <div className="p-2 my-2 rounded bg-light">
-              <div className="col-md-8 mx-auto shadow p-2">
-                <div className="d-flex">
-                  <p className="px-1">نام:</p>
-                  <p className="px-1">{adminUserInfo?.fName}</p>
-                </div>
-                <div className="d-flex">
-                  <p className="px-1"> نام خانوادگی:</p>
-                  <p className="px-1">{adminUserInfo?.LName}</p>
-                </div>
-                <div className="d-flex">
-                  <p className="px-1"> سطح دسترسی :</p>
-                  <p className="px-1">
-                    {adminUserInfo?.role === "adminUser"
-                      ? "ادمین"
-                      : "کاربر معمولی"}
-                  </p>
-                </div>
-                <div className="d-flex">
-                  <p className="px-1">ایمیل:</p>
-                  <p className="px-1">{adminUserInfo?.email}</p>
-                </div>
-                <div className="d-flex">
-                  <p className="px-1">شماره تماس:</p>
-                  <p className="px-1">{adminUserInfo?.mobile}</p>
-                </div>
-                <div className="d-flex p-1">
-                  <p className="px-1">آدرس:</p>
-                  <p className="px-1">{adminUserInfo?.address}</p>
+      <div className="d-flex">
+        {/* sidebar */}
+        <div
+          className="col-4 col-md-2 sidebar-wrapper fixed"
+          style={{
+            position: "fixed",
+            top: 0,
+            right: collapsed ? "-100%" : 0, // اگر منو بسته باشد، به چپ مخفی شود
+            zIndex: 1000,
+            height: "100%",
+            transition: "left 0.3s ease-in-out", // افزودن انیمیشن به حرکت
+          }}
+          id="admin-sidebar"
+        >
+          <div className="text-start">
+            <button
+              className="btn btn-close btn-close-white"
+              onClick={() => setCollapsed(!collapsed)}
+            ></button>
+          </div>
+          <AdminSidebar></AdminSidebar>
+        </div>
+
+        {/* message */}
+        <div
+          className="col-12"
+          id="admin-message"
+          style={{ display: showHidden == 6 ? "block" : "none" }}
+        >
+          <MessageList></MessageList>
+        </div>
+
+        {/* order */}
+        <div
+          className="col-12"
+          style={{ display: showHidden == 7 ? "block" : "none" }}
+        >
+          <OrderList></OrderList>
+        </div>
+
+        {/* user info */}
+        <div
+          className="col-12"
+          id="admin-userinfo"
+          style={{ display: showHidden == 1 ? "block" : "none" }}
+        >
+          <div className="bg-primary rounded-4">
+            <div className="">
+              <h5 className="text-light text-center">اطلاعات کاربری</h5>
+              <div className="p-2 my-2 rounded bg-light">
+                <div className="col-md-8 mx-auto shadow p-2">
+                  <div className="d-flex">
+                    <p className="px-1">نام:</p>
+                    <p className="px-1">{adminUserInfo?.fName}</p>
+                  </div>
+                  <div className="d-flex">
+                    <p className="px-1"> نام خانوادگی:</p>
+                    <p className="px-1">{adminUserInfo?.LName}</p>
+                  </div>
+                  <div className="d-flex">
+                    <p className="px-1"> سطح دسترسی :</p>
+                    <p className="px-1">
+                      {adminUserInfo?.role === "adminUser"
+                        ? "ادمین"
+                        : "کاربر معمولی"}
+                    </p>
+                  </div>
+                  <div className="d-flex">
+                    <p className="px-1">ایمیل:</p>
+                    <p className="px-1">{adminUserInfo?.email}</p>
+                  </div>
+                  <div className="d-flex">
+                    <p className="px-1">شماره تماس:</p>
+                    <p className="px-1">{adminUserInfo?.mobile}</p>
+                  </div>
+                  <div className="d-flex p-1">
+                    <p className="px-1">آدرس:</p>
+                    <p className="px-1">{adminUserInfo?.address}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* anbar  */}
-      <div
-        className="col-8 col-md-10"
-        style={{ display: showHidden == 2 ? "block" : "none" }}
-      >
-        <div className="p-2 shadow-sm">
-          <p className=""> نام محصول:</p>
-          <p className="">موبایل</p>
+        {/* anbar  */}
+        <div
+          className="col-12"
+          style={{ display: showHidden == 2 ? "block" : "none" }}
+        >
+          <div className="p-2 shadow-sm">
+            <p className=""> نام محصول:</p>
+            <p className="">موبایل</p>
+          </div>
+          <div className="p-2 shadow-sm">
+            <p className="">تعداد:</p>
+            <p className="">۳۳۴</p>
+          </div>
+          <div className="p-2 shadow-sm">
+            <p className="">قیمت:</p>
+            <p className="">۱۲۳۴۵۰۰۰ تومان</p>
+          </div>
         </div>
-        <div className="p-2 shadow-sm">
-          <p className="">تعداد:</p>
-          <p className="">۳۳۴</p>
-        </div>
-        <div className="p-2 shadow-sm">
-          <p className="">قیمت:</p>
-          <p className="">۱۲۳۴۵۰۰۰ تومان</p>
-        </div>
-      </div>
 
-      {/* add product */}
-      <div
-        className="col-8 col-md-10"
-        id="admin-addproduct"
-        style={{ display: showHidden == 3 ? "block" : "none" }}
-      >
-        <div className="bg-primary rounded-4 pt-2">
-          <h5 htmlFor="" className="text-center text-light">
-            افزودن محصول جدید
-          </h5>
-          <div className="bg-light rounded pb-2 px-2">
-            <div className="text-center text-danger p-2">{responseMessage}</div>
-            <div className="form-grou col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                دسته بندی
-              </label>
-              <input
-                onChange={(e) => setCategory(e.target.value)}
-                id="category"
-                type="text"
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                نام
-              </label>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                id=""
-                type="text"
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                قیمت
-              </label>
-              <input
-                onChange={(e) => setPrice(e.target.value)}
-                id=""
-                type="text"
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                تعداد
-              </label>
-              <input
-                onChange={(e) => setNumberOfProduct(e.target.value)}
-                id="numberOfProduct"
-                type="text"
-                className="form-control"
-              />
-            </div>
-
-            <div className="form-group col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                مشخصات
-              </label>
-              <textarea
-                className="form-control"
-                onChange={(e) => setDescription(e.target.value)}
-                name=""
-                id="message"
-                cols="30"
-                rows="3"
-              ></textarea>
-            </div>
-
-            <div className="form-group col-md-6 mx-auto">
-              <label htmlFor="" className="text-muted">
-                شماره سریال
-              </label>
-              <input
-                onChange={(e) => setSerialNumber(e.target.value)}
-                id=""
-                type="text"
-                className="form-control"
-              />
-            </div>
-
-            <div className="col-md-6 mx-auto m-1 p-1 border rounded">
-              <label htmlFor="uploadInput" className="text-muted">
-                بارگزاری تصویر
-              </label>
-              <div className="text-center">
+        {/* add product */}
+        <div
+          className="col-12"
+          id="admin-addproduct"
+          style={{ display: showHidden == 3 ? "block" : "none" }}
+        >
+          <div className="bg-primary rounded-4 pt-2">
+            <h5 htmlFor="" className="text-center text-light">
+              افزودن محصول جدید
+            </h5>
+            <div className="bg-light rounded pb-2 px-2">
+              <div className="text-center text-danger p-2">
+                {responseMessage}
+              </div>
+              <div className="form-grou col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  دسته بندی
+                </label>
                 <input
-                  id="uploadInput"
-                  className=""
-                  type="file"
-                  multiple
-                  onChange={handleFileInputChange}
+                  onChange={(e) => setCategory(e.target.value)}
+                  id="category"
+                  type="text"
+                  className="form-control"
                 />
               </div>
+
+              <div className="form-group col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  نام
+                </label>
+                <input
+                  onChange={(e) => setName(e.target.value)}
+                  id=""
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="form-group col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  قیمت
+                </label>
+                <input
+                  onChange={(e) => setPrice(e.target.value)}
+                  id=""
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="form-group col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  تعداد
+                </label>
+                <input
+                  onChange={(e) => setNumberOfProduct(e.target.value)}
+                  id="numberOfProduct"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="form-group col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  مشخصات
+                </label>
+                <textarea
+                  className="form-control"
+                  onChange={(e) => setDescription(e.target.value)}
+                  name=""
+                  id="message"
+                  cols="30"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div className="form-group col-md-6 mx-auto">
+                <label htmlFor="" className="text-muted">
+                  شماره سریال
+                </label>
+                <input
+                  onChange={(e) => setSerialNumber(e.target.value)}
+                  id=""
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="col-md-6 mx-auto m-1 p-1 border rounded">
+                <label htmlFor="uploadInput" className="text-muted">
+                  بارگزاری تصویر
+                </label>
+                <div className="text-center">
+                  <input
+                    id="uploadInput"
+                    className=""
+                    type="file"
+                    multiple
+                    onChange={handleFileInputChange}
+                  />
+                </div>
+                <div className="text-center">
+                  <button
+                    className="btn btn-sm btn-primary "
+                    onClick={handleUpload}
+                  >
+                    آپلود تصویر
+                  </button>
+                </div>
+              </div>
+
               <div className="text-center">
-                <button
-                  className="btn btn-sm btn-primary "
-                  onClick={handleUpload}
-                >
-                  آپلود تصویر
+                <button className="btn btn-success " onClick={addProduct}>
+                  افزودن محصول
                 </button>
               </div>
             </div>
 
-            <div className="text-center">
-              <button className="btn btn-success " onClick={addProduct}>
-                افزودن محصول
-              </button>
-            </div>
-          </div>
+            <div
+              className="container-fluid col-sm-10 p-4"
+              style={{ display: showHidden == 4 ? "block" : "none" }}
+            >
+              <div className="p-2">
+                <p className="text-success">{responseMessage}</p>
+              </div>
+              <div className="p-2 shadow-sm">
+                <p className="">نام:</p>
+                <p className="">{name}</p>
+              </div>
+              <div className="p-2 shadow-sm">
+                <p className="">قیمت</p>
+                <p className="">{price}</p>
+              </div>
+              <div className="p-2 shadow-sm">
+                <p className="">مسیر عکس</p>
+                <p className="">{imgPath}</p>
+              </div>
 
-          <div
-            className="container-fluid col-sm-10 p-4"
-            style={{ display: showHidden == 4 ? "block" : "none" }}
-          >
-            <div className="p-2">
-              <p className="text-success">{responseMessage}</p>
-            </div>
-            <div className="p-2 shadow-sm">
-              <p className="">نام:</p>
-              <p className="">{name}</p>
-            </div>
-            <div className="p-2 shadow-sm">
-              <p className="">قیمت</p>
-              <p className="">{price}</p>
-            </div>
-            <div className="p-2 shadow-sm">
-              <p className="">مسیر عکس</p>
-              <p className="">{imgPath}</p>
-            </div>
-
-            <div className="p-2 shadow-sm">
-              <p className="">توضیحات</p>
-              <p className="">{description}</p>
+              <div className="p-2 shadow-sm">
+                <p className="">توضیحات</p>
+                <p className="">{description}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className="col-8 col-md-10 "
-        id="admin-updatproduct"
-        style={{ display: showHidden == 5 ? "block" : "none"}}
-      >
-        <Products></Products>
+        {/* update and add product */}
+        <div
+          className="col- col-md-"
+          id="admin-updatproduct"
+          style={{ display: showHidden == 5 ? "block" : "none" }}
+        >
+          <Products></Products>
+        </div>
       </div>
     </div>
   );
