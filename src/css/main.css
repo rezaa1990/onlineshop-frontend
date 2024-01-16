@@ -3,96 +3,134 @@
   src: url(./../fonts/Yekan.ttf);
 }
 
-*{
+* {
   font-family: yekan;
 }
 
-.contact, .login , .register, .userproduct, .userinfo{
-  background-color: rgba(4, 1, 50, 0.996);   
-}
-
-footer,nav, .DatePicker,.usersidebar,#basket,#nav-drop-down-menu{
+.contact,
+.login,
+.register,
+.userproduct,
+.userinfo {
   background-color: rgba(4, 1, 50, 0.996);
 }
 
-.search-input::placeholder{
-    color: white;
+footer,
+nav,
+.DatePicker,
+.usersidebar,
+#basket,
+#nav-drop-down-menu {
+  background-color: rgba(4, 1, 50, 0.996);
 }
 
-li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop-down-item:hover,#nav-dropdown:hover{
+.search-input::placeholder {
+  color: white;
+}
+
+li:hover,
+.lilo:hover,
+#side-basket:hover,
+#side-user-information:hover,
+#nav-drop-down-item:hover,
+#nav-dropdown:hover {
   background-color: rgb(37, 0, 122);
 }
 
-#card,#basket-card,#user-info,#factor,#table-head,#factor-sum , #postal-info{
-  background-color:rgba(47, 45, 92, 0.996);
+#card,
+#basket-card,
+#user-info,
+#factor,
+#table-head,
+#factor-sum,
+#postal-info {
+  background-color: rgba(47, 45, 92, 0.996);
   transition: background-color 0.4s ease;
 }
 
-#card:hover{
+#card:hover {
   background-color: rgb(95, 80, 189);
 }
 
-#oneproduct,#comment-text-area{
-  background-color:rgba(4, 1, 50, 0.996);
+#oneproduct,
+#comment-text-area {
+  background-color: rgba(4, 1, 50, 0.996);
 }
 
-#text-area::placeholder,#nav-search-input::placeholder{
+#text-area::placeholder,
+#nav-search-input::placeholder {
   color: #ffffffb7;
   font-size: 2vh;
 }
 /* inputs */
-#text-area,#postal-info-input,#nav-search-input,#contact-input,#login-input,#register-input{
+#text-area,
+#postal-info-input,
+#nav-search-input,
+#contact-input,
+#login-input,
+#register-input {
   background-color: rgb(10, 0, 74);
 }
 
-#one-product-comment{
-  background-color:rgba(4, 1, 50, 0.996);
+#one-product-comment {
+  background-color: rgba(4, 1, 50, 0.996);
 }
 
-#comment{
+#comment {
   background-color: rgba(3, 0, 39, 0.996);
 }
 
-#reply-comment{
+#reply-comment {
   background-color: rgba(1, 8, 73, 0.996);
 }
 
 /* //////////////////////////////////////////////////// */
 /* adminpanel */
 
-#admin-sidebar,#admin-nav{
+#admin-sidebar,
+#admin-nav {
   background-color: rgba(3, 28, 64, 0.932);
 }
 
-#admin-sidebar-ul-li:hover{
+#admin-sidebar-ul-li:hover {
   background-color: rgba(28, 1, 135, 0.855);
 }
 
-#admin-updatproduct,#admin-updateproduct-form{
+#admin-updatproduct,
+#admin-updateproduct-form {
   background-color: rgba(151, 151, 151, 0.896);
 }
 
-#admin-sidebar-product-submenu:hover{
+#admin-sidebar-product-submenu:hover {
   background-color: rgb(118, 63, 174);
 }
 
-#admin-card,#discount,#admin-updateproduct-input, #order{
-  background-color : rgba(151, 151, 151, 0.896)
+#admin-card,
+#discount,
+#admin-updateproduct-input,
+#order,
+#admin-addproduct,
+#admin-messages,
+#admin-order,
+#admin-userinfo {
+  background-color: rgba(151, 151, 151, 0.896);
 }
 
+#admin-nav-userinfo:hover{
+  background-color: rgba(28, 1, 135, 0.855);
+}
 
-#admin-updateproduct-input::placeholder{
+#admin-updateproduct-input::placeholder {
   color: #692929b7;
   font-size: 2.5vh;
 }
 
-#message-list:hover{
+#message-list:hover {
   background-color: rgb(218, 214, 250);
 }
 
-#order-detail{
+#order-detail {
   background-color: rgb(226, 226, 226);
-
 }
 
 .table-hover tbody tr:hover {
@@ -103,13 +141,13 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   background-color: rgb(34, 33, 103);
 } */
 
-#admin-order-row:hover{
+#admin-order-row:hover {
   background-color: rgb(129, 129, 148);
 }
 
 @media (min-width: 410px) {
   #custom-height {
-    height: 350px; /* یک ارتفاع مخصوص برای نمایشگرهای با عرض بیشتر از ۵۷۶ پیکسل */
+    height: 580px; /* یک ارتفاع مخصوص برای نمایشگرهای با عرض بیشتر از ۵۷۶ پیکسل */
   }
 }
 
@@ -144,6 +182,10 @@ li:hover , .lilo:hover,#side-basket:hover,#side-user-information:hover,#nav-drop
   background-color: white;
 }
 
-#menu-btn{
+#menu-btn {
   /* background-color: rgba(3, 28, 64, 0.932); */
+}
+
+#admin-order-tablehead:hover {
+  background-color: blue;
 }

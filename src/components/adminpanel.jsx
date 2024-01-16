@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faAdd, faCoffee, faDove, faMessage, faProcedures, faReceipt, faUpDown, faUpRightAndDownLeftFromCenter, faUser, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState ,useContext} from 'react';
+import { useState, useContext, useRef } from "react";
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import Products from "./products";
@@ -23,6 +23,7 @@ function AdminPanel() {
     server,
     responseApi,
     //admin
+    setUserRole,
     price,
     setPrice,
     name,
@@ -222,9 +223,9 @@ function AdminPanel() {
   console.log("userInfo", userInfo);
 
   const [selectedFile, setSelectedFile] = useState([]);
-  const handleFileInputChange = (event) => {
-    setSelectedFile(event.target.files);
-  };
+  // const handleFileInputChange = (event) => {
+  //   setSelectedFile(event.target.files);
+  // };
 
   const handleUpload = () => {
     if (!selectedFile || selectedFile.length === 0) {
@@ -259,6 +260,7 @@ function AdminPanel() {
   };
   function handleExit() {
     localStorage.removeItem("userToken");
+    setUserRole("1")
     setToken();
   }
 
@@ -269,25 +271,43 @@ function AdminPanel() {
       setCollapsed(true);
     }
   };
-  
+
+  const [files, setFiles] = useState();
+  const fileInputRef = useRef();
+  const handleFileInputChange = (event) => {
+    const files = event.target.files;
+
+    setFiles(files);
+    setSelectedFile(event.target.files);
+    console.log("Selected Files:", files);
+  };
+
+  const handleButtonClick = () => {
+    // شبیه‌سازی کلیک بر روی دکمه انتخاب فایل
+    fileInputRef.current.click();
+  };
 
   return (
-    <div className="">
+    <div className="" style={{ height: "100vh" }}>
       {/* admin nav */}
-      <div className="border-bottom" id="admin-nav">
+      <div
+        className="border-bottom position-fixed z-3 container-fluid"
+        id="admin-nav"
+      >
         <nav className="">
           <div className="container">
             <div className="d-flex align-items-center">
               {/* user */}
-              <div className="col-3 text-white d-flex" onClick={""}>
-                <i className="" style={{ fontSize: "15px", cursor: "pointer" }}>
+              <div className="col-3 text-white d-flex"  onClick={() => setShowHidden(1)} style={{ cursor: "pointer" }}>
+                <div className="m-1 p-2 rounded" id='admin-nav-userinfo'>
+                
                   <img
                     src={userIcon}
                     className="text-dark"
                     style={{ cursor: "pointer", width: "20px", height: "20px" }}
                   />
-                </i>
-                حساب کاربری
+                  حساب کاربری
+                  </div>
               </div>
 
               {/* search */}
@@ -335,11 +355,11 @@ function AdminPanel() {
                 </div>
               </div>
 
-              {/* input/output */}
+              {/* login/logout */}
               <div className="col-3 d-flex">
                 <div className="">
                   <Link
-                    to="./login"
+                    to="/login"
                     onClick={handleLogin}
                     className=""
                     style={{
@@ -369,7 +389,7 @@ function AdminPanel() {
 
                 <div className="text-center">
                   <Link
-                    to="./"
+                    // to="/login"
                     onClick={handleExit}
                     className=""
                     style={{
@@ -404,22 +424,22 @@ function AdminPanel() {
 
       {/* menu btn */}
       <button
-        className="btn btn-danger mt-1 me-1 position-fixed"
-        id='menu-btn'
-  style={{
-    zIndex: 1000,
-  }}
-  onClick={() => setCollapsed(!collapsed)}
->
-  <div className="menu-icon">
-    <div className="menu-line"></div>
-    <div className="menu-line"></div>
-    <div className="menu-line"></div>
-  </div>
-</button>
+        className="btn btn-primary me-1 position-fixed"
+        id="menu-btn"
+        style={{
+          zIndex: 1000,
+          top: 75,
+        }}
+        onClick={() => setCollapsed(!collapsed)}
+      >
+        <div className="menu-icon">
+          <div className="menu-line"></div>
+          <div className="menu-line"></div>
+          <div className="menu-line"></div>
+        </div>
+      </button>
 
-
-      <div className="d-flex">
+      <div className="d-flex h-100">
         {/* sidebar */}
         <div
           className="col-4 col-md-2 sidebar-wrapper fixed"
@@ -435,16 +455,18 @@ function AdminPanel() {
         >
           <div className="text-start">
             <button
-              className="btn btn-close btn-close-white"
+              className="btn-close btn-close-white p-2"
               onClick={() => setCollapsed(!collapsed)}
             ></button>
           </div>
-          <AdminSidebar></AdminSidebar>
+          <div className="">
+            <AdminSidebar></AdminSidebar>
+          </div>
         </div>
 
         {/* message */}
         <div
-          className="col-12"
+          className="col-12 mt-5"
           id="admin-message"
           style={{ display: showHidden == 6 ? "block" : "none" }}
         >
@@ -453,7 +475,7 @@ function AdminPanel() {
 
         {/* order */}
         <div
-          className="col-12"
+          className="col-12 mt-5"
           style={{ display: showHidden == 7 ? "block" : "none" }}
         >
           <OrderList></OrderList>
@@ -461,12 +483,12 @@ function AdminPanel() {
 
         {/* user info */}
         <div
-          className="col-12"
+          className="col-12 mt-5 p-2"
           id="admin-userinfo"
           style={{ display: showHidden == 1 ? "block" : "none" }}
         >
-          <div className="bg-primary rounded-4">
-            <div className="">
+          <div className="p-2">
+            <div className="p-2">
               <h5 className="text-light text-center">اطلاعات کاربری</h5>
               <div className="p-2 my-2 rounded bg-light">
                 <div className="col-md-8 mx-auto shadow p-2">
@@ -525,11 +547,11 @@ function AdminPanel() {
 
         {/* add product */}
         <div
-          className="col-12"
+          className="col-12 mt-5"
           id="admin-addproduct"
           style={{ display: showHidden == 3 ? "block" : "none" }}
         >
-          <div className="bg-primary rounded-4 pt-2">
+          <div className="col-11 mx-auto">
             <h5 htmlFor="" className="text-center text-light">
               افزودن محصول جدید
             </h5>
@@ -615,18 +637,36 @@ function AdminPanel() {
                 <label htmlFor="uploadInput" className="text-muted">
                   بارگزاری تصویر
                 </label>
-                <div className="text-center">
-                  <input
-                    id="uploadInput"
-                    className=""
-                    type="file"
-                    multiple
-                    onChange={handleFileInputChange}
-                  />
+                <div className="text-cente">
+                  <div className="text-center">
+                    <input
+                      id="uploadInput"
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      style={{ display: "none" }}
+                      onChange={(e) => handleFileInputChange(e)}
+                    />
+                    <label
+                      htmlFor="uploadInput"
+                      className="btn btn-sm btn-info mb-2"
+                      style={{ cursor: "pointer" }}
+                    >
+                      انتخاب فایل
+                    </label>
+                    {files &&
+                      Array.from(files).map((file, index) => (
+                        <div className="">
+                          <span key={index} className="text-muted">
+                            {file.name}
+                          </span>
+                        </div>
+                      ))}
+                  </div>
                 </div>
                 <div className="text-center">
                   <button
-                    className="btn btn-sm btn-primary "
+                    className="btn btn-sm btn-primary mt-2"
                     onClick={handleUpload}
                   >
                     آپلود تصویر
@@ -669,9 +709,9 @@ function AdminPanel() {
           </div>
         </div>
 
-        {/* update and add product */}
+        {/* update product*/}
         <div
-          className="col- col-md-"
+          className="col-12 mt-5"
           id="admin-updatproduct"
           style={{ display: showHidden == 5 ? "block" : "none" }}
         >

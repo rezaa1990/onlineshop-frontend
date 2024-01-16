@@ -48,14 +48,14 @@ const MessageList = () => {
   };
   console.log(messages)
   return (
-    <div className="">
-      <div className="bg-primary rounded-4">
+    <div className="h-100">
+      <div className="h-100" id='admin-messages'>
         <h3 className="text-center text-light p-1">پیامها</h3>
-        <div className="border rounded bg-light p-2 ">
+        <div className="border rounded bg-light p-3 m-2 col-10 h-75 mx-auto">
           <ul
-            className="col-md-8 mx-auto border p-2"
+            className="col-md-8 mx-auto mt-2 border p-2"
             style={{
-              maxHeight: "300px",
+              maxHeight: "450px",
               overflow: "auto",
               listStyleType: "none",
               padding: 0,

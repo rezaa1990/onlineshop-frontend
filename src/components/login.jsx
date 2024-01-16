@@ -16,8 +16,10 @@ function Login() {
     setLogInLogUot,
     server,
     handleLogin,
-
-  }=useContext(AppContext);
+    setUserRole,
+    setUser,
+    setAdminUserInfo,
+  } = useContext(AppContext);
   
   const  navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -51,7 +53,10 @@ function Login() {
       localStorage.setItem("userToken", response.data.data.token);
       handleLogin();
       const role = response.data.data.role;
-      navigate(role === "adminUser" ? "/adminpanel" : "/");
+      setUserRole(role); //برای مشخص شدن نقش کاربر و رندر شدن پنل ادمین یا کاربر معمولی بر اساس آن
+      if (role !== "adminUser") {
+        navigate("/userdashboard");
+      } //اگر نقش کاربر برابر با ادمین نبود برو به صفحه ی کاربری کاربر معمولی
     } catch (error) {
       console.log(error);
       setLoginResponseMessage(error.response?.data?.message);

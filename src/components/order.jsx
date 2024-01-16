@@ -111,52 +111,52 @@ const OrderList = () => {
   };
   const OrderDetails = ({ order }) => {
     return (
-      <div className="d-flex rounded-4 shadow">
-        <div className="col-6 col-md-3 p-1 mt-1">
-          <p className="p-1 m-0">
+      <div className="d-flex border">
+        <div className="col-6 p-2 mt-1 ">
+          <p className="p-1 m-0 border-bottom">
             <strong>نام: </strong>
             {order.FName}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>نام خانوادگی: </strong>
             {order.LName}
           </p>
-          <p className="p-1 m-0" style={{ wordBreak: "break-word" }}>
+          <p className="p-1 m-0 border-bottom" style={{ wordBreak: "break-word" }}>
             <strong>آدرس: </strong>
             {breakText(order.address, 20)}
           </p>
 
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>ایمیل: </strong>
             {breakText(order.email, 8)}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>موبایل: </strong>
             {order.mobile}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>کد پستی: </strong>
             {order.postalCode}
           </p>
         </div>
-        <div className="col-6 col-md-3 p-1 mt-1">
-          <p className="p-1 m-0">
+        <div className="col-6 p-2 mt-1">
+          <p className="p-1 m-0 border-bottom">
             <strong>پرداخت شده: </strong>
             {order.payment ? "بله" : "خیر"}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>ارسال: </strong>
             {order.sendToPost ? "بله" : "خیر"}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>تعداد: </strong>
             {order.numberOfEachProductInBasket}
           </p>
-          <p className="p-1 m-0">
+          <p className="p-1 m-0 border-bottom">
             <strong>نام کالا: </strong>
             {order.productsId?.map((product) => product.name).join(", ")}
           </p>
-          <p className="p-1 m-0" style={{ wordBreak: "break-word" }}>
+          <p className="p-1 m-0 border-bottom" style={{ wordBreak: "break-word" }}>
             <strong>تاریخ ثبت: </strong>
             {jMoment(moment(order.createdAt).format()).format(
               "jYYYY/jMM/jDD HH:mm"
@@ -174,10 +174,12 @@ const OrderList = () => {
     if (selectedOrders.includes(orderIdd)) {
       const filteredorder = selectedOrders.filter((id) => id !== orderIdd);
       setSelectedOrders(filteredorder);
+      // setSelectedOrder(filteredorder);
       console.log("1", filteredorder);
     } else {
       const orders = [...selectedOrders, orderIdd];
       setSelectedOrders(orders);
+      // setSelectedOrder(orders);
       console.log("2", orders);
     }
   };
@@ -208,10 +210,10 @@ const OrderList = () => {
   }
 
   return (
-    <div className="rounded-4" id="order">
-      <div className="bg-primary rounded-4">
+    <div className="h-100" id="order">
+      <div className="" id="admin-order">
         <h3 className="pt-1 text-center text-light">سفارشها</h3>
-        <div className="bg-light pt-3 rounded-4 ">
+        <div className="col-11 mx-auto pt-3">
           {/* filters */}
           <div className="bg-secondary mx-auto d-flex col-md-8 justify-content-center filters align-items-center mt-3">
             <input
@@ -251,10 +253,10 @@ const OrderList = () => {
           </div>
 
           {/* table */}
-          <div className="table-responsive">
+          <div className="table-responsive col-md-8 mx-auto">
             <table className="table">
               <thead>
-                <tr>
+                <tr className="text-center">
                   <th scope="col">نام</th>
                   <th scope="col">نام خانوادگی</th>
                   <th scope="col">موبایل</th>
@@ -267,8 +269,8 @@ const OrderList = () => {
               </thead>
               <tbody>
                 {filteredOrders?.map((order, index) => (
-                  <tr key={index}>
-                    <td>{order.FName?.slice(0, 20)}</td>
+                  <tr className="text-center" key={index} onClick={()=>setSelectedOrder(order)} style={{cursor:"pointer"}}>
+                    <td className="">{order.FName?.slice(0, 20)}</td>
                     <td>{order.LName?.slice(0, 20)}</td>
                     <td>{order.mobile?.slice(0, 20)}</td>
                     <td>{order.postalCode?.slice(0, 20)}</td>
@@ -291,6 +293,7 @@ const OrderList = () => {
               </tbody>
             </table>
           </div>
+
           <div className="text-center">
             <button
               onClick={handleSendToPostOrder}
@@ -299,11 +302,11 @@ const OrderList = () => {
               ارسال به پست
             </button>
           </div>
-
-          <div className="col-md-8 mx-auto rounded-4" id="order-detail">
+          {/* order details */}
+          <div className="col-md-8 mx-auto p-4" id="">
             {selectedOrder && (
-              <div className="popup">
-                <div className="popup-content">
+              // <div className="bg-info p-2">
+                <div className="bg-light rounded">
                   <span
                     className="close-btn px-2"
                     style={{ cursor: "pointer" }}
@@ -312,13 +315,14 @@ const OrderList = () => {
                     &times;
                   </span>
                   <h5 className="text-center">جزئیات سفارش</h5>
-                  <div className="">
-                    {selectedOrder && <OrderDetails order={selectedOrder} />}
-                  </div>
+                  {/* <div className="bg-danger p-2"> */}
+                    {<OrderDetails order={selectedOrder} />}
+                  {/* </div> */}
                 </div>
-              </div>
+              // </div>
             )}
           </div>
+          
         </div>
       </div>
     </div>

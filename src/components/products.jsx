@@ -191,8 +191,8 @@ function Products() {
 
   console.log(products);
   return (
-    <section className="p-2">
-      <div className="bg-primary rounded-4">
+    <section className="">
+      <div className="bg-primar">
         <h3 className="text-center text-light">محصولات</h3>
         <div className="bg-light p-2 " id='custom-height'style={{overflow:"auto"}}>
           <div className="container-fluid">
@@ -456,7 +456,7 @@ function Products() {
           )}
         </div>
         {/* ایجاد تخفیف */}
-        <div className="bg-light p-1">
+        <div className="">
           <div className="">
             <div className="p-2 rounded" id="discount">
               <div className="col-md-6 mx-auto">
