@@ -17,7 +17,9 @@ import { useLocation,} from 'react-router-dom';
 import RouteGuard from "./components/routhguard.jsx";
 
 function App() {
-  const server = "localhost" || "92.168.199.166";
+  const server = "localhost"
+  const reqType = "https" 
+  const port = "5000"
 
   const userToken = localStorage.getItem("userToken");
   const config = {
@@ -131,7 +133,7 @@ function App() {
       };
       console.log(addProduct);
       const response = await axios.post(
-        `http://${server}:5000/api/products/addproduct`,
+        `${reqType}://${server}:${port}/api/products/addproduct`,
         addProduct,
         config
       );
@@ -157,7 +159,7 @@ function App() {
         expirationTime,
       };
       const response = await axios.post(
-        `http://${server}:5000/api/discount/creatediscount`,
+        `${reqType}://${server}:${port}/api/discount/creatediscount`,
         data,
         config
       );
@@ -176,7 +178,7 @@ function App() {
         discountId,
       };
       const response = await axios.put(
-        `http://${server}:5000/api/products/adddiscount`,
+        `${reqType}://${server}:${port}/api/products/adddiscount`,
         data,
         config
       );
@@ -195,7 +197,7 @@ function App() {
       };
 
       const response = await axios.put(
-        `http://${server}:5000/api/products/removediscount`,
+        `${reqType}://${server}:${port}/api/products/removediscount`,
         data,
         config
       );
@@ -210,7 +212,7 @@ function App() {
   async function deleteComment(commentId) {
     try {
       const response = await axios.delete(
-        `http://${server}:5000/api/comment/deletecomment/${commentId}`,
+        `${reqType}://${server}:${port}/api/comment/deletecomment/${commentId}`,
         config
       );
       getProduct();
@@ -224,7 +226,7 @@ function App() {
     try {
       const data = {};
       const response = await axios.put(
-        `http://${server}:5000/api/comment/approvecomment/${commentId}`,
+        `${reqType}://${server}:${port}/api/comment/approvecomment/${commentId}`,
         data,
         config
       );
@@ -268,7 +270,7 @@ function App() {
   //این تابع پس از آپدیت یا خذف یا اضافه کردن یک محصول توسط ادمین صدا زده میشود تا مقادیر جدید محصولات در استیت قرار بگیرد
   async function getProduct(id) {
     axios
-      .get(`http://${server}:5000/api/products/getproducts`)
+      .get(`${reqType}://${server}:${port}/api/products/getproducts`)
       .then((response) => {
         const p = response.data.data.products;
         setProducts(p);
@@ -290,7 +292,7 @@ function App() {
         numberOfProduct: updateNumberOfProduct,
       };
       const response = await axios.put(
-        `http://${server}:5000/api/products/updateproduct/${id}`,
+        `${reqType}://${server}:${port}/products/updateproduct/${id}`,
         updateData,
         config
       );
@@ -305,7 +307,7 @@ function App() {
   async function deleteProduct(id) {
     try {
       const response = await axios.delete(
-        `http://${server}:5000/api/products/deleteproduct/${id}`,
+        `${reqType}://${server}:${port}/products/deleteproduct/${id}`,
         config
       );
       alert(response.data.message);
@@ -355,7 +357,7 @@ function App() {
       };
       console.log(data);
       const response = await axios.put(
-        `http://${server}:5000/api/comment/likecomment/${commentId}/${userId}`,
+        `${reqType}://${server}:${port}/comment/likecomment/${commentId}/${userId}`,
         data,
         config
       );
@@ -382,7 +384,7 @@ function App() {
       };
 
       const response = await axios.post(
-        `http://${server}:5000/api/comment/makereplycomment`,
+        `${reqType}://${server}:${port}/api/comment/makereplycomment`,
         data,
         config
       );
@@ -408,7 +410,7 @@ function App() {
       };
       console.log(data);
       const response = await axios.put(
-        `http://${server}:5000/api/comment/addReplyComment`,
+        `${reqType}://${server}:${port}/api/comment/addReplyComment`,
         data,
         config
       );
@@ -439,7 +441,7 @@ function App() {
   const fetchData = async () => {
     try {
       const productResponse = await axios.get(
-        `http://${server}:5000/api/products/getproducts`
+        `${reqType}://${server}:${port}/api/products/getproducts`
       );
       const productsData = productResponse.data.data.products;
       console.log(productsData);
@@ -453,7 +455,7 @@ function App() {
 
   async function getUser() {
     axios
-      .get(`http://${server}:5000/api/user/me`, config)
+      .get(`${reqType}://${server}:${port}/api/user/me`, config)
       .then((response) => {
         const id = response.data.data._id;
         setUserId(id);
@@ -471,7 +473,7 @@ function App() {
         numberOfproduct,
       };
       const response = await axios.put(
-        `http://${server}:5000/api/user/updateuser/${userId}`,
+        `${reqType}://${server}:${port}/api/user/updateuser/${userId}`,
         updateData,
         config
       );
@@ -493,7 +495,7 @@ function App() {
         userId,
       };
       const response = await axios.put(
-        `http://${server}:5000/api/products/addlike/${productId}`,
+        `${reqType}://${server}:${port}/api/products/addlike/${productId}`,
         updateData,
         config
       );
@@ -520,7 +522,7 @@ function App() {
         userId,
       };
       const response = await axios.post(
-        `http://${server}:5000/api/comment/makecomment/${productId}`,
+        `${reqType}://${server}:${port}/api/comment/makecomment/${productId}`,
         data,
         config
       );
@@ -537,7 +539,7 @@ function App() {
         commentId,
       };
       const response = await axios.put(
-        `http://${server}:5000/api/products/addcomment/${productId}`,
+        `${reqType}://${server}:${port}/api/products/addcomment/${productId}`,
         data,
         config
       );
@@ -570,7 +572,7 @@ function App() {
       };
       console.log(data);
       const response = await axios.put(
-        `http://${server}:5000/api/order/addpostalinformation/${orderId}`,
+        `${reqType}://${server}:${port}/api/order/addpostalinformation/${orderId}`,
         data
       );
       console.log(response.data);
@@ -590,7 +592,7 @@ function App() {
       };
       console.log(data);
       const response = await axios.post(
-        `http://${server}:5000/api/order/addorder`,
+        `${reqType}://${server}:${port}/api/order/addorder`,
         data
       );
       console.log(response);
@@ -612,7 +614,7 @@ function App() {
 
   const [userRole, setUserRole] = useState();
 async function userPanelGetUser(){
- await axios.get(`http://${server}:5000/api/user/me`,config)
+ await axios.get(`${reqType}://${server}:${port}/api/user/me`,config)
     .then(response => {
       const user = response.data.data;
       if (user.role === "adminUser") {
@@ -633,7 +635,7 @@ async function deleteFromBasket(userId,basketId) {
   }
   console.log(data)
   try {
-    const response = await axios.put(`http://${server}:5000/api/user/deletebasket`,data,config)
+    const response = await axios.put(`${reqType}://${server}:${port}/api/user/deletebasket`,data,config)
     alert(response.data.message);
     userPanelGetUser();//for updating navbar
     getUser();
@@ -663,7 +665,7 @@ async function deleteFromBasket(userId,basketId) {
         senderEmail,
         content,
       };
-      const response = await axios.post(`http://localhost:5000/api/message/addmessage`,addMessage);
+      const response = await axios.post(`${reqType}://${server}:${port}/api/message/addmessage`,addMessage);
       setSendMessageResponse(response.data.message);
       setSenderName('')
       setSenderEmail('')
@@ -680,6 +682,8 @@ async function deleteFromBasket(userId,basketId) {
     <BrowserRouter>
       <AppContext.Provider
         value={{
+          port,
+          reqType,
           server,
           responseApi,
           //admin

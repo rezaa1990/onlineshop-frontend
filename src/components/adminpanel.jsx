@@ -20,6 +20,8 @@ import MyDatePicker from "./date";
 
 function AdminPanel() {
   const {
+    port,
+    reqType,
     server,
     responseApi,
     //admin
@@ -240,7 +242,7 @@ function AdminPanel() {
     console.log(formData);
     console.log(formData.get("images"));
     axios
-      .post(`http://${server}:5000/api/image/addimage`, formData)
+      .post(`${reqType}://${server}:${port}/api/image/addimage`, formData)
       .then((response) => {
         console.log("تصویر با موفقیت ارسال شد!", response.data);
         console.log(response.data.data.images);

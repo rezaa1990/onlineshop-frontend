@@ -1,7 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import AppContext from '../context/context';
 
 const MessageList = () => {
+  const {
+    port,
+    reqType,
+    server,
+    fName,
+    lName,
+    email,
+    mobile,
+    address,
+    password,
+    repeatPassword,
+    postalCode,
+    setRegisterName,
+    setLastName,
+    setEmail,
+    setMobile,
+    setAddress ,
+    setPassword,
+    setRepeatPassword,
+    setPostalCode,
+
+  }=useContext(AppContext);
   const [messages, setMessages] = useState([]);
   
   useEffect(() => {
@@ -14,7 +37,7 @@ const MessageList = () => {
           }
         };
         
-        const response = await axios.get('http://localhost:5000/api/message/getmessages', config);
+        const response = await axios.get(`${reqType}://${server}:${port}/api/message/getmessages`, config);
         const allMessages = response.data.data.message;
         console.log("message" ,allMessages)
         // const lastStoredDate = localStorage.getItem('lastmessagedate');

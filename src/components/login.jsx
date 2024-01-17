@@ -13,6 +13,8 @@ import { error } from 'jquery';
 
 function Login() {
   const {
+    port,
+    reqType,
     setLogInLogUot,
     server,
     handleLogin,
@@ -46,7 +48,7 @@ function Login() {
       console.log(loginData);
 
       const response = await axios.post(
-        `http://${server}:5000/api/auth/login`,
+        `${reqType}://${server}:${port}/api/auth/login`,
         loginData
       );
       console.log(response.data);
@@ -72,7 +74,7 @@ function Login() {
       };
       console.log(loginData);
       const response = await axios.put(
-        `http://${server}:5000/api/auth/resetpasswordemail`,
+        `${reqType}://${server}:${port}/api/auth/resetpasswordemail`,
         loginData
       );
       console.log(response);
@@ -104,7 +106,7 @@ function Login() {
       };
       console.log(data);
       const response = await axios.put(
-        `http://${server}:5000/api/auth/resetpasswor`,
+        `${reqType}://${server}:${port}/api/auth/resetpasswor`,
         data
       );
       console.log(response);

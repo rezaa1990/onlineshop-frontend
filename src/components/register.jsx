@@ -15,7 +15,9 @@ function Register() {
   const navigate  = useNavigate();
   const[registerResponseMessage,setRegisterResponseMessage]=useState();
 
-  const{
+  const {
+    port,
+    reqType,
     server,
     fName,
     lName,
@@ -50,7 +52,7 @@ function Register() {
   
       console.log(registerData);
   
-      const response = await axios.post(`http://${server}:5000/api/auth/register`, registerData);
+      const response = await axios.post(`${reqType}://${server}:${port}/api/auth/register`, registerData);
       console.log(response.data.message);
       console.log(response.data);
       navigate("/login")
