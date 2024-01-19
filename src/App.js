@@ -15,6 +15,8 @@ import OneProduct from "./components/oneproduct.jsx";
 import { Button } from "bootstrap";
 import { useLocation,} from 'react-router-dom';
 import RouteGuard from "./components/routhguard.jsx";
+import Swal from 'sweetalert2';
+
 
 function App() {
   const server = "localhost"
@@ -306,16 +308,41 @@ function App() {
 
   async function deleteProduct(id) {
     try {
-      const response = await axios.delete(
-        `${reqType}://${server}:${port}/products/deleteproduct/${id}`,
-        config
-      );
-      alert(response.data.message);
-      getProduct();
+      // نمایش پیام تایید از کاربر با SweetAlert2
+      const { value: userConfirmed } = await Swal.fire({
+        title: 'حذف محصول',
+        text: 'آیا از حذف این محصول مطمئن هستید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+      });
+  
+      if (userConfirmed) {
+        const response = await axios.delete(
+          `${reqType}://${server}:${port}/api/products/deleteproduct/${id}`,
+          config
+        );
+        
+        Swal.fire({
+          title: 'حذف محصول',
+          text: response.data.message,
+          icon: 'success',
+        });
+  
+        getProduct();
+      } else {
+        Swal.fire({
+          title: 'حذف محصول',
+          text: 'عملیات حذف کنسل شد.',
+          icon: 'info',
+        });
+      }
     } catch (error) {
       console.error("خطا:", error);
     }
   }
+  
 
   const middleFunction = (id) => {
     setId(id);
