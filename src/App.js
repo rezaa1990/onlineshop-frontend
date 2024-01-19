@@ -293,18 +293,44 @@ function App() {
         description: updateDescription,
         numberOfProduct: updateNumberOfProduct,
       };
-      const response = await axios.put(
-        `${reqType}://${server}:${port}/products/updateproduct/${id}`,
-        updateData,
-        config
-      );
-      alert(response.data.message);
-      getProduct();
-      closeForm();
+  
+      // نمایش پیام تایید از کاربر با SweetAlert2
+      const { value: userConfirmed } = await Swal.fire({
+        title: ' به‌روزرسانی',
+        text: 'آیا از به‌روزرسانی این محصول مطمئن هستید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+      });
+  
+      if (userConfirmed) {
+        const response = await axios.put(
+          `${reqType}://${server}:${port}/api/products/updateproduct/${id}`,
+          updateData,
+          config
+        );
+  
+        Swal.fire({
+          title: 'به‌روزرسانی محصول',
+          text: response.data.message,
+          icon: 'success',
+        });
+  
+        getProduct();
+        closeForm();
+      } else {
+        Swal.fire({
+          title: 'عملیات به‌روزرسانی',
+          text: 'عملیات به‌روزرسانی کنسل شد.',
+          icon: 'info',
+        });
+      }
     } catch (error) {
       console.error("خطا:", error);
     }
   }
+  
 
   async function deleteProduct(id) {
     try {
@@ -384,7 +410,7 @@ function App() {
       };
       console.log(data);
       const response = await axios.put(
-        `${reqType}://${server}:${port}/comment/likecomment/${commentId}/${userId}`,
+        `${reqType}://${server}:${port}/api/comment/likecomment/${commentId}/${userId}`,
         data,
         config
       );
