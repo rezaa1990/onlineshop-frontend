@@ -456,11 +456,12 @@ function Products() {
           )}
         </div>
         {/* ایجاد تخفیف */}
-        <div className="">
-          <div className="">
+        <div className="pb-4" id='admin-add-discount'>
+          <div className="mb-4">
             <div className="p-2 rounded" id="discount">
               <div className="col-md-6 mx-auto">
-              <p className="text-center">ایجاد تخفیف</p>
+                <p className="text-center">ایجاد تخفیف</p>
+                <p className="text-center text-danger">{responseMessage}</p>
 
               {/* چک باکس برای انتخاب نوع تخفیف */}
               <div className="d-flex col-md-8 mx-auto rounded border p-2">
@@ -528,7 +529,6 @@ function Products() {
                 className="text-danger text-center"
                 style={{ display: responseMessage ? "block" : "none" }}
               >
-                {responseMessage}
               </p>
             </div>
             </div>
