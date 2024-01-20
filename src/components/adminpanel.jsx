@@ -459,7 +459,7 @@ function AdminPanel() {
 
       {/* menu btn */}
       <button
-        className="position-fixed p-1 border rounded"
+        className="btn px-1 position-fixed"
         id="menu-btn"
         style={{
           zIndex: 1001,
@@ -469,9 +469,9 @@ function AdminPanel() {
         onClick={() => setCollapsed(!collapsed)}
       >
         <div className="menu-icon">
-          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'bottom right' , transform : !collapsed ? "rotate(-45deg)" : ""}}></div>
+          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'bottom right' , transform : !collapsed ? "rotate(-37deg)" : ""}}></div>
           <div className="menu-line" style={{display:collapsed ? "block" : "none"}}></div>
-          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'top right' , transform : !collapsed ? "rotate(45deg)" : ""}}></div>
+          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'top right' , transform : !collapsed ? "rotate(37deg)" : ""}}></div>
         </div>
       </button>
 

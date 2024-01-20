@@ -175,12 +175,12 @@ li:hover,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 25px;
+  height: 20px;
 }
 
 .menu-line {
   width: 26px;
-  height: 3.5px;
+  height: 3px;
   background-color: white;
 }
 
