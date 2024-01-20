@@ -12,6 +12,8 @@ function Products() {
   const {
     server,
     //admin
+    adminFilteredProducts,
+    setAdminFilteredProducts,
     price,
     setPrice,
     name,
@@ -189,19 +191,29 @@ function Products() {
     }
   }
 
-  console.log(products);
+  console.log(adminFilteredProducts);
   return (
     <section className="">
       <div className="bg-primar">
         <h3 className="text-center text-light">محصولات</h3>
-        <div className="bg-light p-2 " id='custom-height'style={{overflow:"auto"}}>
+        <div
+          className="bg-light p-2 "
+          id="custom-height"
+          style={{ overflow: "auto" }}
+        >
           <div className="container-fluid">
             {/* product */}
             <div className="row">
-              {products.map((product) => (
+              {adminFilteredProducts.map((product) => (
                 <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-1 px-3">
                   <div className="card " id="admin-card">
-                    <img src={require(`./../images/panel-img/${product.images[0].imagePath.substring(55)}`)} alt="" className="card-img-top" />
+                    <img
+                      src={require(`./../images/panel-img/${product.images[0].imagePath.substring(
+                        55
+                      )}`)}
+                      alt=""
+                      className="card-img-top"
+                    />
                     <div className="card-body pb-0">
                       <div className="card-title">
                         <h3 className="text-light text-center">
@@ -456,83 +468,81 @@ function Products() {
           )}
         </div>
         {/* ایجاد تخفیف */}
-        <div className="pb-4" id='admin-add-discount'>
+        <div className="pb-4" id="admin-add-discount">
           <div className="mb-4">
             <div className="p-2 rounded" id="discount">
               <div className="col-md-6 mx-auto">
                 <p className="text-center">ایجاد تخفیف</p>
                 <p className="text-center text-danger">{responseMessage}</p>
 
-              {/* چک باکس برای انتخاب نوع تخفیف */}
-              <div className="d-flex col-md-8 mx-auto rounded border p-2">
-                <div className="">
-                  <label>
-                    <input
-                      className="mx-1"
-                      type="checkbox"
-                      checked={discountType === "percentage"}
-                      onChange={() => handleDiscountSelection("percentage")}
-                    />
-                    درصدی
-                  </label>
+                {/* چک باکس برای انتخاب نوع تخفیف */}
+                <div className="d-flex col-md-8 mx-auto rounded border p-2">
+                  <div className="">
+                    <label>
+                      <input
+                        className="mx-1"
+                        type="checkbox"
+                        checked={discountType === "percentage"}
+                        onChange={() => handleDiscountSelection("percentage")}
+                      />
+                      درصدی
+                    </label>
+                  </div>
+                  <div className="m-auto">
+                    <label>
+                      <input
+                        className="mx-1"
+                        type="checkbox"
+                        checked={discountType === "amount"}
+                        onChange={() => handleDiscountSelection("amount")}
+                      />
+                      مقداری
+                    </label>
+                  </div>
                 </div>
-                <div className="m-auto">
-                  <label>
-                    <input
-                      className="mx-1"
-                      type="checkbox"
-                      checked={discountType === "amount"}
-                      onChange={() => handleDiscountSelection("amount")}
-                    />
-                    مقداری
-                  </label>
+                <div className="col-md-8 mx-auto d-flex">
+                  <input
+                    value={discountValue}
+                    onChange={(e) => setDiscountValue(e.target.value)}
+                    type="text"
+                    placeholder="میزان تخفیف"
+                    className="container rounded border-0 p-2 m-1"
+                  />
+                  <input
+                    value={discountExpireTime}
+                    onChange={(e) => setDiscountExpireTime(e.target.value)}
+                    type="text"
+                    placeholder="زمان انقضا"
+                    className="container rounded border-0 p-2 m-1"
+                  />
                 </div>
+                <div className="d-flex col-md-8 mx-auto justify-content-around">
+                  <button
+                    onClick={() =>
+                      createDiscount(
+                        discountType,
+                        discountValue,
+                        discountExpireTime,
+                        selectedProducts
+                      )
+                    }
+                    className="btn btn-sm btn-success my-1"
+                  >
+                    اعمال تخفیف
+                  </button>
+                  <button
+                    onClick={() => removeDiscount(selectedProducts)}
+                    className="btn btn-sm btn-warning my-1"
+                  >
+                    حذف تخفیف
+                  </button>
+                </div>
+                <p
+                  className="text-danger text-center"
+                  style={{ display: responseMessage ? "block" : "none" }}
+                ></p>
               </div>
-              <div className="col-md-8 mx-auto d-flex">
-                <input
-                  value={discountValue}
-                  onChange={(e) => setDiscountValue(e.target.value)}
-                  type="text"
-                  placeholder="میزان تخفیف"
-                  className="container rounded border-0 p-2 m-1"
-                />
-                <input
-                  value={discountExpireTime}
-                  onChange={(e) => setDiscountExpireTime(e.target.value)}
-                  type="text"
-                  placeholder="زمان انقضا"
-                  className="container rounded border-0 p-2 m-1"
-                />
-              </div>
-              <div className="d-flex col-md-8 mx-auto justify-content-around">
-                <button
-                  onClick={() =>
-                    createDiscount(
-                      discountType,
-                      discountValue,
-                      discountExpireTime,
-                      selectedProducts
-                    )
-                  }
-                  className="btn btn-sm btn-success my-1"
-                >
-                  اعمال تخفیف
-                </button>
-                <button
-                  onClick={() => removeDiscount(selectedProducts)}
-                  className="btn btn-sm btn-warning my-1"
-                >
-                  حذف تخفیف
-                </button>
-              </div>
-              <p
-                className="text-danger text-center"
-                style={{ display: responseMessage ? "block" : "none" }}
-              >
-              </p>
             </div>
-            </div>
-          
           </div>
         </div>
       </div>

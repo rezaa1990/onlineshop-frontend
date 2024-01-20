@@ -31,6 +31,7 @@ function App() {
   };
   ///////////////////////////////////////////////////////////////////////////
   //admin component
+  const [adminFilteredProducts, setAdminFilteredProducts] = useState([]);
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
   const [numberOfLikes, setNumberOfLikes] = useState("");
@@ -160,17 +161,17 @@ function App() {
         value,
         expirationTime,
       };
-  
+
       // نمایش پیام تایید از کاربر با SweetAlert2
       const { value: userConfirmed } = await Swal.fire({
-        title: ' ایجاد تخفیف',
-        text: 'آیا از ایجاد تخفیف برای محصولات انتخابی مطمئن هستید؟',
-        icon: 'warning',
+        title: " ایجاد تخفیف",
+        text: "آیا از ایجاد تخفیف برای محصولات انتخابی مطمئن هستید؟",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
       });
-  
+
       if (userConfirmed) {
         const response = await axios.post(
           `${reqType}://${server}:${port}/api/discount/creatediscount`,
@@ -179,17 +180,17 @@ function App() {
         );
         const discountId = response.data.data._id;
         addDiscountToProduct(selectedProducts, discountId);
-  
+
         Swal.fire({
-          title: 'ایجاد تخفیف',
-          text: 'تخفیف با موفقیت ایجاد شد.',
-          icon: 'success',
+          title: "ایجاد تخفیف",
+          text: "تخفیف با موفقیت ایجاد شد.",
+          icon: "success",
         });
       } else {
         Swal.fire({
-          title: ' ایجاد تخفیف',
-          text: 'عملیات ایجاد تخفیف کنسل شد.',
-          icon: 'info',
+          title: " ایجاد تخفیف",
+          text: "عملیات ایجاد تخفیف کنسل شد.",
+          icon: "info",
         });
       }
     } catch (error) {
@@ -197,7 +198,6 @@ function App() {
       responseApi(error.response.data.data);
     }
   }
-  
 
   async function addDiscountToProduct(selectedProducts, discountId) {
     try {
@@ -220,29 +220,33 @@ function App() {
 
   async function removeDiscount(selectedProducts) {
     try {
-      if (!selectedProducts || !Array.isArray(selectedProducts) || selectedProducts.length === 0) {
+      if (
+        !selectedProducts ||
+        !Array.isArray(selectedProducts) ||
+        selectedProducts.length === 0
+      ) {
         Swal.fire({
-          title: '',
-          text: 'لطفاً حداقل یک محصول را برای حذف تخفیف انتخاب کنید',
-          icon: 'warning',
+          title: "",
+          text: "لطفاً حداقل یک محصول را برای حذف تخفیف انتخاب کنید",
+          icon: "warning",
         });
         return;
       }
-  
+
       const data = {
         selectedProducts,
       };
-  
+
       // نمایش پیام تایید از کاربر با SweetAlert2
       const { value: userConfirmed } = await Swal.fire({
-        title: 'حذف تخفیف',
-        text: 'آیا از حذف تخفیف برای محصولات انتخابی مطمئن هستید؟',
-        icon: 'warning',
+        title: "حذف تخفیف",
+        text: "آیا از حذف تخفیف برای محصولات انتخابی مطمئن هستید؟",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
       });
-  
+
       if (userConfirmed) {
         const response = await axios.put(
           `${reqType}://${server}:${port}/api/products/removediscount`,
@@ -251,18 +255,18 @@ function App() {
         );
         console.log(response);
         Swal.fire({
-          title: 'حذف تخفیف',
-          text: 'تخفیف با موفقیت حذف شد.',
-          icon: 'success',
+          title: "حذف تخفیف",
+          text: "تخفیف با موفقیت حذف شد.",
+          icon: "success",
         });
-  
+
         getProduct();
         responseApi("تخفیف حذف شد");
       } else {
         Swal.fire({
-          title: ' حذف تخفیف',
-          text: 'عملیات حذف تخفیف کنسل شد.',
-          icon: 'info',
+          title: " حذف تخفیف",
+          text: "عملیات حذف تخفیف کنسل شد.",
+          icon: "info",
         });
       }
     } catch (error) {
@@ -270,7 +274,6 @@ function App() {
       responseApi("خطا در حذف تخفیف");
     }
   }
-  
 
   async function deleteComment(commentId) {
     try {
@@ -354,82 +357,80 @@ function App() {
         description: updateDescription,
         numberOfProduct: updateNumberOfProduct,
       };
-  
+
       // نمایش پیام تایید از کاربر با SweetAlert2
       const { value: userConfirmed } = await Swal.fire({
-        title: ' به‌روزرسانی',
-        text: 'آیا از به‌روزرسانی این محصول مطمئن هستید؟',
-        icon: 'warning',
+        title: " به‌روزرسانی",
+        text: "آیا از به‌روزرسانی این محصول مطمئن هستید؟",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
       });
-  
+
       if (userConfirmed) {
         const response = await axios.put(
           `${reqType}://${server}:${port}/api/products/updateproduct/${id}`,
           updateData,
           config
         );
-  
+
         Swal.fire({
-          title: 'به‌روزرسانی محصول',
+          title: "به‌روزرسانی محصول",
           text: response.data.message,
-          icon: 'success',
+          icon: "success",
         });
-  
+
         getProduct();
         closeForm();
       } else {
         Swal.fire({
-          title: 'عملیات به‌روزرسانی',
-          text: 'عملیات به‌روزرسانی کنسل شد.',
-          icon: 'info',
+          title: "عملیات به‌روزرسانی",
+          text: "عملیات به‌روزرسانی کنسل شد.",
+          icon: "info",
         });
       }
     } catch (error) {
       console.error("خطا:", error);
     }
   }
-  
 
   async function deleteProduct(id) {
     try {
       // نمایش پیام تایید از کاربر با SweetAlert2
       const { value: userConfirmed } = await Swal.fire({
-        title: 'حذف محصول',
-        text: 'آیا از حذف این محصول مطمئن هستید؟',
-        icon: 'warning',
+        title: "حذف محصول",
+        text: "آیا از حذف این محصول مطمئن هستید؟",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: 'بله',
-        cancelButtonText: 'خیر',
+        confirmButtonText: "بله",
+        cancelButtonText: "خیر",
       });
-  
+
       if (userConfirmed) {
         const response = await axios.delete(
           `${reqType}://${server}:${port}/api/products/deleteproduct/${id}`,
           config
         );
-        
+
         Swal.fire({
-          title: 'حذف محصول',
+          title: "حذف محصول",
           text: response.data.message,
-          icon: 'success',
+          icon: "success",
         });
-  
+
         getProduct();
       } else {
         Swal.fire({
-          title: 'حذف محصول',
-          text: 'عملیات حذف کنسل شد.',
-          icon: 'info',
+          title: "حذف محصول",
+          text: "عملیات حذف کنسل شد.",
+          icon: "info",
         });
       }
     } catch (error) {
       console.error("خطا:", error);
     }
   }
-  
 
   const middleFunction = (id) => {
     setId(id);
@@ -727,47 +728,52 @@ function App() {
   }
 
   const [userRole, setUserRole] = useState();
-async function userPanelGetUser(){
- await axios.get(`${reqType}://${server}:${port}/api/user/me`,config)
-    .then(response => {
-      const user = response.data.data;
-      if (user.role === "adminUser") {
-        setAdminUserInfo(user);
-      } else {
-        setUser(user);
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }; 
+  async function userPanelGetUser() {
+    await axios
+      .get(`${reqType}://${server}:${port}/api/user/me`, config)
+      .then((response) => {
+        const user = response.data.data;
+        if (user.role === "adminUser") {
+          setAdminUserInfo(user);
+        } else {
+          setUser(user);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-async function deleteFromBasket(userId,basketId) {
-  const data={
-    userId,
-    basketId
+  async function deleteFromBasket(userId, basketId) {
+    const data = {
+      userId,
+      basketId,
+    };
+    console.log(data);
+    try {
+      const response = await axios.put(
+        `${reqType}://${server}:${port}/api/user/deletebasket`,
+        data,
+        config
+      );
+      alert(response.data.message);
+      userPanelGetUser(); //for updating navbar
+      getUser();
+      console.log(response.data);
+    } catch (error) {
+      console.error("خطا:", error);
+    }
   }
-  console.log(data)
-  try {
-    const response = await axios.put(`${reqType}://${server}:${port}/api/user/deletebasket`,data,config)
-    alert(response.data.message);
-    userPanelGetUser();//for updating navbar
-    getUser();
-    console.log(response.data)
-  } catch (error) {
-    console.error('خطا:', error);
-  }
-}
   ///////////////////////////////////////////////////////////////////////////////////////////
   //register
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   //login
   function handleLogin() {
-    const userToken = localStorage.getItem('userToken');
+    const userToken = localStorage.getItem("userToken");
     setToken(userToken);
-    console.log(token)
-    console.log(userToken)
+    console.log(token);
+    console.log(userToken);
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // contact
@@ -779,14 +785,17 @@ async function deleteFromBasket(userId,basketId) {
         senderEmail,
         content,
       };
-      const response = await axios.post(`${reqType}://${server}:${port}/api/message/addmessage`,addMessage);
+      const response = await axios.post(
+        `${reqType}://${server}:${port}/api/message/addmessage`,
+        addMessage
+      );
       setSendMessageResponse(response.data.message);
-      setSenderName('')
-      setSenderEmail('')
-      setContent('')
-      setTimeout(() => setSendMessageResponse(''), 3000);    
+      setSenderName("");
+      setSenderEmail("");
+      setContent("");
+      setTimeout(() => setSendMessageResponse(""), 3000);
     } catch (error) {
-      console.error('خطا:', error);
+      console.error("خطا:", error);
       setSendMessageResponse(error.response.data.data);
     }
   }
@@ -801,6 +810,8 @@ async function deleteFromBasket(userId,basketId) {
           server,
           responseApi,
           //admin
+          adminFilteredProducts,
+          setAdminFilteredProducts,
           setUser,
           setAdminUserInfo,
           setUserRole,

@@ -25,6 +25,8 @@ function AdminPanel() {
     server,
     responseApi,
     //admin
+    adminFilteredProducts,
+    setAdminFilteredProducts,
     setUserRole,
     price,
     setPrice,
@@ -293,6 +295,30 @@ function AdminPanel() {
   const  showSearchInputFunc= () => {
     setShowSearchInput(!showSearchInput);
   };
+
+  useEffect(() => {
+    // فیلتر محصولات هنگامی که navSearchInputValue تغییر کند
+    const filterProducts = () => {
+      if (!navSearchInputValue) {
+        // اگر navSearchInputValue خالی یا undefined باشد، همه محصولات نمایش داده شوند
+        setAdminFilteredProducts(products);
+      } else {
+        // در غیر اینصورت، محصولات را براساس شرایط فیلتر کنید
+        const filtered = products.filter(
+          (product) =>
+            product.name.includes(navSearchInputValue) ||
+            product.serialNumber.includes(navSearchInputValue)
+        );
+        setAdminFilteredProducts(filtered);
+      }
+    };
+
+    filterProducts();
+  }, [navSearchInputValue, products]);
+
+  console.log(navSearchInputValue);
+  console.log(products);
+  console.log(adminFilteredProducts);
   return (
     <div className="" style={{ height: "100vh" }}>
       {/* admin nav */}
