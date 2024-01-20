@@ -289,6 +289,10 @@ function AdminPanel() {
     fileInputRef.current.click();
   };
 
+  const [showSearchInput, setShowSearchInput] = useState(false);
+  const  showSearchInputFunc= () => {
+    setShowSearchInput(!showSearchInput);
+  };
   return (
     <div className="" style={{ height: "100vh" }}>
       {/* admin nav */}
@@ -299,21 +303,22 @@ function AdminPanel() {
         <nav className="">
           <div className="container">
             <div className="d-flex align-items-center">
+
               {/* user */}
               <div className="col-3 text-white d-flex"  onClick={() => setShowHidden(1)} style={{ cursor: "pointer" }}>
-                <div className="m-1 p-2 rounded" id='admin-nav-userinfo'>
+                <div className="d-flex m-1 p-2 rounded" id='admin-nav-userinfo'>
                 
                   <img
                     src={userIcon}
                     className="text-dark"
                     style={{ cursor: "pointer", width: "20px", height: "20px" }}
                   />
-                  حساب کاربری
+                  <span className="d-none d-md-block">                  حساب کاربری</span>
                   </div>
               </div>
 
               {/* search */}
-              <form action="" className="col-3 form-inline p-1">
+              <form action="" className="col-xs-4 col-md-3 form-inline p-1">
                 <div className="input-group">
                   <div className="input-group-append pt-2 px-1">
                     <i
@@ -322,6 +327,7 @@ function AdminPanel() {
                     >
                       <img
                         src={search}
+                        onClick={()=>showSearchInputFunc()}
                         className="mb-2"
                         style={{
                           cursor: "pointer",
@@ -336,7 +342,7 @@ function AdminPanel() {
                     onChange={(e) => setNavSearchInputValue(e.target.value)}
                     type="text"
                     placeholder="جست و جو"
-                    className="text-white form-control rounded border-0 search-input"
+                    className={`text-white form-control rounded border-0 search-input ${showSearchInput ? 'd-block' : 'd-none'} d-md-block`}
                     id="nav-search-input"
                     style={{
                       boxShadow: "none",
@@ -346,7 +352,7 @@ function AdminPanel() {
               </form>
 
               {/* date */}
-              <div className="col-3 d-flex px-1">
+              <div className={`col-3 d-flex px-1 ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
                 <div className="">
                   <i className="">
                     {/* <img src={calendar} className="" style={{width: '25px', height: '25px' }} /> */}
@@ -358,7 +364,7 @@ function AdminPanel() {
               </div>
 
               {/* login/logout */}
-              <div className="col-3 d-flex">
+              <div className={`col-3 d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
                 <div className="">
                   <Link
                     to="/login"
@@ -419,6 +425,7 @@ function AdminPanel() {
                   </Link>
                 </div>
               </div>
+
             </div>
           </div>
         </nav>
@@ -452,7 +459,7 @@ function AdminPanel() {
             right: collapsed ? "-100%" : 0, // اگر منو بسته باشد، به چپ مخفی شود
             zIndex: 1000,
             height: "100%",
-            transition: ".5s ease", // افزودن انیمیشن به حرکت
+            transition: ".4s ease", // افزودن انیمیشن به حرکت
           }}
           id="admin-sidebar"
         >
