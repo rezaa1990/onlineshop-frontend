@@ -426,18 +426,19 @@ function AdminPanel() {
 
       {/* menu btn */}
       <button
-        className="btn btn-primary me-1 position-fixed"
+        className="position-fixed p-1 border rounded"
         id="menu-btn"
         style={{
-          zIndex: 1000,
-          top: 75,
+          zIndex: 1001,
+          top: 51,
+          right:1,
         }}
         onClick={() => setCollapsed(!collapsed)}
       >
         <div className="menu-icon">
-          <div className="menu-line"></div>
-          <div className="menu-line"></div>
-          <div className="menu-line"></div>
+          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'bottom right' , transform : !collapsed ? "rotate(-45deg)" : ""}}></div>
+          <div className="menu-line" style={{display:collapsed ? "block" : "none"}}></div>
+          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'top right' , transform : !collapsed ? "rotate(45deg)" : ""}}></div>
         </div>
       </button>
 
@@ -447,21 +448,17 @@ function AdminPanel() {
           className="col-4 col-md-2 sidebar-wrapper fixed"
           style={{
             position: "fixed",
-            top: 0,
+            top: 50,
             right: collapsed ? "-100%" : 0, // اگر منو بسته باشد، به چپ مخفی شود
             zIndex: 1000,
             height: "100%",
-            transition: "left 0.3s ease-in-out", // افزودن انیمیشن به حرکت
+            transition: ".5s ease", // افزودن انیمیشن به حرکت
           }}
           id="admin-sidebar"
         >
           <div className="text-start">
-            <button
-              className="btn-close btn-close-white p-2"
-              onClick={() => setCollapsed(!collapsed)}
-            ></button>
           </div>
-          <div className="">
+          <div className="pt-5">
             <AdminSidebar></AdminSidebar>
           </div>
         </div>
