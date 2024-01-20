@@ -160,18 +160,44 @@ function App() {
         value,
         expirationTime,
       };
-      const response = await axios.post(
-        `${reqType}://${server}:${port}/api/discount/creatediscount`,
-        data,
-        config
-      );
-      const discountId = response.data.data._id;
-      addDiscountToProduct(selectedProducts, discountId);
+  
+      // نمایش پیام تایید از کاربر با SweetAlert2
+      const { value: userConfirmed } = await Swal.fire({
+        title: ' ایجاد تخفیف',
+        text: 'آیا از ایجاد تخفیف برای محصولات انتخابی مطمئن هستید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+      });
+  
+      if (userConfirmed) {
+        const response = await axios.post(
+          `${reqType}://${server}:${port}/api/discount/creatediscount`,
+          data,
+          config
+        );
+        const discountId = response.data.data._id;
+        addDiscountToProduct(selectedProducts, discountId);
+  
+        Swal.fire({
+          title: 'ایجاد تخفیف',
+          text: 'تخفیف با موفقیت ایجاد شد.',
+          icon: 'success',
+        });
+      } else {
+        Swal.fire({
+          title: ' ایجاد تخفیف',
+          text: 'عملیات ایجاد تخفیف کنسل شد.',
+          icon: 'info',
+        });
+      }
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi("خطا در اعمال تخفیف");
+      responseApi(error.response.data.data);
     }
   }
+  
 
   async function addDiscountToProduct(selectedProducts, discountId) {
     try {
@@ -188,28 +214,63 @@ function App() {
       responseApi("تخفیف اعمال شد");
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi("خطا در اعمال تخفیف");
+      responseApi(error.response.data.data);
     }
   }
 
   async function removeDiscount(selectedProducts) {
     try {
+      if (!selectedProducts || !Array.isArray(selectedProducts) || selectedProducts.length === 0) {
+        Swal.fire({
+          title: '',
+          text: 'لطفاً حداقل یک محصول را برای حذف تخفیف انتخاب کنید',
+          icon: 'warning',
+        });
+        return;
+      }
+  
       const data = {
         selectedProducts,
       };
-
-      const response = await axios.put(
-        `${reqType}://${server}:${port}/api/products/removediscount`,
-        data,
-        config
-      );
-      getProduct();
-      responseApi("تخفیف حذف شد");
+  
+      // نمایش پیام تایید از کاربر با SweetAlert2
+      const { value: userConfirmed } = await Swal.fire({
+        title: 'حذف تخفیف',
+        text: 'آیا از حذف تخفیف برای محصولات انتخابی مطمئن هستید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+      });
+  
+      if (userConfirmed) {
+        const response = await axios.put(
+          `${reqType}://${server}:${port}/api/products/removediscount`,
+          data,
+          config
+        );
+        console.log(response);
+        Swal.fire({
+          title: 'حذف تخفیف',
+          text: 'تخفیف با موفقیت حذف شد.',
+          icon: 'success',
+        });
+  
+        getProduct();
+        responseApi("تخفیف حذف شد");
+      } else {
+        Swal.fire({
+          title: ' حذف تخفیف',
+          text: 'عملیات حذف تخفیف کنسل شد.',
+          icon: 'info',
+        });
+      }
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
       responseApi("خطا در حذف تخفیف");
     }
   }
+  
 
   async function deleteComment(commentId) {
     try {
