@@ -319,142 +319,188 @@ function AdminPanel() {
   console.log(navSearchInputValue);
   console.log(products);
   console.log(adminFilteredProducts);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [navbarVisible, setNavbarVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.pageYOffset;
+      setScrollPosition(currentPosition);
+
+      // اگر موقعیت اسکرول کمتر از 100px باشد، نوبار نمایش داده شود
+      setNavbarVisible(currentPosition < 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollPosition]);
+
   return (
     <div className="" style={{ height: "100vh" }}>
       {/* admin nav */}
+
       <div
-        className="border-bottom position-fixed z-3 container-fluid px-0"
-        id="admin-nav"
+        style={{
+          transition: "opacity 0.3s ease", // اضافه کردن ترانزیشن
+          opacity: navbarVisible ? 1 : 0, // استفاده از اپاسیتی به عنوان حالت نمایانی
+        }}
       >
-        <nav className="">
-          <div className="container">
-            <div className="d-flex align-items-center">
-
-              {/* user */}
-              <div className="col-3 text-white d-flex"  onClick={() => setShowHidden(1)} style={{ cursor: "pointer" }}>
-                <div className="d-flex m-1 p-2 rounded" id='admin-nav-userinfo'>
-                
-                  <img
-                    src={userIcon}
-                    className="text-dark"
-                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
-                  />
-                  <span className="d-none d-md-block">                  حساب کاربری</span>
-                  </div>
-              </div>
-
-              {/* search */}
-              <form action="" className="col-xs-4 col-md-3 form-inline p-1">
-                <div className="input-group">
-                  <div className="input-group-append pt-2 px-1">
-                    <i
-                      className=""
-                      style={{ fontSize: "15px", cursor: "pointer" }}
-                    >
-                      <img
-                        src={search}
-                        onClick={()=>showSearchInputFunc()}
-                        className="mb-2"
-                        style={{
-                          cursor: "pointer",
-                          width: "20px",
-                          height: "20px",
-                        }}
-                      />
-                    </i>
-                  </div>
-                  <input
-                    value={navSearchInputValue}
-                    onChange={(e) => setNavSearchInputValue(e.target.value)}
-                    type="text"
-                    placeholder="جست و جو"
-                    className={`text-white form-control rounded border-0 search-input ${showSearchInput ? 'd-block' : 'd-none'} d-md-block`}
-                    id="nav-search-input"
-                    style={{
-                      boxShadow: "none",
-                    }}
-                  />
-                </div>
-              </form>
-
-              {/* date */}
-              <div className={`col-3 d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
-                <div className="">
-                  <i className="">
-                    {/* <img src={calendar} className="" style={{width: '25px', height: '25px' }} /> */}
-                  </i>
-                </div>
-                <div className="p-1 ">
-                  <MyDatePicker></MyDatePicker>
-                </div>
-              </div>
-
-              {/* login/logout */}
-              <div className={`col-3 me-auto d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
-                <div className="">
-                  <Link
-                    to="/login"
-                    onClick={handleLogin}
-                    className=""
-                    style={{
-                      display: token ? "none" : "block",
-                      textDecoration: "none",
-                    }}
+        <div
+          className="border-bottom position-fixed z-3 container-fluid px-0"
+          id="admin-nav"
+        >
+          <nav className="">
+            <div className="container">
+              <div className="d-flex align-items-center">
+                {/* user */}
+                <div
+                  className="col-3 text-white d-flex"
+                  onClick={() => setShowHidden(1)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div
+                    className="d-flex m-1 p-2 rounded"
+                    id="admin-nav-userinfo"
                   >
-                    <i
-                      className="text-white d-flex justify-content-end m-1"
-                      style={{ fontSize: "15px", cursor: "pointer" }}
-                    >
-                      <div className="p-2 rounded lilo">
+                    <img
+                      src={userIcon}
+                      className="text-dark"
+                      style={{
+                        cursor: "pointer",
+                        width: "20px",
+                        height: "20px",
+                      }}
+                    />
+                    <span className="d-none d-md-block"> حساب کاربری</span>
+                  </div>
+                </div>
+
+                {/* search */}
+                <form action="" className="col-xs-4 col-md-3 form-inline p-1">
+                  <div className="input-group">
+                    <div className="input-group-append pt-2 px-1">
+                      <i
+                        className=""
+                        style={{ fontSize: "15px", cursor: "pointer" }}
+                      >
                         <img
-                          src={userIcon}
-                          className="col-3"
+                          src={search}
+                          onClick={() => showSearchInputFunc()}
+                          className="mb-2"
                           style={{
                             cursor: "pointer",
                             width: "20px",
                             height: "20px",
                           }}
                         />
-                        ثبت نام/ورود
-                      </div>
+                      </i>
+                    </div>
+                    <input
+                      value={navSearchInputValue}
+                      onChange={(e) => setNavSearchInputValue(e.target.value)}
+                      type="text"
+                      placeholder="جست و جو"
+                      className={`text-white form-control rounded border-0 search-input ${
+                        showSearchInput ? "d-block" : "d-none"
+                      } d-md-block`}
+                      id="nav-search-input"
+                      style={{
+                        boxShadow: "none",
+                      }}
+                    />
+                  </div>
+                </form>
+
+                {/* date */}
+                <div
+                  className={`col-3 d-flex ${
+                    showSearchInput ? "d-none" : "d-block"
+                  } d-md-block`}
+                >
+                  <div className="">
+                    <i className="">
+                      {/* <img src={calendar} className="" style={{width: '25px', height: '25px' }} /> */}
                     </i>
-                  </Link>
+                  </div>
+                  <div className="p-1 ">
+                    <MyDatePicker></MyDatePicker>
+                  </div>
                 </div>
 
-                <div className="text-center">
-                  <Link
-                    // to="/login"
-                    onClick={handleExit}
-                    className=""
-                    style={{
-                      display: token ? "block" : "none",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <i
-                      className="text-white d-flex justify-content-end"
-                      style={{ fontSize: "15px", cursor: "pointer" }}
+                {/* login/logout */}
+                <div
+                  className={`col-3 me-auto d-flex ${
+                    showSearchInput ? "d-none" : "d-block"
+                  } d-md-block`}
+                >
+                  <div className="">
+                    <Link
+                      to="/login"
+                      onClick={handleLogin}
+                      className=""
+                      style={{
+                        display: token ? "none" : "block",
+                        textDecoration: "none",
+                      }}
                     >
-                      <div className="p-2 rounded lilo">
-                        <img
-                          src={exit}
-                          className="col-3 mx-1 mt-"
-                          style={{
-                            cursor: "pointer",
-                            width: "18px",
-                            height: "18px",
-                          }}
-                        />
-                        خروج
-                      </div>
-                    </i>
-                  </Link>
+                      <i
+                        className="text-white d-flex justify-content-end m-1"
+                        style={{ fontSize: "15px", cursor: "pointer" }}
+                      >
+                        <div className="p-2 rounded lilo">
+                          <img
+                            src={userIcon}
+                            className="col-3"
+                            style={{
+                              cursor: "pointer",
+                              width: "20px",
+                              height: "20px",
+                            }}
+                          />
+                          ثبت نام/ورود
+                        </div>
+                      </i>
+                    </Link>
+                  </div>
+
+                  <div className="text-center">
+                    <Link
+                      // to="/login"
+                      onClick={handleExit}
+                      className=""
+                      style={{
+                        display: token ? "block" : "none",
+                        textDecoration: "none",
+                      }}
+                    >
+                      <i
+                        className="text-white d-flex justify-content-end"
+                        style={{ fontSize: "15px", cursor: "pointer" }}
+                      >
+                        <div className="p-2 rounded lilo">
+                          <img
+                            src={exit}
+                            className="col-3 mx-1 mt-"
+                            style={{
+                              cursor: "pointer",
+                              width: "18px",
+                              height: "18px",
+                            }}
+                          />
+                          خروج
+                        </div>
+                      </i>
+                    </Link>
+                  </div>
                 </div>
               </div>
-
             </div>
-          </div>
-        </nav>
+          </nav>
+        </div>
       </div>
 
       {/* menu btn */}
@@ -464,14 +510,31 @@ function AdminPanel() {
         style={{
           zIndex: 1001,
           top: 51,
-          right:1,
+          right: 1,
         }}
         onClick={() => setCollapsed(!collapsed)}
       >
         <div className="menu-icon">
-          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'bottom right' , transform : !collapsed ? "rotate(-37deg)" : ""}}></div>
-          <div className="menu-line" style={{display:collapsed ? "block" : "none"}}></div>
-          <div className="menu-line" style={{transition: 'transform 0.3s ease' , transformOrigin: 'top right' , transform : !collapsed ? "rotate(37deg)" : ""}}></div>
+          <div
+            className="menu-line"
+            style={{
+              transition: "transform 0.3s ease",
+              transformOrigin: "bottom right",
+              transform: !collapsed ? "rotate(-37deg)" : "",
+            }}
+          ></div>
+          <div
+            className="menu-line"
+            style={{ display: collapsed ? "block" : "none" }}
+          ></div>
+          <div
+            className="menu-line"
+            style={{
+              transition: "transform 0.3s ease",
+              transformOrigin: "top right",
+              transform: !collapsed ? "rotate(37deg)" : "",
+            }}
+          ></div>
         </div>
       </button>
 
@@ -489,8 +552,7 @@ function AdminPanel() {
           }}
           id="admin-sidebar"
         >
-          <div className="text-start">
-          </div>
+          <div className="text-start"></div>
           <div className="pt-5">
             <AdminSidebar></AdminSidebar>
           </div>
