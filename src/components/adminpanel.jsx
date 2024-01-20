@@ -323,7 +323,7 @@ function AdminPanel() {
     <div className="" style={{ height: "100vh" }}>
       {/* admin nav */}
       <div
-        className="border-bottom position-fixed z-3 container-fluid"
+        className="border-bottom position-fixed z-3 container-fluid px-0"
         id="admin-nav"
       >
         <nav className="">
@@ -378,7 +378,7 @@ function AdminPanel() {
               </form>
 
               {/* date */}
-              <div className={`col-3 d-flex px-1 ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
+              <div className={`col-3 d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
                 <div className="">
                   <i className="">
                     {/* <img src={calendar} className="" style={{width: '25px', height: '25px' }} /> */}
@@ -390,7 +390,7 @@ function AdminPanel() {
               </div>
 
               {/* login/logout */}
-              <div className={`col-3 d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
+              <div className={`col-3 me-auto d-flex ${showSearchInput ? 'd-none' : 'd-block'} d-md-block`}>
                 <div className="">
                   <Link
                     to="/login"
