@@ -9,6 +9,7 @@ import basket from "./../images/basket.png"
 import AppContext from '../context/context';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Banner from './banner';
 const apiUrl = process.env.REACT_APP_CUSTOM_URL;// "http://localhost:5000"
 // import eee from "http://localhost:5000/home/reza/Desktop/node-shop/src/routes/image/uploads/m1.jpeg"
 
@@ -95,8 +96,9 @@ function UserProducts() {
 
 return (
     <>
-      <section className='p-2 userproduct'>
-        <div className="container-fluid">
+    <section className='userproduct'>
+      <Banner></Banner>
+        <div className="container-fluid pt-5">
           <h1 className="text-center text-light mb-5">محصولات</h1>
           <div className="row" id='user-product-custom-height' style={{overflow:"auto"}}>
 

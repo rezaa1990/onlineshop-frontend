@@ -84,6 +84,31 @@ li:hover,
   background-color: rgba(1, 8, 73, 0.996);
 }
 
+/* در قسمت استایل‌ها یا یک فایل CSS جداگانه */
+
+.dots-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #333; /* این خط برای افزودن حاشیه به دایره‌ها است */
+  opacity: .5;
+}
+
+.dot.active {
+opacity: .8;
+}
+
 /* //////////////////////////////////////////////////// */
 /* adminpanel */
 

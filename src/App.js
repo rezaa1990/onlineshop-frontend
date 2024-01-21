@@ -16,6 +16,7 @@ import { Button } from "bootstrap";
 import { useLocation,} from 'react-router-dom';
 import RouteGuard from "./components/routhguard.jsx";
 import Swal from 'sweetalert2';
+import Banner from "./components/banner.jsx";
 
 
 function App() {
@@ -1008,7 +1009,8 @@ function App() {
           <AdminPanel></AdminPanel>
         ) : (
           <>
-            <Navbar></Navbar>
+              <Navbar></Navbar>
+              {/* <Banner></Banner> */}
             <Routes>
               <Route path="/oneproduct" element={<OneProduct />} />
               <Route path="/userdashboard" element={<UserPanel />} />
