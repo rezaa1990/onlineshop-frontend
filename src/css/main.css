@@ -109,6 +109,22 @@ li:hover,
 opacity: .8;
 }
 
+
+/* banner */
+@keyframes fadeInOutWithImageChange {
+  0%, 100% {
+    opacity: 0;
+    scale: .85;
+  }
+  25%,75% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+.fade {
+  animation: fadeInOutWithImageChange 5s linear infinite;
+  animation-delay: -4.85s;
+}
 /* //////////////////////////////////////////////////// */
 /* adminpanel */
 
