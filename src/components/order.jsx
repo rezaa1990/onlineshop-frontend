@@ -5,6 +5,7 @@ import jMoment from "moment-jalaali";
 import pp from "./../images/pp.jpg";
 import p1 from "./../images/p1.jpeg";
 import AppContext from "../context/context";
+import Swal from 'sweetalert2';
 
 const OrderList = () => {
   const {
@@ -378,20 +379,61 @@ const OrderList = () => {
           token1: `${userToken}`,
         },
       };
-
       const data = {
         selectedOrders,
       };
-      const response = await axios.put(
-        `http://localhost:5000/api/order/sendtopostorder`,
-        data,
-        config
-      );
-      console.log(response);
-      setSelectedOrders([]);
-      setForceUpdate((prevState) => !prevState);
+      if (selectedOrders.length === 0) {
+        Swal.fire({
+          title: 'هیچ سفارشی انتخاب نشده',
+          text: 'لطفاً حداقل یک سفارش را انتخاب کنید.',
+          icon: 'info',
+        });
+        return;
+      }
+  
+      // نمایش پیام تایید از کاربر با SweetAlert2
+      const { value: userConfirmed } = await Swal.fire({
+        title: 'ارسال سفارش به پست',
+        text: 'آیا مطمئن هستید که می‌خواهید سفارشات انتخابی را به پست ارسال کنید؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'بله',
+        cancelButtonText: 'خیر',
+      });
+  
+      if (userConfirmed) {
+        const response = await axios.put(
+          `${reqType}://${server}:${port}/api/order/sendtopostorder`,
+          data,
+          config
+        );
+        console.log(response);
+  
+        // نمایش پیام موفقیت‌آمیز با SweetAlert2
+        Swal.fire({
+          title: 'ارسال سفارش به پست',
+          text: response.data.message,
+          icon: 'success',
+        });
+  
+        setSelectedOrders([]);
+        setForceUpdate((prevState) => !prevState);
+      }else {
+        Swal.fire({
+          title: "ارسال محصول به پست",
+          text: "عملیات ارسال محصول کنسل شد.",
+          icon: "info",
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+  
+      // نمایش پیام خطا با SweetAlert2
+      Swal.fire({
+        title: 'خطا',
+        text: 'خطا در ارسال سفارش به پست',
+        icon: 'error',
+      });
     }
   }
 
