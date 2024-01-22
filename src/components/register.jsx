@@ -123,9 +123,9 @@ function Register() {
 // };
 
   return (
-    <div className="row justify-content-center register">
-    <div className="col-lg-6">
-      <h3 className="m-5 text-center text-white">ثبت نام</h3>
+    <div className="row justify-content-center register pt-5">
+    <div className="col-lg-6 pt-5">
+      <h3 className="m-5 text-center text-white pt-5">ثبت نام</h3>
 
       <div className="form-group mx-5">
        <p className="text-center text-danger ">{registerResponseMessage}</p>

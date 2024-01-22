@@ -20,7 +20,7 @@ import Banner from "./components/banner.jsx";
 
 
 function App() {
-  const server = "localhost"
+  const server = "192.168.199.166"
   const reqType = "https" 
   const port = "5000"
 

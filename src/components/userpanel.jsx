@@ -187,13 +187,13 @@ function UserPanel() {
     <>
       <div className="d-md-flex">
         {/* sidebar */}
-        <div className="col-12 col-md-3 p-2 usersidebar"
+        <div className="col-12 col-md-3 p-2 usersidebar pt-5"
         
         >
           
-          <div className="p-1">
-            <div className="">
-              <div className="">
+          <div className="p-1 pt-5">
+            <div className="pt-5">
+              <div className="pt-4">
                 <img src={require("./../images/pp.jpg")} alt="سسس" className="" style={{ borderRadius: "50%", width: "12vh" }} /></div>
               <div className="m-1 text-light">
                 {user?.fName}
@@ -218,8 +218,8 @@ function UserPanel() {
         </div>
 
               {/* user info */}
-        <div className="col-12 col-md-9 py-1 userinfo" style={{ display: userPanelShowHidden == 1 ? 'block' : 'none' }}>
-          <h1 className="text-center text-light mb-3 pt-3">اطلاعات کاربری</h1>
+        <div className="col-12 col-md-9 py-1 userinfo pt-5" style={{ display: userPanelShowHidden == 1 ? 'block' : 'none' }}>
+          <h1 className="text-center text-light mb-3 pt-5">اطلاعات کاربری</h1>
           <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
             <p className="mx-2 text-light">نام:</p>
             <p className="text-light">{user?.fName}</p>
@@ -244,10 +244,10 @@ function UserPanel() {
 
               {/* basket */}
         <div className="col-12 col-md-9 basket" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
-          <section className='' id='basket'>
-            <div className="">
+          <section className='h-100' id='basket'>
+            <div className="pt-5">
               
-            <h1 className="text-center text-light mb-5">سبد خرید</h1>
+            <h1 className="text-center text-light mb-5 pt-5">سبد خرید</h1>
               
             <div className="d-md-flex" style={{display:user.basket?.length > 0 ? "block" : "none"}}>
                 

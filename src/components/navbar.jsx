@@ -206,12 +206,31 @@ function Navbar() {
     setActive(tagnumber)
   };
 
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20; // 20px یا مقدار دلخواه شما
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="navbar navbar-expand-lg"style={{borderBottom:"1px white solid"}}>
+    <nav
+      className={`navbar navbar-expand-lg container-fluid position-fixed z-1 ${scrolled ? 'py-0' : 'py-3'}`}
+      style={{
+        opacity: '.9',
+        transition: 'padding 0.3s ease-in-out', // افزودن انیمیشن به ترانزیشن
+      }}
+    >
       <div className="container-fluid">
 
         <div
-          className="navbar-toggler mb-1 px-1 bg-light"
+          className="navbar-toggler px-1 bg-light"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"

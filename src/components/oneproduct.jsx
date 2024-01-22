@@ -225,9 +225,9 @@ function OneProduct() {
     };
   
   return (
-    <div className="" id="oneproduct">
+    <div className="pt-5" id="oneproduct">
       {/* card img */}
-      <div className="">
+      <div className="pt-5">
         <div className="d-flex justify-content-center position-relative">
         <button
           className="text-light btn btn-lg border-0 position-absolute top-50 start-0"
@@ -248,6 +248,7 @@ function OneProduct() {
             src={require(`./../images/panel-img/${image.imagePath?.substring(55)}`)}
             alt={`image_${index}`}
             style={{
+              borderRadius:""
               // width: '300px',
               // height: '300px',
             }}

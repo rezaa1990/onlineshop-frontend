@@ -122,13 +122,13 @@ function Login() {
   }
 
   return (
-    <div className="row containe justify-content-center login mx-0">
+    <div className="row containe justify-content-center login mx-0 pt-5">
       {/* login */}
       <div
-        className="col-lg-6"
+        className="col-lg-6 pt-5"
         style={{ display: display === 1 ? "block" : "none" }}
       >
-        <h3 className="m-4 text-center text-light">ورود</h3>
+        <h3 className="m-4 text-center text-light pt-5">ورود</h3>
 
         <div className="form-group mx-5">
           <p className="text-center text-danger ">{loginResponseMessage}</p>
@@ -173,11 +173,11 @@ function Login() {
       </div>
       {/* send email */}
       <div
-        className="col-lg-6"
+        className="col-lg-6 pt-5"
         style={{ display: display === 2 ? "block" : "none" }}
       >
-        <div className="text-center">
-          <h3 className="my-4 text-light">
+        <div className="text-center pt-5">
+          <h3 className="my-4 text-light pt-5">
             {" "}
             ارسال ایمیل بازیابی رمز عبور
           </h3>

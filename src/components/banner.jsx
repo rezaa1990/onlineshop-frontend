@@ -22,19 +22,19 @@ function Banner() {
   };
 
   return (
-    <section className="container-fluid" id="banner">
-      <div className="">
+    <section className="container-fluid pt-5" id="banner">
+      <div className="pt-5 mt-5">
         <div className={`row align-items-center text-center`}>
           <div className="col-md-6 col-lg-8">
-            <h1 className='display-3 text-white pt-3' id='banner-title'><span className='pt-3' >ما همیشه با شما هستیم </span></h1>
-            <h2 className='text-light my-4' id='banner-text'>جدیدترین محصولات</h2>
+            <h2 className='display-md-3 text-white pt-3'><span className='p-3' id='banner-title'>ما همیشه با شما هستیم </span></h2>
+            <h6 className='text-light my-4' id='banner-text'>جدیدترین محصولات</h6>
           </div>
           <div className="col-md-4 position-relative py-1">
             <img
               src={images[currentImageIndex]}
               alt="تصویر"
               className="container-fluid rounded-5 fade"
-              style={{ width: '80%', height: 'auto' }}
+              style={{ width: '85%', height: 'auto' }}
             />
             <div className="dots-container">
               {images.map((_, index) => (

@@ -346,7 +346,7 @@ function AdminPanel() {
       <div
         style={{
           transition: "opacity 0.3s ease", // اضافه کردن ترانزیشن
-          opacity: navbarVisible ? 1 : 0, // استفاده از اپاسیتی به عنوان حالت نمایانی
+          // opacity: navbarVisible ? 1 : 0, // استفاده از اپاسیتی به عنوان حالت نمایانی
         }}
       >
         <div

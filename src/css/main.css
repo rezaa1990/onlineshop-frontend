@@ -16,12 +16,14 @@
 }
 
 footer,
-nav,
-.DatePicker,
 .usersidebar,
 #basket,
 #nav-drop-down-menu {
   background-color: rgba(4, 1, 50, 0.996);
+}
+
+.DatePicker,nav{
+  background-color: rgba(6, 0, 79, 0.996);
 }
 
 .search-input::placeholder {
@@ -84,8 +86,8 @@ li:hover,
   background-color: rgba(1, 8, 73, 0.996);
 }
 
-/* در قسمت استایل‌ها یا یک فایل CSS جداگانه */
 
+/* banner */
 .dots-container {
   position: absolute;
   bottom: 10px;
@@ -96,21 +98,17 @@ li:hover,
 }
 
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   background-color: white;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #333; /* این خط برای افزودن حاشیه به دایره‌ها است */
-  opacity: .5;
+  opacity: .4;
 }
 
 .dot.active {
-opacity: .8;
+opacity: .7;
 }
-
-
-/* banner */
 
 @keyframes customAnimation {
   0% {
