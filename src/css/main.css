@@ -111,6 +111,38 @@ opacity: .8;
 
 
 /* banner */
+
+@keyframes customAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#banner-title {
+  animation: customAnimation 2s ease-in;
+}
+
+@keyframes customAnimation1 {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#banner-text {
+  animation: customAnimation1 3s ease-in;
+}
+
+
 @keyframes fadeInOutWithImageChange {
   0%, 100% {
     opacity: 0;
