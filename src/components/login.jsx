@@ -56,8 +56,10 @@ function Login() {
       handleLogin();
       const role = response.data.data.role;
       setUserRole(role); //برای مشخص شدن نقش کاربر و رندر شدن پنل ادمین یا کاربر معمولی بر اساس آن
-      if (role !== "adminUser") {
-        navigate("/userdashboard");
+      if (role == "adminUser") {
+        navigate("/adminpanel");
+      } else {
+        navigate("/userdashboard")
       } //اگر نقش کاربر برابر با ادمین نبود برو به صفحه ی کاربری کاربر معمولی
     } catch (error) {
       console.log(error);
