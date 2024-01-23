@@ -263,7 +263,8 @@ function AdminPanel() {
         const status = error.response.status;
         console.log(status);
         if (status == 400 || status == 401) {
-          setUserRole("") //اگر توکن معتبر نباشد و استاتوس ۴۰۰ یا ۴۰۱ برگردد userRole به مقدار خالی ست میشود تا کاربر به صفحه ی ورود هدایت شود.
+          handleExit()
+          navigate("/login")//اگر توکن معتبر نباشد و استاتوس ۴۰۰ یا ۴۰۱ برگردد userRole به مقدار خالی ست میشود تا کاربر به صفحه ی ورود هدایت شود.
         } else {
           responseApi(error.message);
         }
