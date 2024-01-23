@@ -810,6 +810,7 @@ function App() {
           reqType,
           server,
           responseApi,
+          config,
           //admin
           adminFilteredProducts,
           setAdminFilteredProducts,

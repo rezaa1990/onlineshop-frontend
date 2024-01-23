@@ -24,6 +24,7 @@ function AdminPanel() {
     reqType,
     server,
     responseApi,
+    config,
     //admin
     adminFilteredProducts,
     setAdminFilteredProducts,
@@ -244,7 +245,7 @@ function AdminPanel() {
     console.log(formData);
     console.log(formData.get("images"));
     axios
-      .post(`${reqType}://${server}:${port}/api/image/addimage`, formData)
+      .post(`${reqType}://${server}:${port}/api/image/addimage`, formData , config)
       .then((response) => {
         console.log("تصویر با موفقیت ارسال شد!", response.data);
         console.log(response.data.data.images);
@@ -259,7 +260,13 @@ function AdminPanel() {
       })
       .catch((error) => {
         console.error("خطا در ارسال تصویر:", error);
-        responseApi(error.message);
+        const status = error.response.status;
+        console.log(status);
+        if (status == 400 || status == 401) {
+          setUserRole("") //اگر توکن معتبر نباشد و استاتوس ۴۰۰ یا ۴۰۱ برگردد userRole به مقدار خالی ست میشود تا کاربر به صفحه ی ورود هدایت شود.
+        } else {
+          responseApi(error.message);
+        }
       });
   };
   function handleExit() {
@@ -469,7 +476,7 @@ function AdminPanel() {
 
                   <div className="text-center">
                     <Link
-                      // to="/login"
+                      to="/login"
                       onClick={handleExit}
                       className=""
                       style={{
