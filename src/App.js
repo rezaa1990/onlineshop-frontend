@@ -291,7 +291,13 @@ function App() {
       }
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi("خطا در حذف تخفیف");
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi("خطا در حذف تخفیف");
+      }
     }
   }
 
