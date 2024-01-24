@@ -146,8 +146,6 @@ function App() {
       setShowHidden(4);
     } catch (error) {
       console.log(error);
-      const status = error.response.status;
-      console.log(status);
       if (error.response.data.data.res === false) {
         setUserRole("1")
         setToken();
@@ -204,7 +202,13 @@ function App() {
       }
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi(error.response.data.data);
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi(error.response.data.data);
+      }
     }
   }
 
@@ -223,7 +227,14 @@ function App() {
       responseApi("تخفیف اعمال شد");
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi(error.response.data.data);
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi(error.response.data.data);
+      }
+      
     }
   }
 
