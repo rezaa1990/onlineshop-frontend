@@ -310,7 +310,13 @@ function App() {
       getProduct();
     } catch (error) {
       console.error("خطا:", error);
-      responseApi("خطا در حذف کامنت");
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi("خطا در حذف کامنت");
+      }
     }
   }
 
@@ -327,7 +333,14 @@ function App() {
       responseApi(response.data.message);
     } catch (error) {
       console.error("خطا:", error);
-      responseApi("خطا در تایید کردن کامنت");
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi("خطا در تایید کردن کامنت");
+      }
+
     }
   }
 
