@@ -727,6 +727,11 @@ function App() {
       responseApi("نظر شما بعد از تایید توسط ادمین نمایش داده خواهد شد");
     } catch (error) {
       console.error("خطا:", error);
+      if (error.response.data.data.res === false) {
+        setCommentResponse("برای افزودن نظر ابتدا باید وارد شوید یا ثبت نام کنید");
+      } else {
+        setCommentResponse(error.response.data.data);
+      }
     }
   }
 
