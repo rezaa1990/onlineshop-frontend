@@ -142,15 +142,23 @@ function App() {
         config
       );
       responseApi(response.data.message);
-      setShowHidden(4);
       getProduct();
+      setShowHidden(4);
     } catch (error) {
       console.log(error);
-      responseApi(
-        error.response.data.data
-          ? error.response.data.data
-          : error.response.data
-      );
+      const status = error.response.status;
+      console.log(status);
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi(
+          error.response.data.data
+            ? error.response.data.data
+            : error.response.data
+        );
+      }
     }
   }
   /////////////////////////////////////////////////////////////////////////////
@@ -1012,12 +1020,12 @@ function App() {
           <>
               <Navbar></Navbar>
               {/* <Banner></Banner> */}
-            <Routes>
-              <Route path="/oneproduct" element={<OneProduct />} />
-              <Route path="/userdashboard" element={<UserPanel />} />
-              <Route path="/" element={<UserProducts />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Routes>
+                <Route path="/" element={<UserProducts />} />
+                <Route path="/userdashboard" element={<UserPanel />} />
+                <Route path="/oneproduct" element={<OneProduct />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
             <Contact></Contact>
             <Footer></Footer>
