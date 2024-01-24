@@ -431,6 +431,13 @@ function App() {
       }
     } catch (error) {
       console.error("خطا:", error);
+      if (error.response.data.data.res === false) {
+        setUserRole("1")
+        setToken();
+        window.location.href = '/login';
+      } else {
+        responseApi("خطا در بروزرسانی محصول");
+      }
     }
   }
 
