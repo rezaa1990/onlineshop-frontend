@@ -3,8 +3,10 @@ import { faCoffee, faDove} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import { Button, Spinner } from "react-bootstrap";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
 // import { useNavigate } from 'react-router-dom';
-
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useContext } from 'react';
@@ -14,6 +16,8 @@ import{useNavigate } from 'react-router-dom';
 function Register() {
   const navigate  = useNavigate();
   const[registerResponseMessage,setRegisterResponseMessage]=useState();
+  const [loading, setLoading] = useState(false);
+  const [userRegister, setUserRegister] = useState(false);
 
   const {
     port,
@@ -40,6 +44,7 @@ function Register() {
 
   async function register(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       const registerData = {
         fName,
@@ -55,10 +60,16 @@ function Register() {
       const response = await axios.post(`${reqType}://${server}:${port}/api/auth/register`, registerData);
       console.log(response.data.message);
       console.log(response.data);
+      // setUserRegister(true);
       navigate("/login")
     } catch (error) {
       console.log(error.response)
-      setRegisterResponseMessage(error.response.data.data);
+      const a = JSON.stringify(error.response?.data?.data).slice(2,-2)
+      const b = error.response?.data?.message;
+      let result = a + " " + b;
+      console.log(result)
+      setRegisterResponseMessage(result);
+      setLoading(false);
     }
   }
 
@@ -173,7 +184,35 @@ function Register() {
         </div>
 
         <div className="form-group mx-5">
-          <button onClick={register} className="btn btn-success my-3 w-100">ثبت نام</button>
+            {/* <button onClick={register} className="btn btn-success my-3 w-100">ثبت نام</button> */}
+            <Button
+              onClick={register}
+              variant="success"
+              className="btn btn-success my-3 w-100"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    variant=''
+                    role="status"
+                    aria-hidden="true"
+                    className="mx-2"
+                    style={{
+                      animationDuration: '1.5s',  // زمان انیمیشن را تنظیم کنید
+                      border: '0.2em solid',  // نوع حاشیه را تنظیم کنید
+                      borderTopColor: 'transparent',  // رنگ حاشیه بالا را تنظیم کنید
+                    }}
+                  />
+                  <span className="text-light"> درانتظار ثبت نام </span>
+                </>
+              ) : (
+                "ثبت نام"
+              )}
+            </Button>
         </div>
 
         {/* <div className="form-group mx-5">
