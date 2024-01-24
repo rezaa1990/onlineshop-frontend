@@ -652,7 +652,12 @@ function App() {
       responseApi(response.data.message);
     } catch (error) {
       console.error("خطا در ارسال درخواست:", error);
-      responseApi(error.response.data);
+      if (error.response.data.data.res === false) {
+        setCommentResponse("برای افزودن محصول به سبد خرید ابتدا باید وارد شوید یا ثبت نام کنید");
+      } else {
+        responseApi(error.response.data);
+      }
+      
     }
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
