@@ -9,7 +9,9 @@ import 'firebase/compat/auth';
 import { useContext } from 'react';
 import AppContext from '../context/context';
 import { error } from 'jquery';
-
+import { Button, Spinner } from "react-bootstrap";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
 
 function Login() {
   const {
@@ -22,8 +24,8 @@ function Login() {
     setUser,
     setAdminUserInfo,
   } = useContext(AppContext);
-  
-  const  navigate = useNavigate();
+
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -32,13 +34,16 @@ function Login() {
   const [resetCode, setResetCode] = useState();
   const [display, setDisplay] = useState(1);
   const [buttonState, setButtonState] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  function handleClick(order,e) {
+  function handleClick(order, e) {
     e.preventDefault();
-    setDisplay(order)
+    setDisplay(order);
   }
   async function login(e) {
     e.preventDefault();
+    setLoading(true);
     try {
       const loginData = {
         email,
@@ -59,11 +64,13 @@ function Login() {
       if (role == "adminUser") {
         navigate("/adminpanel");
       } else {
-        navigate("/userdashboard")
+        navigate("/userdashboard");
       } //اگر نقش کاربر برابر با ادمین نبود برو به صفحه ی کاربری کاربر معمولی
+      setIsLoggedIn(true);
     } catch (error) {
       console.log(error);
       setLoginResponseMessage(error.response?.data?.message);
+      setLoading(false);
     }
   }
 
@@ -114,10 +121,12 @@ function Login() {
       console.log(response);
       setLoginResponseMessage(response.data?.message);
       setButtonState(false);
-      setDisplay(response.data?.message == "رمز عبور با موفقیت تغییر یافت" ? 1 : 3)
+      setDisplay(
+        response.data?.message == "رمز عبور با موفقیت تغییر یافت" ? 1 : 3
+      );
     } catch (error) {
       console.log(error);
-      console.log(error.response?.data?.data)
+      console.log(error.response?.data?.data);
       setLoginResponseMessage(error.response?.data?.data);
       setButtonState(false);
     }
@@ -158,9 +167,34 @@ function Login() {
           </div>
 
           <div className="form-group mx-5">
-            <button onClick={login} className="btn btn-success my-3 w-100">
-              ورود
-            </button>
+            <Button
+              onClick={login}
+              variant="success"
+              className="my-3 w-100"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    variant=''
+                    role="status"
+                    aria-hidden="true"
+                    className="mx-2"
+                    style={{
+                      animationDuration: '1.5s',  // زمان انیمیشن را تنظیم کنید
+                      border: '0.2em solid',  // نوع حاشیه را تنظیم کنید
+                      borderTopColor: 'transparent',  // رنگ حاشیه بالا را تنظیم کنید
+                    }}
+                  />
+                  <span className="text-light"> درانتظار ورود به سایت</span>
+                </>
+              ) : (
+                "ورود"
+              )}
+            </Button>
           </div>
 
           <div className="text-center">
@@ -206,7 +240,7 @@ function Login() {
                 بازیابی
               </button>
               <button
-                onClick={(e)=>handleClick(1,e)}
+                onClick={(e) => handleClick(1, e)}
                 className="btn btn-warning btn-sm my-1 w-50"
               >
                 بازگشت
@@ -283,7 +317,7 @@ function Login() {
                 تغییر رمز
               </button>
               <button
-                onClick={(e)=>handleClick(2,e)}
+                onClick={(e) => handleClick(2, e)}
                 className="btn btn-warning btn-sm my-1 w-50"
               >
                 بازگشت
