@@ -18,7 +18,8 @@
 footer,
 .usersidebar,
 #basket,
-#nav-drop-down-menu {
+#nav-drop-down-menu,
+#userpanel {
   background-color: rgba(4, 1, 50, 0.996);
 }
 

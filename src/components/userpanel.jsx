@@ -191,7 +191,7 @@ function UserPanel() {
   console.log("uuuuserrrr",user);
   return (
     <>
-      <div className="d-md-flex">
+      <div className="d-md-flex pt-5" id='userpanel'>
         {/* sidebar */}
         <div className="col-12 col-md-3 p-2 usersidebar pt-5">
           <div className="p-1 pt-5">
@@ -344,7 +344,7 @@ function UserPanel() {
                   }
                   variant="success"
                   className="btn mb-4 w-50 text-light btn-success"
-                  disabled={loadingIssuingInvoice}
+                  disabled={user.basket?.length > 0 ? false : true || loadingIssuingInvoice}
                 >
                   {loadingIssuingInvoice ? (
                     <>
