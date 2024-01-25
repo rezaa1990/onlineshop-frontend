@@ -35,7 +35,13 @@ function Login() {
   const [display, setDisplay] = useState(1);
   const [buttonState, setButtonState] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // loginstate
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // sendemailstate
+  const [loadingE, setLoadingE] = useState(false);
+  // resetpasswordstate
+  const [loadingResetPass, setLoadingResetPass] = useState(false);
 
   function handleClick(order, e) {
     e.preventDefault();
@@ -75,7 +81,7 @@ function Login() {
   }
 
   async function resetPasswordEmail(e) {
-    setButtonState(true);
+    setLoadingE(true);
     e.preventDefault();
     try {
       const loginData = {
@@ -87,13 +93,12 @@ function Login() {
         loginData
       );
       console.log(response);
-      setButtonState(false);
       setLoginResponseMessage(response?.data?.message);
-      setDisplay(3);
+      setLoadingE(false);
     } catch (error) {
       console.log(error);
       setLoginResponseMessage(error.response?.data?.message);
-      setButtonState(false);
+      setLoadingE(false);
     }
   }
 
@@ -104,7 +109,7 @@ function Login() {
     resetCode,
     e
   ) {
-    setButtonState(true);
+    setLoadingResetPass(true);
     e.preventDefault();
     try {
       const data = {
@@ -120,15 +125,15 @@ function Login() {
       );
       console.log(response);
       setLoginResponseMessage(response.data?.message);
-      setButtonState(false);
       setDisplay(
         response.data?.message == "رمز عبور با موفقیت تغییر یافت" ? 1 : 3
       );
+      setLoadingResetPass(false);
     } catch (error) {
       console.log(error);
       console.log(error.response?.data?.data);
       setLoginResponseMessage(error.response?.data?.data);
-      setButtonState(false);
+      setLoadingResetPass(false);
     }
   }
 
@@ -179,14 +184,14 @@ function Login() {
                     as="span"
                     animation="border"
                     size="sm"
-                    variant=''
+                    variant=""
                     role="status"
                     aria-hidden="true"
                     className="mx-2"
                     style={{
-                      animationDuration: '1.5s',  // زمان انیمیشن را تنظیم کنید
-                      border: '0.2em solid',  // نوع حاشیه را تنظیم کنید
-                      borderTopColor: 'transparent',  // رنگ حاشیه بالا را تنظیم کنید
+                      animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                      border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                      borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
                     }}
                   />
                   <span className="text-light"> درانتظار ورود به سایت</span>
@@ -232,16 +237,38 @@ function Login() {
               />
             </div>
             <div className="form-group mx-5 text-center">
-              <button
+              <Button
                 onClick={resetPasswordEmail}
-                disabled={buttonState}
-                className="btn btn-success btn-sm my-1 w-50"
+                variant="success"
+                className="btn btn-success mt-4 ms-1"
+                disabled={loadingE}
               >
-                بازیابی
-              </button>
+                {loadingE ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      variant=""
+                      role="status"
+                      aria-hidden="true"
+                      className="mx-2"
+                      style={{
+                        animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                        border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                        borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
+                      }}
+                    />
+                    <span className="text-light"> درانتظار ارسال ایمیل</span>
+                  </>
+                ) : (
+                  "بازیابی"
+                )}
+              </Button>
+
               <button
                 onClick={(e) => handleClick(1, e)}
-                className="btn btn-warning btn-sm my-1 w-50"
+                className="btn btn-warning mt-4 me-1"
               >
                 بازگشت
               </button>
@@ -301,7 +328,7 @@ function Login() {
               />
             </div>
             <div className="form-group mx-5 text-center">
-              <button
+              <Button
                 onClick={(e) =>
                   resetPassword(
                     newPassword,
@@ -311,14 +338,35 @@ function Login() {
                     e
                   )
                 }
-                disabled={buttonState}
-                className="btn btn-success btn-sm my-1 w-50"
+                variant="success"
+                className="btn btn-success ms-1 mt-4"
+                disabled={loadingResetPass}
               >
-                تغییر رمز
-              </button>
+                {loadingResetPass ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      variant=""
+                      role="status"
+                      aria-hidden="true"
+                      className="mx-2"
+                      style={{
+                        animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                        border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                        borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
+                      }}
+                    />
+                    <span className="text-light"> درانتظار تغییر رمز</span>
+                  </>
+                ) : (
+                  "تغییر رمز"
+                )}
+              </Button>
               <button
                 onClick={(e) => handleClick(2, e)}
-                className="btn btn-warning btn-sm my-1 w-50"
+                className="btn btn-warning me-1 mt-4"
               >
                 بازگشت
               </button>
