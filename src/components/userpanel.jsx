@@ -9,7 +9,7 @@ import { Button, Spinner } from "react-bootstrap";
 
 function UserPanel() {
 
-  const{
+  const {
     server,
     //admin
     price,
@@ -52,7 +52,7 @@ function UserPanel() {
     setUpdateImg,
     updateCategory,
     setUpdateCategory,
-    updateNumberOfProduct ,
+    updateNumberOfProduct,
     setUpdateNumberOfProduct,
     isFormVisible,
     setIsFormVisible,
@@ -66,16 +66,16 @@ function UserPanel() {
     setSelectedProducts,
     discountType,
     setDiscountType,
-    discountValue, 
+    discountValue,
     setDiscountValue,
-    discountExpireTime, 
+    discountExpireTime,
     setDiscountExpireTime,
     createDiscount,
     addDiscountToProduct,
     removeDiscount,
     handleToggleProduct,
     handleDiscountSelection,
-    updateSerialNumber , 
+    updateSerialNumber,
     setUpdateSerialNumber,
     //user product
     userProducts,
@@ -96,13 +96,13 @@ function UserPanel() {
     setAllDataAboutProduct,
     commentResponse,
     setCommentResponse,
-    fullDescription, 
+    fullDescription,
     setFullDescription,
-    replyComment, 
+    replyComment,
     setReplyComments,
-    numberOfSelectedProduct, 
+    numberOfSelectedProduct,
     setNumberOfSelectedProduct,
-    indexOfSelectedProduct , 
+    indexOfSelectedProduct,
     setIndexOfSelectedProducts,
     handleClick,
     toggleDescription,
@@ -114,11 +114,13 @@ function UserPanel() {
     addReplyToComment,
     setProductId,
     changeNumber,
-    id1 , 
+    id1,
     setId1,
-    oneProduct , 
+    oneProduct,
     setOneProduct,
     //user panel
+    loadingSendingPostalInformation,
+    setLoadingSendingPostalInformation,
     loadingIssuingInvoice,
     setLoadingIssuingInvoice,
     user,
@@ -127,26 +129,27 @@ function UserPanel() {
     setUserPanelShowHidden,
     userPanelGetUser,
     deleteFromBasket,
-    orderMeesage,setOrderResponseMessage,
+    orderMeesage,
+    setOrderResponseMessage,
     orderId,
     setOrderId,
-    factor , 
+    factor,
     setFactor,
-    totalPrice , 
+    totalPrice,
     setTotalPrice,
     sendingPostalInformation,
     IssuingInvoice,
-    clientFName , 
+    clientFName,
     setClientFName,
-    clientLName , 
+    clientLName,
     setClientLName,
-    clientEmail , 
+    clientEmail,
     setClientEmail,
-    clientMobile , 
+    clientMobile,
     setClientMobile,
-    clientAddress , 
+    clientAddress,
     setClientAddress,
-    clientPostalCode , 
+    clientPostalCode,
     setClientPostalCode,
     middleFunction1,
     //register
@@ -162,7 +165,7 @@ function UserPanel() {
     setLastName,
     setEmail,
     setMobile,
-    setAddress ,
+    setAddress,
     setPassword,
     setRepeatPassword,
     setPostalCode,
@@ -180,7 +183,7 @@ function UserPanel() {
     sendMessageResponse,
     setSendMessageResponse,
     sendMessage,
-  }=useContext(AppContext);
+  } = useContext(AppContext);
   
   useEffect(() => {
     userPanelGetUser();
@@ -190,241 +193,421 @@ function UserPanel() {
     <>
       <div className="d-md-flex">
         {/* sidebar */}
-        <div className="col-12 col-md-3 p-2 usersidebar pt-5"
-        
-        >
-          
+        <div className="col-12 col-md-3 p-2 usersidebar pt-5">
           <div className="p-1 pt-5">
             <div className="pt-5">
               <div className="pt-4">
-                <img src={require("./../images/pp.jpg")} alt="سسس" className="" style={{ borderRadius: "50%", width: "12vh" }} /></div>
-              <div className="m-1 text-light">
-                {user?.fName}
+                <img
+                  src={require("./../images/pp.jpg")}
+                  alt="سسس"
+                  className=""
+                  style={{ borderRadius: "50%", width: "12vh" }}
+                />
               </div>
+              <div className="m-1 text-light">{user?.fName}</div>
             </div>
           </div>
 
-          <div id='side-user-information' className="d-flex align-items-center mx-2 rounded" style={{cursor: 'pointer'}} onClick={() => setUserPanelShowHidden(1)}>
-              <img src={userIcon} alt="" className="mt-1 me-1" style={{width: '20px', height: '20px' }}/>
-              <div  className="text-light my-2 p-2">
-              اطلاعات کاربری
-              </div>   
-          </div>
-       
-          <div id='side-basket' className="d-flex align-items-center mx-2 mt-2 rounded" style={{cursor: 'pointer'}} onClick={() => setUserPanelShowHidden(2)}>
-              <img src={basket} alt="" className="mt-1 me-1" style={{cursor: 'pointer', width: '25px', height: '25px'}}/>
-              <div  className="text-light my-2 p-2">
-                سبد خرید
-              </div>
+          <div
+            id="side-user-information"
+            className="d-flex align-items-center mx-2 rounded"
+            style={{ cursor: "pointer" }}
+            onClick={() => setUserPanelShowHidden(1)}
+          >
+            <img
+              src={userIcon}
+              alt=""
+              className="mt-1 me-1"
+              style={{ width: "20px", height: "20px" }}
+            />
+            <div className="text-light my-2 p-2">اطلاعات کاربری</div>
           </div>
 
+          <div
+            id="side-basket"
+            className="d-flex align-items-center mx-2 mt-2 rounded"
+            style={{ cursor: "pointer" }}
+            onClick={() => setUserPanelShowHidden(2)}
+          >
+            <img
+              src={basket}
+              alt=""
+              className="mt-1 me-1"
+              style={{ cursor: "pointer", width: "25px", height: "25px" }}
+            />
+            <div className="text-light my-2 p-2">سبد خرید</div>
+          </div>
         </div>
 
-              {/* user info */}
-        <div className="col-12 col-md-9 py-1 userinfo pt-5" style={{ display: userPanelShowHidden == 1 ? 'block' : 'none' }}>
+        {/* user info */}
+        <div
+          className="col-12 col-md-9 py-1 userinfo pt-5"
+          style={{ display: userPanelShowHidden == 1 ? "block" : "none" }}
+        >
           <h1 className="text-center text-light mb-3 pt-5">اطلاعات کاربری</h1>
-          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
+          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
             <p className="mx-2 text-light">نام:</p>
             <p className="text-light">{user?.fName}</p>
           </div>
-          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
+          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
             <p className="mx-2 text-light"> نام خانوادگی:</p>
             <p className="text-light">{user?.lName}</p>
           </div>
-          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
+          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
             <p className="mx-2 text-light">ایمیل:</p>
             <p className="text-light">{user?.email}</p>
           </div>
-          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
+          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
             <p className="mx-2 text-light">شماره تماس:</p>
             <p className="text-light">{user?.mobile}</p>
           </div>
-          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id='user-info'>
+          <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
             <p className="mx-2 text-light">آدرس:</p>
             <p className="text-light">{user?.address}</p>
           </div>
         </div>
 
-              {/* basket */}
-        <div className="col-12 col-md-9 basket" style={{ display: userPanelShowHidden ==2 ? 'block' : 'none' }}>
-          <section className='h-100' id='basket'>
+        {/* basket */}
+        <div
+          className="col-12 col-md-9 basket"
+          style={{ display: userPanelShowHidden == 2 ? "block" : "none" }}
+        >
+          <section className="h-100" id="basket">
             <div className="pt-5">
-              
-            <h1 className="text-center text-light mb-5 pt-5">سبد خرید</h1>
-              
-            <div className="d-md-flex" style={{display:user.basket?.length > 0 ? "block" : "none"}}>
-                
-            {user?.basket?.map((basket,index) =>
-                <div className="col-lg-3 col-md-6 mb-5 px-3">
-                <div className="card p-1" id='basket-card'> 
-                  <img src={require(`./../images/panel-img/${basket.images[0].imagePath.substring(55)}`)} alt="" className="card-img-top" />
-                  <div className="card-body">
-                    <div className="card-title">
-                      <h3 className="text-light text-center">{basket.name}</h3>
-                    </div>
-                    <div className="card-subtitle mt-4">
-                      <p className="text-light text-center">تعداد:{user.numberOfEachProductInBasket.filter((n,i)=>i == index )}</p>
-                    </div>
-                    <div className="text-center">
-                      <button onClick={()=>deleteFromBasket(user._id,basket._id)} className="btn btn-warning btn-sm">حذف از سبد</button>
+              <h1 className="text-center text-light mb-5 pt-5">سبد خرید</h1>
+
+              <div
+                className="d-md-flex"
+                style={{ display: user.basket?.length > 0 ? "block" : "none" }}
+              >
+                {user?.basket?.map((basket, index) => (
+                  <div className="col-lg-3 col-md-6 mb-5 px-3">
+                    <div className="card p-1" id="basket-card">
+                      <img
+                        src={require(`./../images/panel-img/${basket.images[0].imagePath.substring(
+                          55
+                        )}`)}
+                        alt=""
+                        className="card-img-top"
+                      />
+                      <div className="card-body">
+                        <div className="card-title">
+                          <h3 className="text-light text-center">
+                            {basket.name}
+                          </h3>
+                        </div>
+                        <div className="card-subtitle mt-4">
+                          <p className="text-light text-center">
+                            تعداد:
+                            {user.numberOfEachProductInBasket.filter(
+                              (n, i) => i == index
+                            )}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <button
+                            onClick={() =>
+                              deleteFromBasket(user._id, basket._id)
+                            }
+                            className="btn btn-warning btn-sm"
+                          >
+                            حذف از سبد
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div> 
+                ))}
               </div>
-            )}
-            </div>
-            
-            <div className="d-flex justify-content-center">
+
+              <div className="d-flex justify-content-center">
                 {/* <img src={emptybox} alt="" className="" style={{display:user.basket?.length > 0 ? "none" : "block" , width:"30vh", height:"30vh"}}/> */}
-                <p className="text-warning py-5" style={{ display: user.basket?.length > 0 ? "none" : "block" }}>سبد شما خالی است</p>
-            </div>
-              
-            <div className="text-center mt-4">
+                <p
+                  className="text-warning py-5"
+                  style={{
+                    display: user.basket?.length > 0 ? "none" : "block",
+                  }}
+                >
+                  سبد شما خالی است
+                </p>
+              </div>
+
+              <div className="text-center mt-4">
                 {/* <button disabled={user.basket?.length > 0 ? false : true } onClick={(e) => middleFunction1(user.basket,user.numberOfEachProductInBasket,e)} className="btn mb-4 w-50 text-light btn-success"> صدور فاکتور </button> */}
                 <Button
-              onClick={(e) => middleFunction1(user.basket,user.numberOfEachProductInBasket,e)}
-              variant="success"
-              className="btn mb-4 w-50 text-light btn-success"
-              disabled={loadingIssuingInvoice}
-            >
-              {loadingIssuingInvoice ? (
-                <>
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    variant=""
-                    role="status"
-                    aria-hidden="true"
-                    className="mx-2"
-                    style={{
-                      animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
-                      border: "0.2em solid", // نوع حاشیه را تنظیم کنید
-                      borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
-                    }}
-                  />
-                  <span className="text-light"> درانتظار صدور فاکتور</span>
-                </>
-              ) : (
-                "صدور فاکتور"
-              )}
-            </Button>
-            </div>
-              
+                  onClick={(e) =>
+                    middleFunction1(
+                      user.basket,
+                      user.numberOfEachProductInBasket,
+                      e
+                    )
+                  }
+                  variant="success"
+                  className="btn mb-4 w-50 text-light btn-success"
+                  disabled={loadingIssuingInvoice}
+                >
+                  {loadingIssuingInvoice ? (
+                    <>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        variant=""
+                        role="status"
+                        aria-hidden="true"
+                        className="mx-2"
+                        style={{
+                          animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                          border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                          borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
+                        }}
+                      />
+                      <span className="text-light"> درانتظار صدور فاکتور</span>
+                    </>
+                  ) : (
+                    "صدور فاکتور"
+                  )}
+                </Button>
+              </div>
             </div>
           </section>
         </div>
 
-              {/* postal info */}
-        <div className="col-12 col-md-9 pt-5" id='postal-info' style={{ display: userPanelShowHidden ==3 ? 'block' : 'none' }}>
+        {/* postal info */}
+        <div
+          className="col-12 col-md-9 pt-5"
+          id="postal-info"
+          style={{ display: userPanelShowHidden == 3 ? "block" : "none" }}
+        >
           <div className="container pt-5">
+            <div className="row justify-content-center pt-5">
+              <div className="col-lg-6">
+                <h3 className="m-5 text-light">اطلاعات پستی</h3>
 
-          <div className="row justify-content-center pt-5">
-          <div className="col-lg-6">
-            <h3 className="m-5 text-light">اطلاعات پستی</h3>
+                <div className="form-group mx-5">
+                  <p className="text-center text-danger ">{""}</p>
+                </div>
 
-           <div className="form-group mx-5">
-             <p className="text-center text-danger ">{''}</p>
-           </div>
-
-            <form action="" className="text-muted mb-5">
-
-            <div className="form-group mx-5 text-danger text-center">{orderMeesage}</div>
+                <form action="" className="text-muted mb-5">
+                  <div className="form-group mx-5 text-danger text-center">
+                    {orderMeesage}
+                  </div>
                   <p className="text-warning text-center">{responseMessage}</p>
-            <div className="form-group mx-5">
-              <label htmlFor="name" className='text-light'>نام</label>
-              <input value={clientFName} onChange={(e)=>setClientFName(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
-            </div>
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      نام
+                    </label>
+                    <input
+                      value={clientFName}
+                      onChange={(e) => setClientFName(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light border-0"
+                    />
+                  </div>
 
-            <div className="form-group mx-5">
-              <label htmlFor="name" className='text-light'>نام خانوادگی</label>
-              <input value={clientLName} onChange={(e)=>setClientLName(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
-            </div>
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      نام خانوادگی
+                    </label>
+                    <input
+                      value={clientLName}
+                      onChange={(e) => setClientLName(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light border-0"
+                    />
+                  </div>
 
-            <div className="form-group mx-5">
-              <label htmlFor="name" className='text-light'>ایمیل</label>
-              <input value={clientEmail} onChange={(e)=>setClientEmail(e.target.value)} id="postal-info-input" type="text" className="form-control text-light  border-0"/>
-            </div>
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      ایمیل
+                    </label>
+                    <input
+                      value={clientEmail}
+                      onChange={(e) => setClientEmail(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light  border-0"
+                    />
+                  </div>
 
-            <div className="form-group mx-5">
-              <label htmlFor="name" className='text-light'>موبایل</label>
-              <input value={clientMobile} onChange={(e)=>setClientMobile(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
-           </div>
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      موبایل
+                    </label>
+                    <input
+                      value={clientMobile}
+                      onChange={(e) => setClientMobile(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light border-0"
+                    />
+                  </div>
 
-            <div className="form-group mx-5">
-             <label htmlFor="name" className='text-light'>آدرس</label>
-              <input value={clientAddress} onChange={(e)=>setClientAddress(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
-           </div>
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      آدرس
+                    </label>
+                    <input
+                      value={clientAddress}
+                      onChange={(e) => setClientAddress(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light border-0"
+                    />
+                  </div>
 
-            <div className="form-group mx-5">
-              <label htmlFor="name" className='text-light'>کد پستی</label>
-              <input value={clientPostalCode} onChange={(e)=>setClientPostalCode(e.target.value)} id="postal-info-input" type="text" className="form-control text-light border-0" />
+                  <div className="form-group mx-5">
+                    <label htmlFor="name" className="text-light">
+                      کد پستی
+                    </label>
+                    <input
+                      value={clientPostalCode}
+                      onChange={(e) => setClientPostalCode(e.target.value)}
+                      id="postal-info-input"
+                      type="text"
+                      className="form-control text-light border-0"
+                    />
+                  </div>
+                  <div className="text-center m-1">
+                    <Button
+                      onClick={(e) => sendingPostalInformation(orderId, e)}
+                      variant="success"
+                      className="btn btn-success btn-sm"
+                      disabled={loadingSendingPostalInformation}
+                    >
+                      {loadingSendingPostalInformation ? (
+                        <>
+                          <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            variant=""
+                            role="status"
+                            aria-hidden="true"
+                            className="mx-2"
+                            style={{
+                              animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                              border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                              borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
+                            }}
+                          />
+                          <span className="text-light">
+                            در حال ارسال اطلاعات پستی
+                          </span>
+                        </>
+                      ) : (
+                        "ثبت و پرداخت فاکتور"
+                      )}
+                    </Button>
+                    <button
+                      onClick={() => setUserPanelShowHidden(2)}
+                      className="btn btn-warning btn-sm"
+                    >
+                      {" "}
+                      بازگشت{" "}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-           <div className="text-center m-1">
-              <button onClick={(e)=>sendingPostalInformation(orderId,e)} disabled={''} className="btn btn-success btn-sm">ثبت و پرداخت فاکتور</button>
-          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning btn-sm"> بازگشت </button>
-            </div>
-          </form>
           </div>
-           </div>
-
-           </div>
         </div>
 
         {/* factor info */}
-        <div className="col-12 col-md-9 pt-5" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
+        <div
+          className="col-12 col-md-9 pt-5"
+          id="factor"
+          style={{ display: userPanelShowHidden == 4 ? "block" : "none" }}
+        >
           <div className="container table-responsive pt-5">
-            <h4 className='text-light text-center pt-5'>فاکتور</h4>
+            <h4 className="text-light text-center pt-5">فاکتور</h4>
             <table className="mx-auto container border table-responsive mb-4">
-              <thead className=''>
-              <tr className=''>
-                <th id='table-head' className='text-light p-1 col-1'>#</th>
-                <th id='table-head' className='text-light p-1 col-1'>نام کالا</th>
-                <th id='table-head' className='text-light p-1 col-1'>تعداد</th>
-                <th id='table-head' className='text-light p-1 col-1'>قیمت + تخفیف</th>
-                <th id='table-head' className='text-light p-1 col-1'>تخفیف </th>
-                <th id='table-head' className='text-light p-1 col-1'>قیمت * تعداد</th>
-                {/* سایر ستون‌ها */}
-              </tr>
+              <thead className="">
+                <tr className="">
+                  <th id="table-head" className="text-light p-1 col-1">
+                    #
+                  </th>
+                  <th id="table-head" className="text-light p-1 col-1">
+                    نام کالا
+                  </th>
+                  <th id="table-head" className="text-light p-1 col-1">
+                    تعداد
+                  </th>
+                  <th id="table-head" className="text-light p-1 col-1">
+                    قیمت + تخفیف
+                  </th>
+                  <th id="table-head" className="text-light p-1 col-1">
+                    تخفیف{" "}
+                  </th>
+                  <th id="table-head" className="text-light p-1 col-1">
+                    قیمت * تعداد
+                  </th>
+                  {/* سایر ستون‌ها */}
+                </tr>
               </thead>
               <tbody>
-              {factor?.map((factor, index) => (
-                
-              <tr key={index} className='border'>
-                <td className='text-light' id='table-head' >{index + 1}</td>
-                <td className='text-light' id='table-head' >{factor.productName}</td>
-                <td className='text-light' id='table-head' >{factor.numberOfEachProduct}</td>
-                <td className='text-light' id='table-head' >{parseFloat(factor.pricePerUnit).toFixed(2)}</td>
-                <td className='text-light' id='table-head' >{factor.discount ? factor.discount* 100 : 0 } درصد </td>
-                <td className='text-light' id='table-head' >{parseFloat(factor.priceMNumber).toFixed(2)}</td>
-                
-              </tr>
-              ))}
-              <tr>
-                <td className='text-warning' id='factor-sum' colSpan="4">جمع کل</td>
-                <td className='' id='factor-sum'>
-                </td>
-                <td className='text-warning' id='factor-sum'>
-                  {parseFloat(totalPrice).toFixed(2)}
-                </td>
-              </tr>
-              
-
+                {factor?.map((factor, index) => (
+                  <tr key={index} className="border">
+                    <td className="text-light" id="table-head">
+                      {index + 1}
+                    </td>
+                    <td className="text-light" id="table-head">
+                      {factor.productName}
+                    </td>
+                    <td className="text-light" id="table-head">
+                      {factor.numberOfEachProduct}
+                    </td>
+                    <td className="text-light" id="table-head">
+                      {parseFloat(factor.pricePerUnit).toFixed(2)}
+                    </td>
+                    <td className="text-light" id="table-head">
+                      {factor.discount ? factor.discount * 100 : 0} درصد{" "}
+                    </td>
+                    <td className="text-light" id="table-head">
+                      {parseFloat(factor.priceMNumber).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="text-warning" id="factor-sum" colSpan="4">
+                    جمع کل
+                  </td>
+                  <td className="" id="factor-sum"></td>
+                  <td className="text-warning" id="factor-sum">
+                    {parseFloat(totalPrice).toFixed(2)}
+                  </td>
+                </tr>
               </tbody>
             </table>
             <div className="text-center pt-5">
-          <button onClick={() => setUserPanelShowHidden(3)} className="btn btn-success btn-sm m-1">دریافت اطلاعات پستی</button>
-          <button onClick={() => setUserPanelShowHidden(2)} className="btn btn-warning btn-sm  m-1"> بازگشت </button>
+              <button
+                onClick={() => setUserPanelShowHidden(3)}
+                className="btn btn-success btn-sm m-1"
+              >
+                دریافت اطلاعات پستی
+              </button>
+              <button
+                onClick={() => setUserPanelShowHidden(2)}
+                className="btn btn-warning btn-sm  m-1"
+              >
+                {" "}
+                بازگشت{" "}
+              </button>
             </div>
           </div>
         </div>
-              {/* payment page */}
-        <div className="col-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==5 ? 'block' : 'none' }}>
+        {/* payment page */}
+        <div
+          className="col-12 col-md-9"
+          id="postal-info"
+          style={{ display: userPanelShowHidden == 5 ? "block" : "none" }}
+        >
           <div className="container">
-                <h1 className="">صفحه ی پرداخت</h1>
-           </div>
+            <h1 className="">صفحه ی پرداخت</h1>
+          </div>
         </div>
-  
       </div>
     </>
   );

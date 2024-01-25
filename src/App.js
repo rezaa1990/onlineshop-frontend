@@ -741,7 +741,10 @@ function App() {
   /////////////////////////////////////////////////////////////////////////////
   //user panel
   // دریافت مشخصات مشتری برای اضافه کردن به داکیومنت سفارشها)(order)
+  const [loadingSendingPostalInformation, setLoadingSendingPostalInformation] =
+    useState(false);
   async function sendingPostalInformation(orderId, e) {
+    setLoadingSendingPostalInformation(true);
     e.preventDefault();
     try {
       const data = {
@@ -759,9 +762,11 @@ function App() {
       );
       console.log(response.data);
       responseApi(response.data.message);
+      setLoadingSendingPostalInformation(false);
     } catch (error) {
       console.error("خطا:", error);
       responseApi(error.response.data.data);
+      setLoadingSendingPostalInformation(false);
     }
   }
   //ساخت و صدور فاکتور
@@ -1000,6 +1005,8 @@ function App() {
           navSearchInputValue,
           setNavSearchInputValue,
           //user panel
+          loadingSendingPostalInformation,
+          setLoadingSendingPostalInformation,
           loadingIssuingInvoice,
           setLoadingIssuingInvoice,
           user,
@@ -1082,14 +1089,14 @@ function App() {
           <AdminPanel></AdminPanel>
         ) : (
           <>
-              <Navbar></Navbar>
-              {/* <Banner></Banner> */}
-              <Routes>
-                <Route path="/" element={<UserProducts />} />
-                <Route path="/userdashboard" element={<UserPanel />} />
-                <Route path="/oneproduct" element={<OneProduct />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+            <Navbar></Navbar>
+            {/* <Banner></Banner> */}
+            <Routes>
+              <Route path="/" element={<UserProducts />} />
+              <Route path="/userdashboard" element={<UserPanel />} />
+              <Route path="/oneproduct" element={<OneProduct />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
             <Contact></Contact>
             <Footer></Footer>
