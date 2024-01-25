@@ -5,6 +5,7 @@ import AppContext from '../context/context';
 import userIcon from '../images/user.png';
 import basket from '../images/basket.png';
 import emptybox from '../images/empty-box.png';
+import { Button, Spinner } from "react-bootstrap";
 
 function UserPanel() {
 
@@ -118,6 +119,8 @@ function UserPanel() {
     oneProduct , 
     setOneProduct,
     //user panel
+    loadingIssuingInvoice,
+    setLoadingIssuingInvoice,
     user,
     setUser,
     userPanelShowHidden,
@@ -277,7 +280,35 @@ function UserPanel() {
             </div>
               
             <div className="text-center mt-4">
-              <button disabled={user.basket?.length > 0 ? false : true } onClick={(e) => middleFunction1(user.basket,user.numberOfEachProductInBasket,e)} className="btn mb-4 w-50 text-light btn-success"> صدور فاکتور </button>
+                {/* <button disabled={user.basket?.length > 0 ? false : true } onClick={(e) => middleFunction1(user.basket,user.numberOfEachProductInBasket,e)} className="btn mb-4 w-50 text-light btn-success"> صدور فاکتور </button> */}
+                <Button
+              onClick={(e) => middleFunction1(user.basket,user.numberOfEachProductInBasket,e)}
+              variant="success"
+              className="btn mb-4 w-50 text-light btn-success"
+              disabled={loadingIssuingInvoice}
+            >
+              {loadingIssuingInvoice ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    variant=""
+                    role="status"
+                    aria-hidden="true"
+                    className="mx-2"
+                    style={{
+                      animationDuration: "1.5s", // زمان انیمیشن را تنظیم کنید
+                      border: "0.2em solid", // نوع حاشیه را تنظیم کنید
+                      borderTopColor: "transparent", // رنگ حاشیه بالا را تنظیم کنید
+                    }}
+                  />
+                  <span className="text-light"> درانتظار صدور فاکتور</span>
+                </>
+              ) : (
+                "صدور فاکتور"
+              )}
+            </Button>
             </div>
               
             </div>

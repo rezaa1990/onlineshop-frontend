@@ -765,7 +765,9 @@ function App() {
     }
   }
   //ساخت و صدور فاکتور
+  const [loadingIssuingInvoice,setLoadingIssuingInvoice] = useState(false);
   async function IssuingInvoice(userBasket, numberOfEachProductInBasket, e) {
+    setLoadingIssuingInvoice(true);
     e.preventDefault();
     try {
       const data = {
@@ -783,9 +785,11 @@ function App() {
       const newOrderId = response.data.data.order._id;
       setOrderId(newOrderId);
       getUser();
+      setLoadingIssuingInvoice(false);
     } catch (error) {
       console.error("خطا:", error);
       responseApi(error.response.data.data);
+      setLoadingIssuingInvoice(false);
     }
   }
 
@@ -996,6 +1000,8 @@ function App() {
           navSearchInputValue,
           setNavSearchInputValue,
           //user panel
+          loadingIssuingInvoice,
+          setLoadingIssuingInvoice,
           user,
           setUser,
           userPanelShowHidden,
