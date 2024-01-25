@@ -285,10 +285,10 @@ function UserPanel() {
         </div>
 
               {/* postal info */}
-        <div className="col-12 col-md-9" id='postal-info' style={{ display: userPanelShowHidden ==3 ? 'block' : 'none' }}>
-          <div className="container">
+        <div className="col-12 col-md-9 pt-5" id='postal-info' style={{ display: userPanelShowHidden ==3 ? 'block' : 'none' }}>
+          <div className="container pt-5">
 
-          <div className="row justify-content-center">
+          <div className="row justify-content-center pt-5">
           <div className="col-lg-6">
             <h3 className="m-5 text-light">اطلاعات پستی</h3>
 
@@ -341,9 +341,9 @@ function UserPanel() {
         </div>
 
         {/* factor info */}
-        <div className="col-12 col-md-9" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
-          <div className="container table-responsive">
-            <h4 className='text-light text-center pt-2'>فاکتور</h4>
+        <div className="col-12 col-md-9 pt-5" id='factor' style={{ display: userPanelShowHidden ==4 ? 'block' : 'none' }}>
+          <div className="container table-responsive pt-5">
+            <h4 className='text-light text-center pt-5'>فاکتور</h4>
             <table className="mx-auto container border table-responsive mb-4">
               <thead className=''>
               <tr className=''>
