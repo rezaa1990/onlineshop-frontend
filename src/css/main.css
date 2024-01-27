@@ -27,6 +27,21 @@ footer,
   background-color: rgba(6, 0, 79, 0.996);
 }
 
+@keyframes navbar-open-close {
+  0%{
+    opacity: 0;
+    scale: .85;
+  }
+  100%{
+    opacity: 1;
+    scale: 1;
+  }
+}
+#navbar-content{
+  animation:  navbar-open-close .7s ease-in;
+}
+
+
 .search-input::placeholder {
   color: white;
 }

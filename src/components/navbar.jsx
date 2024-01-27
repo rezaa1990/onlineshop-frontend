@@ -229,7 +229,7 @@ function Navbar() {
         transition: "padding 0.3s ease-in-out", // افزودن انیمیشن به ترانزیشن
       }}
     >
-      <div className="container-fluid">
+      <div className="container-fluid" id="navbar-content">
         <div
           className="navbar-toggler px-1 bg-light"
           type="button"
