@@ -228,7 +228,7 @@ function OneProduct() {
     <div className="pt-5" id="oneproduct">
       {/* card img */}
       <div className="pt-5">
-        <div className="d-flex justify-content-center position-relative">
+        <div className="d-flex justify-content-center position-relative pt-5">
         <button
           className="text-light btn btn-lg border-0 position-absolute top-50 start-0"
           onClick={handlePrev}
@@ -241,7 +241,7 @@ function OneProduct() {
         </button>
         {oneProduct.images.map((image, index) => (
           <img
-            className={`mt-1 px-5 
+            className={`mt-1 px-5 pt-5
             ${currentIndex === index ? 'd-block' : 'd-none'} 
             ${window.innerWidth >= 576 ? 'w-50' : 'w-100'}`}
             key={index}
