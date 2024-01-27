@@ -1,14 +1,13 @@
-import {useContext} from 'react';
+import { useContext, useState } from "react";
 import pp from "./../images/pp.jpg";
-import p1 from "./../images/p1.jpeg"
-import AppContext from '../context/context';
-import userIcon from '../images/user.png';
-import basket from '../images/basket.png';
-import emptybox from '../images/empty-box.png';
+import p1 from "./../images/p1.jpeg";
+import AppContext from "../context/context";
+import userIcon from "../images/user.png";
+import basket from "../images/basket.png";
+import emptybox from "../images/empty-box.png";
 import { Button, Spinner } from "react-bootstrap";
 
 function UserPanel() {
-
   const {
     server,
     //admin
@@ -184,65 +183,109 @@ function UserPanel() {
     setSendMessageResponse,
     sendMessage,
   } = useContext(AppContext);
-  
+
   useEffect(() => {
     userPanelGetUser();
   }, []);
-  console.log("uuuuserrrr",user);
+  console.log("uuuuserrrr", user);
+
+  const [showSidebar, setShowSidebar] = useState(false);
   return (
     <>
-      <div className="d-md-flex pt-5" id='userpanel'>
+      <div className="d-md-flex pt-5" id="userpanel">
         {/* sidebar */}
-        <div className="col-12 col-md-3 p-2 usersidebar pt-5">
-          <div className="p-1 pt-5">
-            <div className="pt-5">
-              <div className="pt-4">
-                <img
-                  src={require("./../images/pp.jpg")}
-                  alt="سسس"
-                  className=""
-                  style={{ borderRadius: "50%", width: "12vh" }}
-                />
+        <div className="col-12 col-md-3">
+          <div className="pt-5 mt-3">
+            <button
+              className="btn btn-sm border mt-5 me-1 mt-lg-1"
+              id="menu-btn"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
+              <div className="menu-icon">
+                <div
+                  className="menu-line"
+                  style={{
+                    transition: "transform 0.3s ease",
+                    transformOrigin: "bottom right",
+                    transform: showSidebar ? "rotate(-37deg)" : "",
+                  }}
+                ></div>
+                <div
+                  className="menu-line"
+                  style={{ display: !showSidebar ? "block" : "none" }}
+                ></div>
+                <div
+                  className="menu-line"
+                  style={{
+                    transition: "transform 0.3s ease",
+                    transformOrigin: "top right",
+                    transform: showSidebar ? "rotate(37deg)" : "",
+                  }}
+                ></div>
               </div>
-              <div className="m-1 text-light">{user?.fName}</div>
+            </button>
+          </div>
+
+          <div
+            className=" p-2 usersidebar"
+            style={{
+              opacity: showSidebar ? 1 : 0,
+              maxHeight: showSidebar ? "100%" : "0",
+              overflow: "hidden",
+              transform: showSidebar ? "translateX(0)" : "translateX(100%)",
+              transition: "opacity 0.5s ease, max-height 0.5s ease, transform 0.5s ease",
+            }}
+          >
+            <div className="">
+              <div className="">
+                <div className="pt-1">
+                  <img
+                    src={require("./../images/pp.jpg")}
+                    alt="سسس"
+                    className=""
+                    style={{ borderRadius: "50%", width: "12vh" }}
+                  />
+                </div>
+                <div className="m-1 text-light">{user?.fName}</div>
+              </div>
             </div>
-          </div>
 
-          <div
-            id="side-user-information"
-            className="d-flex align-items-center mx-2 rounded"
-            style={{ cursor: "pointer" }}
-            onClick={() => setUserPanelShowHidden(1)}
-          >
-            <img
-              src={userIcon}
-              alt=""
-              className="mt-1 me-1"
-              style={{ width: "20px", height: "20px" }}
-            />
-            <div className="text-light my-2 p-2">اطلاعات کاربری</div>
-          </div>
+            <div
+              id="side-user-information"
+              className="d-flex align-items-center mx-2 rounded"
+              style={{ cursor: "pointer" }}
+              onClick={() => setUserPanelShowHidden(1)}
+            >
+              <img
+                src={userIcon}
+                alt=""
+                className="mt-1 me-1"
+                style={{ width: "20px", height: "20px" }}
+              />
+              <div className="text-light my-2 p-2">اطلاعات کاربری</div>
+            </div>
 
-          <div
-            id="side-basket"
-            className="d-flex align-items-center mx-2 mt-2 rounded"
-            style={{ cursor: "pointer" }}
-            onClick={() => setUserPanelShowHidden(2)}
-          >
-            <img
-              src={basket}
-              alt=""
-              className="mt-1 me-1"
-              style={{ cursor: "pointer", width: "25px", height: "25px" }}
-            />
-            <div className="text-light my-2 p-2">سبد خرید</div>
+            <div
+              id="side-basket"
+              className="d-flex align-items-center mx-2 mt-2 rounded"
+              style={{ cursor: "pointer" }}
+              onClick={() => setUserPanelShowHidden(2)}
+            >
+              <img
+                src={basket}
+                alt=""
+                className="mt-1 me-1"
+                style={{ cursor: "pointer", width: "25px", height: "25px" }}
+              />
+              <div className="text-light my-2 p-2">سبد خرید</div>
+            </div>
           </div>
         </div>
 
         {/* user info */}
         <div
           className="col-12 col-md-9 py-1 userinfo pt-5"
-          style={{ display: userPanelShowHidden == 1 ? "block" : "none" }}
+          style={{display: userPanelShowHidden == 1 ? "block" : "none" }}
         >
           <h1 className="text-center text-light mb-3 pt-5">اطلاعات کاربری</h1>
           <div className="p-2 m-1 rounded d-flex col-8 mx-auto" id="user-info">
@@ -344,7 +387,11 @@ function UserPanel() {
                   }
                   variant="success"
                   className="btn mb-4 w-50 text-light btn-success"
-                  disabled={user.basket?.length > 0 ? false : true || loadingIssuingInvoice}
+                  disabled={
+                    user.basket?.length > 0
+                      ? false
+                      : true || loadingIssuingInvoice
+                  }
                 >
                   {loadingIssuingInvoice ? (
                     <>
