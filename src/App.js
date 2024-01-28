@@ -819,6 +819,9 @@ function App() {
         console.log(error);
       });
   }
+  useEffect(() => {
+    userPanelGetUser();
+  }, [])
 
   async function deleteFromBasket(userId, basketId) {
     const data = {
