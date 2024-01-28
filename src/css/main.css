@@ -79,6 +79,10 @@ li:hover,
   background-color: rgba(4, 1, 50, 0.996);
 }
 
+#oneproduct-btn-addcomment , #oneproduct-comment-reply-btn{
+background-color: rgb(31, 17, 124);
+}
+
 #text-area::placeholder,
 #nav-search-input::placeholder {
   color: #ffffffb7;

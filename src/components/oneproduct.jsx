@@ -241,14 +241,14 @@ function OneProduct() {
         </button>
         {oneProduct.images.map((image, index) => (
           <img
-            className={`mt-1 px-5 pt-5
+            className={`mt-1 pt-5
             ${currentIndex === index ? 'd-block' : 'd-none'} 
             ${window.innerWidth >= 576 ? 'w-50' : 'w-100'}`}
             key={index}
             src={require(`./../images/panel-img/${image.imagePath?.substring(55)}`)}
             alt={`image_${index}`}
             style={{
-              borderRadius:""
+              borderRadius:"10%"
               // width: '300px',
               // height: '300px',
             }}
@@ -310,7 +310,7 @@ function OneProduct() {
             {/*add to basket and like */}
             <div className="d-flex align-items-center">
               {/* + , -  */}
-              <div className="col-6 d-flex align-items-center py-3 px-0">
+              <div className="col-10 d-flex align-items-center py-3 px-0">
                 <div className="pt-3">
                   <p
                     className=""
@@ -324,25 +324,16 @@ function OneProduct() {
                     }
                   >
                     <i
-                      className="p-2 rounded"
-                      id="add-to-basket"
-                      style={{ fontSize: "15px", cursor: "pointer" }}
+                      className=""
+                      // id="add-to-basket"
+                      // style={{ fontSize: "15px", cursor: "pointer" }}
                     >
-                      <img
-                        src={basket}
-                        className="basket"
-                        id="basket-image"
-                        style={{
-                          cursor: "pointer",
-                          width: "30px",
-                          height: "30px",
-                        }}
-                      />
+                    <button className="btn btn-sm text-light rounded- border px-1 mx-3">افزودن به سبد</button>
                     </i>
                   </p>
                 </div>
                 <button
-                  className="btn btn-sm rounded-5 text-light"
+                  className="btn btn-sm text-light"
                   id="basket-button"
                   style={{ border: "1px white solid" }}
                   onClick={() => setProductId(oneProduct._id, 0)}
@@ -353,7 +344,7 @@ function OneProduct() {
                   {numberOfSelectedProduct || 1}
                 </span>
                 <button
-                  className="btn btn-sm rounded-4 text-light"
+                  className="btn btn-sm text-light"
                   id="basket-button"
                   style={{ border: "1px white solid" }}
                   onClick={() => setProductId(oneProduct._id, 1)}
@@ -363,7 +354,7 @@ function OneProduct() {
               </div>
 
               {/* like */}
-              <div className="col-6 pt-4 text-start">
+              <div className="col-2 pt-4 text-start">
                 <p className="me-auto text-light">
                   {oneProduct?.numberOfLikes?.length}
                   <i
@@ -397,8 +388,8 @@ function OneProduct() {
           </div>
         </div>
 
-        <form className="col-8 m-auto p-1">
-          <div className="">
+        <form className="col-8 m-auto">
+          <div className="d-flex align-items-center">
             <textarea
               id="text-area"
               value={comments[oneProduct?._id] || ""}
@@ -409,14 +400,16 @@ function OneProduct() {
               cols="30"
               rows="2"
               placeholder="نظر خود را بنویسید ..."
-              style={{ outline: "none", boxShadow: "none", border: "none" }}
-            ></textarea>
+              style={{ outline: "none", boxShadow: "none", border: "none" , borderEndEndRadius:"0" , borderStartEndRadius:"0"}}
+            >
+              
+            </textarea>
             <div className="text-center">
               <button
                 onClick={(e) => addComment(oneProduct._id, e)}
-                className="btn btn-sm text-light m-1"
-                id="add-comment-button"
-                style={{ border: "1px solid white" }}
+                className="btn text-light border-0"
+                id="oneproduct-btn-addcomment"
+                style={{borderEndStartRadius:"0" , borderStartStartRadius:"0"}}
               >
                 ثبت نظر
               </button>
@@ -466,9 +459,9 @@ function OneProduct() {
             </button>
           </div>
         </div>
-
+<div className="border col-md-8 mx-auto mt-3 rounded">
         <p className="text-center text-light mt-4 "> نظرات دیگران</p>
-        <div id="" className="col-8 mx-auto p-1 rounded">
+        <div id="" className="mx-auto p-1 rounded">
           <div className="" style={{ maxHeight: "400px", overflow: "auto" }}>
             {oneProduct?.comments?.map((comment) => (
               <div
@@ -479,7 +472,7 @@ function OneProduct() {
                 }}
               >
                 <div className="">
-                  <p className="text-light p-1 m-0">{comment?.author.fName}</p>
+                  <p className="text-light p-1 m-0" style={{fontSize:"12px"}}>{comment?.author.fName}</p>
                   <p
                     className="text-light text-center m-0"
                     style={{ fontSize: "15px", wordWrap: "break-word" }}
@@ -499,7 +492,7 @@ function OneProduct() {
                       }
                     >
                       <img
-                        src={like}
+                        src={defaultHeart}
                         alt=""
                         className=""
                         style={{
@@ -526,19 +519,19 @@ function OneProduct() {
                       >
                         <p
                           className="text-end p-1"
-                          style={{ fontSize: "11px" }}
+                          style={{ fontSize: "px" }}
                         >
                           {t?.author.fName}
                         </p>
                         <p className="">{t?.text}</p>
                       </div>
                     ))}
-                    <div className="">
-                      <div className="mx-2">
+                    <div className="d-flex justify-content-center">
+                      <div className="">
                         <textarea
                           value={replyComment}
                           onChange={(e) => handleRyplyComment(e.target.value)}
-                          className="form-control text-light p-1"
+                          className="text-light p-1"
                           id="text-area"
                           cols="30"
                           rows="1"
@@ -550,7 +543,7 @@ function OneProduct() {
                           }}
                         ></textarea>
                       </div>
-                      <div className="text-center">
+                      <div className="">
                         <button
                           onClick={(e) =>
                             replyToComment(
@@ -561,7 +554,9 @@ function OneProduct() {
                               e
                             )
                           }
-                          className="btn btn-sm text-light border mb-3 mt-1"
+                          className="btn btn-sm text-light"
+                          id="oneproduct-comment-reply-btn"
+                          style={{borderEndStartRadius:"0" , borderStartStartRadius:"0" , paddingBottom:"5px"}}
                         >
                           ثبت
                         </button>
@@ -573,17 +568,27 @@ function OneProduct() {
                       className="btn"
                       onClick={() => showReplysOfCommentFunc(comment._id)}
                     >
-                      <p className="text-light m-0">^ ^</p>
+                      <p className="text-light m-0"><img
+                        src={unfold}
+                        alt=""
+                        className=""
+                        style={{
+                          cursor: "pointer",
+                          width: "20px",
+                          height: "20px",
+                        }}
+                      /></p>
                     </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-        <div className="text-center my-1">
+          </div>
+          </div>
+        <div className="text-center mt-5">
           <button
-            className="text-light btn border"
+            className="btn btn-warning w-50"
             onClick={() => navigate("/")}
           >
             بازگشت
