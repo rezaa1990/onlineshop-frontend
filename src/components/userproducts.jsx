@@ -6,6 +6,8 @@ import p1 from "./../images/p1.jpeg"
 import redHeart from "./../images/redheart.png"
 import defaultHeart from "./../images/defaultheart.png"
 import basket from "./../images/basket.png"
+import fullBasket from "./../images/full-basket.png"
+import emptyBasket from "./../images/empty-basket.png"
 import AppContext from '../context/context';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -16,7 +18,8 @@ const apiUrl = process.env.REACT_APP_CUSTOM_URL;// "http://localhost:5000"
 function UserProducts() {
   let currentDate = new Date();
   const navigate = useNavigate();
-  const{
+  const {
+    user,
     products, 
     setProducts,
     userProducts,
@@ -113,7 +116,7 @@ return (
               )
             })
             .map((product, index) => (
-              <div className="col-lg-3 col-md-6 mb-5 px-3" key={index}>
+              <div className="col-12 col-md-6 col-lg-4 mb-5 px-3" key={index}>
                 {/* card */}
                 <div className="card p-1" id='card'>
                   {/* card img */}
@@ -171,27 +174,35 @@ return (
 
                     </div> */}
                         {/*add to basket and like */}
-                    <div className="row">
+                    <div className="d-flex align-items-center">
 
-                      <div className="col-4 p-3 text-center">
+                      <div className="col-7 p-3 text-center">
                         <p className="ms-auto" onClick={()=>addToBasketMiddleFunction(product._id , indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1)}>
                           <i className="" style={{ fontSize: '15px',cursor:'pointer'}}>
-                            <img src={basket} className="basket" style={{cursor:'pointer', width: '30px', height: '30px'}}/>
+                            {/* <img
+                           src={
+                            (user.basket?.map((b) => b._id) || []).includes(product._id)
+                              ? fullBasket
+                              : emptyBasket
+                          }
+                              className="basket" style={{ cursor: 'pointer', width: '45px', height: '40px' }}
+                            /> */}
+                            <button className="btn btn-sm text-light rounded-3 border mt-3">افزودن به سبد</button>
                           </i>
                         </p>
                         
                       </div>
 
-                      <div className="col-4 p-3 d-flex align-items-center justify-content-center">
-                          <button className='btn btn-sm rounded-5 text-light' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,0)}>-</button>
-                          <span className='text-light text-center col-4 p-1'>{indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1}</span>
-                          <button className='btn btn-sm rounded-5 text-light' id='basket-button' style={{border:"1px white solid"}} onClick={()=>setProductId(product._id,1)}>+</button>
+                      <div className="col-3 p-3 d-flex align-items-center justify-content-center">
+                          <button className='btn btn-sm text-light rounded-3 border' id='basket-button' style={{border:"1px white solid", fontSize:"15px"}} onClick={()=>setProductId(product._id,0)}>-</button>
+                          <span className='text-light text-center col- p-1' style={{fontSize:"22px"}}>{indexOfSelectedProduct == product._id ?  numberOfSelectedProduct : 1}</span>
+                          <button className='btn btn-sm text-light rounded-3 border' id='basket-button' style={{}} onClick={()=>setProductId(product._id,1)}>+</button>
                       </div>
 
-                      <div className="col-4 p-3 text-center">
-                        <p className="me-auto text-light">
-                          {product.numberOfLikes?.length}                        
-                          <i className="" onClick={()=>addLike(product._id,product)} style={{ fontSize: '10px',cursor:'pointer'}}>
+                      <div className="col-2 p-3 text-center mt-3">
+                        <p className="d-flex me-auto text-light">
+                          <span className='col-4'>{product.numberOfLikes?.length}</span>                       
+                          <i className="col-8 m-md-1" onClick={()=>addLike(product._id,product)} style={{ fontSize: '10px',cursor:'pointer'}}>
                             <img src={product.numberOfLikes?.includes(userId) ? redHeart : defaultHeart} className="heart" style={{cursor:'pointer', width: '20px', height: '20px'}}/>
                           </i>
                         </p>
