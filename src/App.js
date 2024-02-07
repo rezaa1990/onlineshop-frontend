@@ -20,8 +20,8 @@ import Banner from "./components/banner.jsx";
 
 
 function App() {
-  const server = "192.168.199.166"
-  const reqType = "https" 
+  const server = "localhost"
+  const reqType = "http" 
   const port = "5000"
 
   const userToken = localStorage.getItem("userToken");
@@ -529,9 +529,10 @@ function App() {
         data,
         config
       );
+      
+      console.log(response.data.data.likededProduct);
+      setOneProduct(response.data.data.likededProduct);
       getProduct();
-      console.log(response.data.data.commentedProduct);
-      setOneProduct(response.data.data.commentedProduct);
     } catch (error) {
       console.error("خطا:", error);
       setCommentResponse("برای لایک کردن ابتدا باید وارد شوید یا ثبت نام کنید");
@@ -550,7 +551,7 @@ function App() {
         author: userId,
         text: replyComment,
       };
-
+console.log(data)
       const response = await axios.post(
         `${reqType}://${server}:${port}/api/comment/makereplycomment`,
         data,
@@ -586,6 +587,7 @@ function App() {
       console.log(response.data);
       setOneProduct(response.data.data.oneProduct);
       setReplyComments("");
+      responseApi("نظر شما پس از تایید توسط ادمین نمایش داده خواهد شد")
     } catch (error) {
       console.error("خطا:", error);
       setCommentResponse("برای ثبت نظر خود باید وارد شوید یا ثبت نام کنید");
@@ -640,6 +642,7 @@ function App() {
         productId,
         numberOfproduct,
       };
+      console.log(updateData)
       const response = await axios.put(
         `${reqType}://${server}:${port}/api/user/updateuser/${userId}`,
         updateData,

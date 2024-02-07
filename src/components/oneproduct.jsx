@@ -223,7 +223,7 @@ function OneProduct() {
         setCurrentIndex(currentIndex - 1);
       }
     };
-  
+  console.log(oneProduct)
   return (
     <div className="pt-5" id="oneproduct">
       {/* card img */}
@@ -239,13 +239,13 @@ function OneProduct() {
               height: '5vh',
             }} />
         </button>
-        {oneProduct.images.map((image, index) => (
+        {oneProduct?.images?.map((image, index) => (
           <img
             className={`mt-1 pt-5
             ${currentIndex === index ? 'd-block' : 'd-none'} 
             ${window.innerWidth >= 576 ? 'w-50' : 'w-100'}`}
             key={index}
-            src={require(`./../images/panel-img/${image.imagePath?.substring(55)}`)}
+            src={require(`./../images/panel-img/${image.imagePath.substring(55)}`)}
             alt={`image_${index}`}
             style={{
               borderRadius:"10%"
@@ -258,7 +258,7 @@ function OneProduct() {
         <button
           className="text-light btn btn-lg border-0 position-absolute top-50 end-0"
           onClick={handleNext}
-          disabled={currentIndex === oneProduct.images.length - 1}
+          disabled={currentIndex === oneProduct?.images?.length - 1}
         >
           <img src={next} alt="" className="" style={{
               width: '5vh',
@@ -274,7 +274,7 @@ function OneProduct() {
           <div className="card-discount d-flex col-8 m-auto">
             <h6
               className="text-warning col-6 text-center p-2 m-2"
-              style={{ display: oneProduct.discount ? "block" : "none" }}
+              style={{ display: oneProduct?.discount ? "block" : "none" }}
             >
               تخفیف {oneProduct.discount?.value * 100}%
             </h6>
@@ -515,7 +515,7 @@ function OneProduct() {
                       <div
                         id="reply-comment"
                         className="text-center mx-4 rounded"
-                        style={{ wordWrap: "break-word" }}
+                        style={{ wordWrap: "break-word", display:t.isApproved == true ? "block" : "none"}}
                       >
                         <p
                           className="text-end p-1"
