@@ -20,7 +20,7 @@ import Banner from "./components/banner.jsx";
 
 
 function App() {
-  const server = "localhost"
+  const server = "192.168.226.166"
   const reqType = "http" 
   const port = "5000"
 
@@ -1092,11 +1092,12 @@ console.log(data)
         }}
       >
         {userRole === "adminUser" ? (
-          <AdminPanel></AdminPanel>
+          <Routes>
+          <Route path="/" element={<AdminPanel/>} />
+        </Routes>
         ) : (
           <>
             <Navbar></Navbar>
-            {/* <Banner></Banner> */}
             <Routes>
               <Route path="/" element={<UserProducts />} />
               <Route path="/userdashboard" element={<UserPanel />} />
